@@ -301,6 +301,7 @@
 	}
 
 	.main {
+		height: 100%;
 		flex: 1;
 		flex-direction: column;
 		overflow: hidden;
@@ -339,7 +340,7 @@
 	/* #ifdef MP-WEIXIN */
 	.nav-bar {
 		:first-child {
-			height: 120rpx;
+			// height: 120rpx;
 		}
 	}
 

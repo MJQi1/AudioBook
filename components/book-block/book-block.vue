@@ -69,9 +69,11 @@ export default {
 
 <style lang="less" scoped>
 .book-block {
-	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	background-color: #fff;
+	border-radius: 20rpx;
+	padding: 20rpx;
 	.classify {
 		width: 120rpx;
 		height: 120rpx;

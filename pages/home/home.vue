@@ -9,7 +9,7 @@
 			</view>
 			<view @click.stop="goSearchPage" class="search-box" slot="default">
 				<view class="child">
-					<uni-icons type="search" color="#999" size="16"></uni-icons>搜索相关书籍
+					<uni-icons type="search" color="#999" size="16"></uni-icons><text>搜索相关书籍</text>
 				</view>
 			</view>
 		</uni-nav-bar>
@@ -36,7 +36,7 @@
 			<swiper class="swipers" :indicator-dots="false" :current="tabAct" @change="swiperChange" :duration="500">
 				<swiper-item v-for="(item, index) in selectBar" v-if="item.select" :key="item.name">
 					<!-- 滚动效果 -->
-					<scroll-view scroll-y="true" class="swiper-sccroll">
+					<scroll-view scroll-y="true" class="swiper-sccroll" @scrolltolower="loadMore">
 						<view>
 							<!-- 首页轮播 -->
 							<swiper class="banner" v-if="index === 0" :indicator-dots="true" indicator-color="#ffe4cb" indicator-active-color="#ffaa00"
@@ -52,29 +52,27 @@
 								<book-block v-if="item.name==='推荐'"></book-block>
 								<book-block v-if="item.name==='男生'" :list="boyList"></book-block>
 								<book-block v-if="item.name==='女生'" :list="girlList"></book-block>
-								
-								<a-compinents title="猜你喜欢" :list="textList"></a-compinents>
-								{{item.name}}
-								<view class="" style="height: 300rpx;">
-									1
-								</view>
-								<view class="" style="height: 300rpx;">
-									12
-								</view>
-								<view class="" style="height: 300rpx;">
-									13
-								</view>
-								<view class="" style="height: 300rpx;">
-									14
-								</view>
-								<view class="" style="height: 300rpx;">
-									15
-								</view>
-								<view class="" style="height: 300rpx;">
-									16
-								</view>
-								<view class="" style="height: 300rpx;">
-									17
+								<!-- 展示模块 -->
+								<book-block-title title="猜你喜欢" :refresh="true">
+									<a-compinents  :list="textList"></a-compinents>
+								</book-block-title>
+								<!-- 展示详情 -->
+								<book-block-title title="为你推荐" :more="true">
+									<book-intro :list="textList"></book-intro>
+								</book-block-title>
+								<!-- 小排行 -->
+								<book-small-rank :lists="rankData"></book-small-rank>
+								<!-- 下拉加载随机推荐 -->
+								<book-block-title title="精彩推荐">
+									<view class="" v-for="(item, index) in pollDownData" :key="index">
+										<book-intro :list="item.list"></book-intro>	
+									</view>
+									
+									
+								</book-block-title>
+								<uni-load-more :status="state"></uni-load-more>
+								<view class="" style="height: 30rpx;">
+									
 								</view>
 							</view>
 						</view>
@@ -88,6 +86,7 @@
 </template>
 
 <script>
+	import {selectBar, rankData, textList,boyList, girlList, pollDownData} from './data.js'
 	export default {
 		data() {
 			return {
@@ -108,129 +107,21 @@
 				searchData: '',
 				range: 0,
 				tabAct: 0,
+				state:'more',//下拉刷新状态
 				//标题导航
-				selectBar: [{
-						name: '推荐',
-						select: true
-					},
-					{
-						name: '男生',
-						select: true
-					},
-					{
-						name: '女生',
-						select: true
-					},
-					{
-						name: '儿童',
-						select: true
-					},
-					{
-						name: '免费',
-						select: true
-					},
-					{
-						name: '会员',
-						select: true
-					},
-					{
-						name: '132',
-						select: true
-					},
-					{
-						name: 'true',
-						select: true
-					}
-				],
+				selectBar: selectBar,
 				//滚动条件
 				scrollLeft: 0,
 				old: {
 					scrollTop: 0
 				},
 				//测试数据
-				textList:[{
-					bookId:144,
-					src:'http://imagev2.xmcdn.com/group74/M08/F7/E5/wKgO3F6ZKlyTkqKqAAMEKEhOSIw777.jpg!op_type=5&upload_type=album&device_type=ios&name=mobile_large&magick=png',
-					bookTitle:'嘴说大全',
-					author:'小三'
-				},{
-					bookId:242,
-					src:'http://imagev2.xmcdn.com/group74/M08/F7/E5/wKgO3F6ZKlyTkqKqAAMEKEhOSIw777.jpg!op_type=5&upload_type=album&device_type=ios&name=mobile_large&magick=png',
-					bookTitle:'校花的贴身',
-					author:'鱼人二代'
-				},{
-					bookId:2544,
-					src:'/static/guide/duo.png',
-					bookTitle:'斗破苍穹',
-					author:'天蚕土豆'
-				},{
-					bookId:454,
-					src:'/static/guide/duo.png',
-					bookTitle:'小鼠大气',
-					author:'哈罗'
-				},{
-					bookId:1995,
-					src:'/static/guide/duo.png',
-					bookTitle:'庆余年',
-					author:'猫腻'
-				},{
-					bookId:785,
-					src:'/static/guide/duo.png',
-					bookTitle:'斗罗大陆',
-					author:'唐家三少'
-				}],
-				boyList:[
-				{
-					title: '玄幻',
-					imageSrc: '/static/icons/xuanhuan.png',
-					path: '/pages/index/test/test'
-				},
-				{
-					title: '武侠',
-					imageSrc: '/static/icons/xianxia.png',
-					path: '/pages/index/test/test'
-				},
-				{
-					title: '都市',
-					imageSrc: '/static/icons/dushi.png',
-					path: '/pages/index/test/test'
-				},
-				{
-					title: '悬疑',
-					imageSrc: '/static/icons/xuanyi.png',
-					path: '/pages/index/test/test'
-				},
-				{
-					title: '游戏',
-					imageSrc: '/static/icons/youxi.png',
-					path: '/pages/index/test/test'
-				}],
-				girlList:[
-				{
-					title: '言情',
-					imageSrc: '/static/icons/yanqing.png',
-					path: '/pages/index/test/test'
-				},
-				{
-					title: '悬疑',
-					imageSrc: '/static/icons/xuanyi.png',
-					path: '/pages/index/test/test'
-				},
-				{
-					title: '仙侠',
-					imageSrc: '/static/icons/xianxia.png',
-					path: '/pages/index/test/test'
-				},
-				{
-					title: '青春',
-					imageSrc: '/static/icons/shuidi.png',
-					path: '/pages/index/test/test'
-				},
-				{
-					title: '游戏',
-					imageSrc: '/static/icons/youxi.png',
-					path: '/pages/index/test/test'
-				}]
+				textList: textList,
+				boyList:boyList,
+				girlList:girlList,
+				rankData: rankData,
+				pollDownData:pollDownData,
+				
 			}
 		},
 		methods: {
@@ -240,17 +131,18 @@
 					url: 'search/search'
 				})
 			},
-			confirm() {
-				uni.navigateTo({
-					url: "./search/search",
-					success() {
-						console.log('success');
-					},
-					fail(e) {
-						console.log(e);
-					}
-				})
-			},
+			// confirm() {
+			// 	uni.navigateTo({
+			// 		url: "./search/search",
+			// 		success() {
+			// 			console.log('success');
+			// 		},
+			// 		fail(e) {
+			// 			console.log(e);
+			// 		}
+			// 	})
+			// },
+			//导航按钮
 			ponit(i, e) {
 				this.tabAct = i
 				let obj = e.target.x
@@ -271,13 +163,16 @@
 				})
 				this.scrollLeft = 0
 			},
+			//返回当前swiper的页码
 			swiperChange(e) {
 				this.tabAct = e.detail.current
 
 			},
+			//显示抽屉
 			showDraw() {
 				this.$refs.draw.open();
 			},
+			//练级swiper
 			selected(index) {
 				let i = index
 				if (index === 0) {
@@ -288,8 +183,33 @@
 					// console.log(this.selectBar);
 				})
 
+			},
+			//加载更多
+			loadMore(){
+				if(this.pollDownData.length> 6){
+					this.state = 'noMore'
+					return
+				}
+				
+				let data = {
+					list: this.textList
+				}
+				this.state = 'loading'
+				setTimeout(()=>{
+					this.pollDownData.push(data)
+				},1000)
 			}
-		}
+		},
+		onLoad(){
+			// console.log(textList);
+		},
+		onPullDownRefresh() {
+			console.log('refresh');
+			setTimeout(function() {
+				uni.stopPullDownRefresh();
+			}, 1000);
+		},
+		
 	}
 </script>
 
@@ -323,15 +243,16 @@
 		.search-box {
 			color: #999;
 			width: 60vw;
+			height: 3vh;
 			margin-left: 20rpx;
-			height: 60rpx;
 			border: 1px solid #e5e5e5;
 			border-radius: 50rpx;
-			line-height: 60rpx;
 
 			.child {
-				font-size: 26rpx;
+				font-size: 16rpx;
 				margin-left: 15vw;
+				height: 100%;
+				line-height: 160%;
 			}
 		}
 
@@ -347,7 +268,7 @@
 	/* #endif */
 
 	.container {
-		padding: 20px;
+		padding: 10px;
 		font-size: 14px;
 		line-height: 24px;
 	}
@@ -384,30 +305,35 @@
 		flex: 1;
 		flex-direction: column;
 		overflow: hidden;
-		background-color: #ffffff;
+		// background-color: #ffc87b;
+		background-image: url(../../static/backimg.png);
+		background-size: cover;
+		background-repeat: no-repeat;
+		color: #555;
 		height: 100%;
 
 		.scroll-x {
 			width: 100%;
 			height: 70rpx;
 			white-space: nowrap;
-
+			background-image: linear-gradient(to bottom ,#fdf2ee,#ffffff);
+			
 			.page-container {
 				display: inline-block;
 				height: 50rpx;
 				line-height: 50rpx;
 				margin: 10rpx 30rpx;
-				/* background-color: #0086B3; */
 			}
 
 			.tab-active {
-				border-bottom: 5rpx #ffc23a solid;
+				border-bottom: 5rpx #ffc13a solid;
 			}
 		}
 
 		.swipers {
 			flex: 1;
 			height: 90%;
+			// background-color: #ffc743;
 			.swiper-item {
 				flex: 1;
 				flex-direction: row;
@@ -427,7 +353,6 @@
 		.swiper-container{
 			padding: 30rpx;
 			// width: 100%;
-			
 			// background-color: #aaaaff;
 		}
 	}

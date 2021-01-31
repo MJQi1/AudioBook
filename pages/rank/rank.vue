@@ -4,10 +4,10 @@
 		<view class="content">
 			<view v-show="current === index1" class="content-item" v-for="(node,index1) in items" >
 				<view class="left-tab">
-					<view v-show="index1===0" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list1 " :key="index" @click="changTab(index)">{{item}}</view>
-					<view v-show="index1===1" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list2" :key="index" @click="changTab(index)">{{item}}</view>
-					<view v-show="index1===2" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list3" :key="index" @click="changTab(index)">{{item}}</view>
-					<view v-show="index1===3" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list4" :key="index" @click="changTab(index)">{{item}}</view>
+					<view v-if="index1===0" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list1 " :key="index" @click="changTab(index)">{{item}}</view>
+					<view v-if="index1===1" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list2" :key="index" @click="changTab(index)">{{item}}</view>
+					<view v-if="index1===2" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list3" :key="index" @click="changTab(index)">{{item}}</view>
+					<view v-if="index1===3" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list4" :key="index" @click="changTab(index)">{{item}}</view>
 				</view>
 				
 				<view class="right-box">

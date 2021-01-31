@@ -16,8 +16,29 @@
 	}, {
 		"path": "pages/bookshelf/bookshelf",
 		"style": {
-			"navigationBarTitleText": "书架",
-			"enablePullDownRefresh": false
+			// "navigationBarTitleText": "书架",
+			"enablePullDownRefresh": false,
+			"transparentTitle":"auto",
+			"titleImage":"static/logo.png",
+			"navigationBarBackgroundColor":"#ffbf2a",
+			"app-plus":{
+				"titleNView":{
+					"titleColor":"#fff2d0",
+					"buttons":[{
+						"type":"none",
+						"background": "rgba(0,0,0,0)",
+						"float":"right"
+					},
+					{
+						"type":"search",
+						"float":"right",
+						"text":"\ue63f",
+						"fontSrc":"/static/font/iconfont.ttf",
+						"background": "rgba(0,0,0,0)"
+						// "color":"#333"
+					}]
+				}
+			}
 		}
 
 	}, {

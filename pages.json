@@ -9,8 +9,33 @@
 	}, {
 		"path": "pages/mine/mine",
 		"style": {
-			"navigationBarTitleText": "我的",
-			"enablePullDownRefresh": false
+			"navigationBarTitleText": "个人中心",
+			"enablePullDownRefresh": false,
+			"transparentTitle":"auto",
+			"app-plus":{
+				"titleNView":{
+					"titleText":"个人中心",
+					"backgroundColor":"#ffbf2a",
+					"buttons":[{
+						"type":"none",
+						"background": "rgba(0,0,0,0)",
+						"fontSrc":"/static/font/iconfont.ttf",
+						"text":"\ue672"
+					},{
+						"type":"none",
+						"background": "rgba(0,0,0,0)",
+						"fontSrc":"/static/font/iconfont.ttf",
+						"text":"\ue66b"
+					},{
+						"type":"none",
+						"background": "rgba(0,0,0,0)",
+						"fontSrc":"/static/font/iconfont.ttf",
+						"text":"\ue66a",
+						"float":"left"
+						
+					}]
+				}
+			}
 		}
 
 	}, {

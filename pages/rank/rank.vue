@@ -54,26 +54,28 @@ export default {
 
 <style lang="less" scoped>
 	.content{
-			
+		// padding-top: 20rpx;
 		.content-item{
-			padding-top: 20rpx;
+			// border-top: 1rpx solid #666666;
+			margin-top: 10rpx;
+			padding-top: 10rpx;
 			display: flex;
 			height: 88vh;
 			flex-direction: row;
 			.left-tab{
 				width: 25vw;
 				height: 100%;
-				background-color: #fafafa;
+				background-color: #f0f0f0;
 				.check-bth{
 					line-height: 75rpx;
 					height: 75rpx;
-					background-color: #ffebc2;
 					
 					margin-top: 2rpx;
 					text-align: center;
 				}
 				.check-active{
 					border-left: 7rpx solid #ff6600;
+					background-color: #ffffff;
 					color: #ff6600;
 				}
 			}

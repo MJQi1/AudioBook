@@ -79,18 +79,19 @@ export default {
 			// height: 100rpx;
 			padding-top: 20rpx;
 			color: #999;
+			line-height: 40rpx;
 			font-size: 26rpx;
 			//文字超出隐藏
 			text-overflow: ellipsis;
 			overflow: hidden;
 			display: -webkit-box;
-			-webkit-line-clamp: 3;
+			-webkit-line-clamp: 2;
 			-webkit-box-orient: vertical;
 		}
 		.msg {
 			color: #999;
 			font-size: 20rpx;
-			padding-top: 10rpx;
+			padding-top: 30rpx;
 		}
 	}
 }

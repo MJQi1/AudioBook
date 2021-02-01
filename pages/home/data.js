@@ -49,7 +49,7 @@ const textList = [{
 }, {
 	bookId: 242,
 	src: 'http://imagev2.xmcdn.com/group74/M08/F7/E5/wKgO3F6ZKlyTkqKqAAMEKEhOSIw777.jpg!op_type=5&upload_type=album&device_type=ios&name=mobile_large&magick=png',
-	bookTitle: '校花的贴身',
+	bookTitle: '校花的贴身高手',
 	author: '鱼人二代',
 	type: '都市',
 	state: "连载",

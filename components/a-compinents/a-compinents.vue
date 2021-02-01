@@ -5,8 +5,8 @@
 				<view class="book-datils" v-for="(item,index) in list" :key="index" @click="goDetails(item.bookId)">
 					<image :src="item.src" mode=""></image>
 					<view class="book-title">
-						{{item.bookTitle}}
-						<text>{{item.author}}</text>
+						<text class="title">{{item.bookTitle}}</text>
+						<text class="author">{{item.author}}</text>
 					</view>
 				</view>
 			</view> 
@@ -75,10 +75,16 @@
 				width: 100%;
 				font-size: 30rpx;
 				// text-align: center;
-				white-space: normal;
-				color: #333;
-
-				text {
+				.title{
+					white-space: normal;
+					color: #333;
+					text-overflow: ellipsis;
+					overflow: hidden;
+					display: -webkit-box;
+					-webkit-line-clamp: 1;
+					-webkit-box-orient: vertical;
+				}
+				.author {
 					display: block;
 					font-size: 28rpx;
 					color: #999;

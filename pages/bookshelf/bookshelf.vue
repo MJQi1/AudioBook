@@ -16,14 +16,20 @@
 				</swiper>
 			</view>
 		</view>
+		<view class="bookshelf">
+			
+			<bookshelf-item v-for="(item,index) in bookshelfList" :key="index" :datils="item"></bookshelf-item>
+			<bookshelf-item></bookshelf-item>
+		</view>
 	</view>
 </template>
 
 <script>
+	import {textList} from "../home/data.js"
 	export default {
 		data() {
 			return {
-				
+				bookshelfList:textList
 			};
 		}
 	}
@@ -31,6 +37,7 @@
 
 <style lang="less" scoped>
 .main-box{
+	
 	height: 1860rpx;
 	width: 100%;
 }
@@ -64,5 +71,11 @@
 			}
 		}
 	}
+}
+.bookshelf{
+	padding: 80rpx 30rpx;
+	display: flex;
+	flex-flow: row wrap;
+	
 }
 </style>

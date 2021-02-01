@@ -18,7 +18,7 @@
 			datils:{
 				type:Object,
 				default:{
-					src:"/static/icons/add1.png",
+					src:"/static/icons/add.png",
 					bookTitle:''
 				}
 			}

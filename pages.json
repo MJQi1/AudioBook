@@ -9,21 +9,22 @@
 	}, {
 		"path": "pages/mine/mine",
 		"style": {
-			"navigationBarTitleText": "个人中心",
+			"navigationBarTitleText": "",
 			"enablePullDownRefresh": false,
 			"transparentTitle":"auto",
 			"app-plus":{
 				"titleNView":{
-					"titleText":"个人中心",
-					"backgroundColor":"#ffbf2a",
+					"titleText":"",
+					"backgroundColor":"#fff",
 					"buttons":[{
 						"type":"none",
-						"background": "rgba(0,0,0,0)",
+						"background": "rgba(0,0,0,0.1)",
 						"fontSrc":"/static/font/iconfont.ttf",
-						"text":"\ue672"
+						"text":"\ue672",
+						"color":"#007AFF"
 					},{
 						"type":"none",
-						"background": "rgba(0,0,0,0)",
+						"background": "rgba(0,0,0,0.1)",
 						"fontSrc":"/static/font/iconfont.ttf",
 						"text":"\ue66b"
 					},{
@@ -41,27 +42,34 @@
 	}, {
 		"path": "pages/bookshelf/bookshelf",
 		"style": {
-			// "navigationBarTitleText": "书架",
+			"navigationBarTitleText": "我的书架",
 			"enablePullDownRefresh": false,
 			"transparentTitle":"auto",
-			"titleImage":"static/logo.png",
 			"navigationBarBackgroundColor":"#ffbf2a",
 			"app-plus":{
 				"titleNView":{
 					"titleColor":"#fff2d0",
 					"buttons":[{
-						"type":"none",
-						"background": "rgba(0,0,0,0)",
+						"type":"share",
+						"background": "rgba(0,0,0,0.1)",
 						"float":"right"
 					},
 					{
-						"type":"search",
+						"type":"none",
 						"float":"right",
 						"text":"\ue63f",
 						"fontSrc":"/static/font/iconfont.ttf",
-						"background": "rgba(0,0,0,0)"
+						"background": "rgba(0,0,0,0.1)"
 						// "color":"#333"
 					}]
+				},
+				"pullToRefresh":{
+					"support":"true",
+					"style":"circle",
+					"color": "#ffaa00",
+					"height":"10%",
+					"range":"10%",
+					"offset":"5%"
 				}
 			}
 		}
@@ -103,6 +111,15 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "书详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "登录或注册",
                 "enablePullDownRefresh": false
             }
             

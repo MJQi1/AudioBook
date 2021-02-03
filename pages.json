@@ -102,7 +102,7 @@
             {
                 "navigationBarTitleText": "搜索",
                 "enablePullDownRefresh": false,
-								"navigationStyle":"custom"
+				"navigationStyle":"custom"
             }
             
         }
@@ -111,7 +111,22 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "书详情",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+				// "transparentTitle":"auto",
+				"app-plus":{
+					"titleNView":{
+						"type":"transparent",
+						"titleText":"书详情",
+						"buttons":[{
+							"type":"share",
+							"background":"rgba(0,0,0,0)"
+						}],
+						// "autoBackButton":"false",
+						"backButton":{
+							"background":"rgba(0,0,0,0)"
+						}
+					}
+				}
             }
             
         }
@@ -119,8 +134,18 @@
             "path" : "pages/mine/login/login",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "登录或注册",
-                "enablePullDownRefresh": false
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"transparentTitle":"auto",
+				"app-plus":{
+					"titleNView":{
+						"backButton":{
+							"background":"rgba(0,0,0,0)"
+						}
+						
+					}
+					
+				}
             }
             
         }

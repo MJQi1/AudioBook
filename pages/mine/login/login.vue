@@ -2,62 +2,37 @@
 	<view class="main">
 		<view class="logo">
 			<image class="logo-image" src="../../../static/logo.png" mode="aspectFit"></image>
-			<view class="line"> | </view>
+			<view class="line">|</view>
 			<view v-show="loginOr" class="login-title">登录</view>
 			<view v-show="!loginOr" class="login-title">注册</view>
-			
 		</view>
-		<view class="input" >
+		<view class="input">
 			<!-- 登录 -->
-			<uni-forms 
-			class="form"
-			ref="form"
-			v-show="loginOr"
-			 label-width="50"
-			:form-rules="sdaf" 
-			@submit="login" 
-			@reset="rest" 
-			@validate="asdf">
-				<uni-forms-item label="帐号" name="">
-					<uni-easyinput v-model="dfs" placeholder="请输入手机号/邮箱" />
-				</uni-forms-item>
-				<uni-forms-item label="密码" name="">
-					<uni-easyinput  v-model="dfs" placeholder="请输入密码" />
-				</uni-forms-item>
+			<uni-forms class="form" ref="login" v-show="loginOr" label-width="50" :rules="rules">
+				<uni-forms-item label="帐号" name="email"><uni-easyinput v-model="loginData.email" placeholder="请输入邮箱" /></uni-forms-item>
+				<uni-forms-item label="密码" name="passward"><uni-easyinput type="passward" v-model="loginData.passward" placeholder="请输入密码" /></uni-forms-item>
 				<uni-forms-item label=" " name="" class="login-btn">
-					<button size="mini" form-type="submit">登录</button>
-					<view class="register-link" @click="register">没有账号？立即注册</view>
+					<view class="sub-btn">
+						<button class="btn" size="mini" @click="Login">登录</button>
+						<view class="register-link" @click="changeRegister">注册账号</view>
+					</view>
 				</uni-forms-item>
-				
 			</uni-forms>
 			<!-- 注册 -->
-			<uni-forms 
-			class="form"
-			ref="form"
-			v-show="!loginOr"
-			 label-width="50"
-			:form-rules="sdaf" 
-			@submit="login" 
-			@reset="rest" 
-			@validate="asdf">
-				<uni-forms-item label="帐号" name="">
-					<uni-easyinput v-model="dfs" placeholder="请输入手机号/邮箱" />
-				</uni-forms-item>
-				<uni-forms-item label="用户名" name="">
-					<uni-easyinput v-model="dfs" placeholder="请输用户名" />
-				</uni-forms-item>
-				<uni-forms-item label="密码" name="">
-					<uni-easyinput  v-model="dfs" placeholder="请输入密码" />
-				</uni-forms-item>
-				<uni-forms-item label="验证码" name="">
-					<uni-easyinput  v-model="s" placeholder="输入验证码" />
-					<button size="mini" class="get-code">获取验证码</button>
+			<uni-forms class="form" ref="register" v-show="!loginOr" label-width="50" :rules="rules">
+				<uni-forms-item label="帐号" name="email"><uni-easyinput v-model="registerData.email" placeholder="请输入邮箱" /></uni-forms-item>
+				<uni-forms-item label="用户名" name="username"><uni-easyinput v-model="registerData.username" placeholder="请输用户名" /></uni-forms-item>
+				<uni-forms-item label="密码" name="passward"><uni-easyinput v-model="registerData.passward" placeholder="请输入密码" /></uni-forms-item>
+				<uni-forms-item label="验证码" name="code">
+					<uni-easyinput v-model="registerData.code" />
+					<button size="mini" class="get-code" @click="getCode">获取验证码</button>
 				</uni-forms-item>
 				<uni-forms-item label=" " name="" class="login-btn">
-					<button size="mini" form-type="submit">注册</button>
-					<view class="register-link" @click="changeLogin">已有账号？立即登录</view>
+					<view class="sub-btn">
+						<button class="btn" size="mini" @click="Register">注册</button>
+						<view class="register-link" @click="changeLogin">账号登录</view>
+					</view>
 				</uni-forms-item>
-				
 			</uni-forms>
 		</view>
 		<!-- 其他登录 -->
@@ -67,110 +42,254 @@
 				<uni-icons size="25" type="weixin"></uni-icons>
 				<uni-icons size="25" type="weibo"></uni-icons>
 			</view>
-			
+
 			<view class="tiaokuan">
-				<label>
-					<checkbox style="transform:scale(0.5)"  color="#ffaa00" :value="1" /><text>我已经同意<text class="underline">用户协议</text>和<text class="underline">隐私政策</text></text>
-				</label>
+				<checkbox-group  @change="clauseChange">
+					<label>
+						<checkbox style="transform:scale(0.5)" color="#ffaa00" checked value="1" />
+						<text>
+							我已经同意
+							<text class="underline">用户协议</text>
+							和
+							<text class="underline">隐私政策</text>
+							
+						</text>
+					</label>
+				</checkbox-group>
+				
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				loginOr:true
-			};
-		},
-		methods:{
-			//切换登录/注册
-			register(){
-				this.loginOr = false
+export default {
+	data() {
+		return {
+			//条款
+			clause: '1',
+			loginOr: true,
+			loginData: {
+				email: '',
+				passward: ''
 			},
-			changeLogin(){
-				this.loginOr = true
+			registerData: {
+				email: '',
+				passward: '',
+				username: '',
+				cede: 0
+			},
+			rules: {
+				email: {
+					rules: [
+						{
+							required: true,
+							errorMessage: '请输入账号'
+						},
+						{
+							format: 'email',
+							errorMessage: '请输入正确的邮箱地址'
+						}
+					]
+				},
+				passward: {
+					rules: [
+						{
+							required: true,
+							errorMessage: '请输入密码'
+						},
+						{
+							minLength: 6,
+							maxLength: 8,
+							errorMessage: '密码长度在 {minLength} 到 {maxLength} 个字符'
+						}
+					]
+				},
+				username: {
+					rules: [
+						{
+							required: true,
+							errorMessage: '请输入用户名'
+						},
+						{
+							minLength: 2,
+							maxLength: 8,
+							errorMessage: '用户名长度在 {minLength} 到 {maxLength} 个字符'
+						}
+					]
+				},
+				code: {
+					rules: [
+						{
+							required: true,
+							errorMessage: '请输入验证码'
+						},
+						{
+							pattern: /^\d{6}$/,
+							errorMessage: '请输入6位验证码'
+						}
+					]
+				}
+			}
+		};
+	},
+	methods: {
+		//切换登录/注册
+		changeRegister() {
+			this.loginOr = false;
+		},
+		changeLogin() {
+			this.loginOr = true;
+		},
+		//登录
+		Login() {
+			
+			if(this.clause !== '1'){
+				uni.showToast({
+					title:'请选择条款',
+					icon:'none'
+				})
+				return
+			}
+			this.$refs.login
+				.submit()
+				.then(res => {
+					console.log('表单数据信息：', res);
+				})
+				.catch(err => {
+					console.log('表单错误信息：', err);
+				});
+		},
+		//注册
+		Register() {
+			if(this.clause !== '1'){
+				uni.showToast({
+					title:'请选择条款',
+					icon:'none'
+				})
+				return
+			}
+			this.$refs.register
+				.submit()
+				.then(res => {
+					console.log('表单数据信息：', res);
+				})
+				.catch(err => {
+					console.log('表单错误信息：', err);
+				});
+		},
+		// 接受条款
+		clauseChange(d){
+			this.clause = d.detail.value[0]
+		},
+		//获取验证码
+		getCode(){
+			let email = this.registerData.email
+			console.log(email);
+			let test = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)
+			console.log(test);
+			if(!test){
+				uni.showToast({
+					icon:"none",
+					title:"输入正确邮箱"
+				})
 			}
 		}
 	}
+};
 </script>
 
 <style lang="less" scoped>
-.main{
+.main {
 	width: 100%;
 	height: 100%;
-	background-image: linear-gradient(to top,#ffbecf,#ffffff,#ffe2a8);
-	.logo{
+	background-image: linear-gradient(to top, #ffbecf, #ffffff, #ffe2a8);
+	.logo {
+		position: absolute;
+		top: 15vh;
+		left: 0;
+		right: 0;
 		display: flex;
 		justify-content: space-around;
 		margin-top: 100rpx;
 		margin: 0 auto;
 		width: 400rpx;
-		height: 560rpx;
-		.logo-image{
+		height: 160rpx;
+		.logo-image {
 			width: 60%;
 			height: 100%;
 		}
-		.login-title{
-			line-height: 550rpx;
+		.login-title {
+			line-height: 150rpx;
 			font-size: 40rpx;
 			font-weight: bold;
 			color: #d28278;
 		}
-		.line{
+		.line {
 			.login-title();
 			color: #666;
 		}
 	}
-	.input{
+	.input {
+		position: absolute;
+		top: 30vh;
+		left: 0;
+		right: 0;
 		width: 500rpx;
 		margin: 0rpx auto;
 		height: 750rpx;
-		.form{
+		.form {
 			background-color: #fff;
 			// opacity: 0.6;
 			border-radius: 20rpx;
 			box-shadow: 0rpx 0rpx 50rpx #fff0d2;
-			.login-btn{
-				display: flex;
-				align-items: center;
-				.register-link{
-					position: relative;
-					bottom: 15rpx;
+			.sub-btn {
+				width: 100%;
+				position: relative;
+				.btn {
+					// width: 130rpx;
+					// height: 60rpx;
+				}
+				.register-link {
+					// width: 100%;
+					position: absolute;
+					right: 0;
+					bottom: 20rpx;
 					display: inline-block;
-					margin-left: 40rpx;
 					font-size: 16rpx;
-					line-height: 60rpx;
+					// line-height: 60rpx;
 					color: #888;
 				}
-			}	
-		}
-		
-	}
-	
-	
-}
-.other-login{
-		width: 500rpx;
-		margin: 0 auto 0;
-		.login-type{
-			display: flex;
-			justify-content: space-around;
-		}
-		.tiaokuan{
-			margin: 30rpx auto;
-			width: 75%;
-			font-size: 16rpx;
-			.underline{
-				text-decoration: underline;
 			}
 		}
 	}
-.get-code{
-	margin-top: 20rpx;
-	position: relative;
-	left: 165rpx;
 }
-
+.other-login {
+	position: absolute;
+	bottom: 5vh;
+	width: 500rpx;
+	left: 0;
+	right: 0;
+	margin: 0 auto 0;
+	.login-type {
+		display: flex;
+		justify-content: space-around;
+	}
+	.tiaokuan {
+		margin: 30rpx auto;
+		width: 85%;
+		font-size: 16rpx;
+		.underline {
+			text-decoration: underline;
+		}
+	}
+}
+.get-code {
+	margin-top: 20rpx;
+	position: absolute;
+	top: -15rpx;
+	right: 5rpx;
+	// width: 100%;
+	background-color: #fff;
+}
 </style>

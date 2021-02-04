@@ -19,7 +19,6 @@
 
 <style lang="less">
 	/*每个页面公共css */
-	@import "./static/global.less";
 	page{
 		height: 100%;
 		width: 100%;

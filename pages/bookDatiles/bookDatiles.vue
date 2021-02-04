@@ -15,7 +15,7 @@
 			</view>
 		</view>
 
-		<uni-section title="简介" sub-title="" type="line"></uni-section>
+		<uni-section title="简介" type="line"></uni-section>
 		
 			<uni-group title="作者" margin-top="" mode="card">
 				<view class="nextText">
@@ -167,15 +167,19 @@ export default {
 }
 .book-top {
 	height: 360rpx;
-	background-image: linear-gradient(to top, #ffd98b, #ff8283);
+	background-image: url(../../static/background/home.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
 	padding: 30rpx;
 	.book-top-warp {
+		// filter: blur(20rpx);
 		display: flex;
 		flex-direction: row;
 		margin-top: 150rpx;
 		height: 170rpx;
 		image {
-			width: 200rpx;
+			border-radius: 20%;
+			width: 170rpx;
 			height: 100%;
 		}
 		.book-info {
@@ -203,6 +207,7 @@ export default {
 }
 .install {
 	padding: 30rpx;
+	border-radius: 23rpx;
 }
 .evalute {
 	padding: 30rpx;

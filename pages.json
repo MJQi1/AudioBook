@@ -11,29 +11,29 @@
 		"style": {
 			"navigationBarTitleText": "",
 			"enablePullDownRefresh": false,
-			"transparentTitle":"auto",
-			"app-plus":{
-				"titleNView":{
-					"titleText":"",
-					"backgroundColor":"#fff",
-					"buttons":[{
-						"type":"none",
+			"transparentTitle": "auto",
+			"app-plus": {
+				"titleNView": {
+					"titleText": "",
+					"backgroundColor": "#fff",
+					"buttons": [{
+						"type": "none",
 						"background": "rgba(0,0,0,0.1)",
-						"fontSrc":"/static/font/iconfont.ttf",
-						"text":"\ue672",
-						"color":"#007AFF"
-					},{
-						"type":"none",
+						"fontSrc": "/static/font/iconfont.ttf",
+						"text": "\ue672",
+						"color": "#007AFF"
+					}, {
+						"type": "none",
 						"background": "rgba(0,0,0,0.1)",
-						"fontSrc":"/static/font/iconfont.ttf",
-						"text":"\ue66b"
-					},{
-						"type":"none",
+						"fontSrc": "/static/font/iconfont.ttf",
+						"text": "\ue66b"
+					}, {
+						"type": "none",
 						"background": "rgba(0,0,0,0)",
-						"fontSrc":"/static/font/iconfont.ttf",
-						"text":"\ue66a",
-						"float":"left"
-						
+						"fontSrc": "/static/font/iconfont.ttf",
+						"text": "\ue66a",
+						"float": "left"
+
 					}]
 				}
 			}
@@ -44,32 +44,33 @@
 		"style": {
 			"navigationBarTitleText": "我的书架",
 			"enablePullDownRefresh": false,
-			"transparentTitle":"auto",
-			"navigationBarBackgroundColor":"#ffbf2a",
-			"app-plus":{
-				"titleNView":{
-					"titleColor":"#fff2d0",
-					"buttons":[{
-						"type":"share",
-						"background": "rgba(0,0,0,0.1)",
-						"float":"right"
-					},
-					{
-						"type":"none",
-						"float":"right",
-						"text":"\ue63f",
-						"fontSrc":"/static/font/iconfont.ttf",
-						"background": "rgba(0,0,0,0.1)"
-						// "color":"#333"
-					}]
+			"transparentTitle": "auto",
+			"navigationBarBackgroundColor": "#ffbf2a",
+			"app-plus": {
+				"titleNView": {
+					"titleColor": "#fff2d0",
+					"buttons": [{
+							"type": "share",
+							"background": "rgba(0,0,0,0.1)",
+							"float": "right"
+						},
+						{
+							"type": "none",
+							"float": "right",
+							"text": "\ue63f",
+							"fontSrc": "/static/font/iconfont.ttf",
+							"background": "rgba(0,0,0,0.1)"
+							// "color":"#333"
+						}
+					]
 				},
-				"pullToRefresh":{
-					"support":"true",
-					"style":"circle",
+				"pullToRefresh": {
+					"support": "true",
+					"style": "circle",
 					"color": "#ffaa00",
-					"height":"10%",
-					"range":"10%",
-					"offset":"5%"
+					"height": "10%",
+					"range": "10%",
+					"offset": "5%"
 				}
 			}
 		}
@@ -96,56 +97,66 @@
 			"navigationStyle": "custom"
 		}
 
+	}, {
+		"path": "pages/home/search/search",
+		"style": {
+			"navigationBarTitleText": "搜索",
+			"enablePullDownRefresh": false,
+			"navigationStyle": "custom"
+		}
+
+	}, {
+		"path": "pages/bookDatiles/bookDatiles",
+		"style": {
+			"navigationBarTitleText": "书详情",
+			"enablePullDownRefresh": false,
+			// "transparentTitle":"auto",
+			"app-plus": {
+				"titleNView": {
+					"type": "transparent",
+					"titleText": "书详情",
+					"buttons": [{
+						"type": "share",
+						"background": "rgba(0,0,0,0)"
+					}],
+					// "autoBackButton":"false",
+					"backButton": {
+						"background": "rgba(0,0,0,0)"
+					}
+				}
+			}
+		}
+
+	}, {
+		"path": "pages/mine/login/login",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false,
+			"transparentTitle": "auto",
+			"app-plus": {
+				"titleNView": {
+					"backButton": {
+						"background": "rgba(0,0,0,0)"
+					}
+
+				}
+
+			}
+		}
+
+	}, {
+		"path": "pages/mine/chartMessage/chartMessage",
+		"style": {
+			"navigationBarTitleText": "消息",
+			"enablePullDownRefresh": false
+		}
+
 	}    ,{
-            "path" : "pages/home/search/search",
+            "path" : "pages/mine/settings/settings",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "搜索",
-                "enablePullDownRefresh": false,
-				"navigationStyle":"custom"
-            }
-            
-        }
-        ,{
-            "path" : "pages/bookDatiles/bookDatiles",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "书详情",
-                "enablePullDownRefresh": false,
-				// "transparentTitle":"auto",
-				"app-plus":{
-					"titleNView":{
-						"type":"transparent",
-						"titleText":"书详情",
-						"buttons":[{
-							"type":"share",
-							"background":"rgba(0,0,0,0)"
-						}],
-						// "autoBackButton":"false",
-						"backButton":{
-							"background":"rgba(0,0,0,0)"
-						}
-					}
-				}
-            }
-            
-        }
-        ,{
-            "path" : "pages/mine/login/login",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false,
-				"transparentTitle":"auto",
-				"app-plus":{
-					"titleNView":{
-						"backButton":{
-							"background":"rgba(0,0,0,0)"
-						}
-						
-					}
-					
-				}
+                "navigationBarTitleText": "设置",
+                "enablePullDownRefresh": false
             }
             
         }

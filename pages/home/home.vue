@@ -306,7 +306,7 @@
 		flex-direction: column;
 		overflow: hidden;
 		// background-color: #ffc87b;
-		background-image: url(../../static/backimg.png);
+		background-image: url(../../static/background/backimg.png);
 		background-size: cover;
 		background-repeat: no-repeat;
 		color: #555;

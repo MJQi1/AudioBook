@@ -1,17 +1,37 @@
 <template>
-	<view>
+	<view class="main">
 		<uni-list>
+			<uni-list-item title="账号与安全" note=" " link="navigateTo"></uni-list-item>
+			<uni-list-item title="新消息提醒" note=" " link="navigateTo"></uni-list-item>
+			<uni-list-item title="账号与安全" note=" " link="navigateTo"></uni-list-item>
+			<uni-list-item title="隐私设置" note=" " link="navigateTo"></uni-list-item>
+			<uni-list-item title="通用设置" note=" " link="navigateTo"></uni-list-item>
+			
+			<view class="border"></view>
 			<uni-list-item title="检查更新" note=" " link="navigateTo"></uni-list-item>
 			<uni-list-item title="软件不错,赞一个" note=" " link="navigateTo"></uni-list-item>
 			<uni-list-item title="帮助中心" note=" " link="navigateTo"></uni-list-item>
 			<uni-list-item title="意见反馈" note=" " link="navigateTo"></uni-list-item>
 			<uni-list-item title="帐号注销" note=" " link="navigateTo"></uni-list-item>
 			
-			<uni-list-item title="隐私设置" note=" " link="navigateTo"></uni-list-item>
+			<view class="border"></view>
 			<uni-list-item title="关于Audio听书" note=" " link="navigateTo"></uni-list-item>
 			<uni-list-item title="清除缓存" note=" " link="navigateTo"></uni-list-item>
 			
-			<uni-list-item title="" note=""></uni-list-item>
+			<view v-if="isLogin">
+				<view class="border"></view>
+				<button type="default" class="button" size="mini">切换账号</button>
+				<view class="border"></view>
+				<button type="default" class="button" size="mini">退出登录	</button>
+			</view>
+			
+			<view v-if="!isLogin">
+				<view class="border"></view>
+				<button type="default" class="button" size="mini">登录账号</button>
+			</view>
+			
+			<view class="border"></view>
+			<button type="warn" class="err" size="mini">退出程序</button>
 		</uni-list>
 	</view>
 </template>
@@ -20,12 +40,32 @@
 	export default {
 		data() {
 			return {
-				
+				isLogin:true
 			};
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-
+.main{
+	height: 100%;
+	width: 100%;
+	background-color: #f8f8f8;
+}
+.border{
+	width: 100vw;
+	height:20rpx;
+	background-color: #f8f8f8;
+}
+.button{
+	width:100%;
+	background-color: #FFFFFF;
+	
+	padding: 20rpx;
+	
+}
+.err{
+	width:100%;
+	padding: 20rpx;
+}
 </style>

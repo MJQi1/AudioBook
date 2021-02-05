@@ -36,8 +36,8 @@
 			
 		<uni-section title="全部章节" sub-title="" type="line"></uni-section>
 		<uni-list>
-			<uni-list-item v-for="(item, index) in bookTemp" :key="index" :title="`第${index + 1}章  ${item.title}`" to="../home/search/search"></uni-list-item>
-			<uni-list-item title="全部章节" link to="xxx"></uni-list-item>
+			<uni-list-item v-for="(item, index) in bookTemp" :key="index" :title="`第${index + 1}章  ${item.title}`" to="../play/play"></uni-list-item>
+			<uni-list-item title="剩余全部章节" link to="./allList/allList"></uni-list-item>
 		</uni-list>
 		<uni-section title="评价" sub-title="" type="line"></uni-section>
 		<view class="evalute">

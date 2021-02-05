@@ -160,6 +160,25 @@
             }
             
         }
+        ,{
+            "path" : "pages/bookDatiles/allList/allList",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "全部章节",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/play/play",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "播放",
+                "enablePullDownRefresh": false,
+				"transparentTitle":"always"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

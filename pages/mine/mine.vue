@@ -75,7 +75,7 @@
 			</uni-list>
 			<view class="space"></view>
 			<uni-list>
-				<uni-list-item title="设置" link></uni-list-item>
+				<uni-list-item title="设置" link to="settings/settings"></uni-list-item>
 				<uni-list-item title="意见反馈" link></uni-list-item>
 			</uni-list>
 		</view>

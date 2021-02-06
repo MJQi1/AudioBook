@@ -11,19 +11,19 @@
 				<view class="user-name" @click="toLogin">登录</view>
 			</view>
 			<view class="wallet-msg">
-				<view class="book-coin">
+				<view class="book-coin" @click="toWhat('pay')">
 					<view class="coin">10</view>
 					<view class="coin-title">书币</view>
 				</view>
-				<view class="book-coin">
+				<view class="book-coin" @click="toWhat('pay')">
 					<view class="coin">0</view>
 					<view class="coin-title">书券</view>
 				</view>
-				<view class="book-coin">
+				<view class="book-coin" @click="toWhat('pay')">
 					<view class="coin">0</view>
 					<view class="coin-title">优惠券</view>
 				</view>
-				<view class="charge">充值</view>
+				<view class="charge" @click="toWhat('pay')">充值</view>
 			</view>
 			<view class="vip-card">
 				<view class="gard-title">至尊 · VIP</view>
@@ -47,7 +47,7 @@
 					<uni-icons type="chatbubble" size="25" color="#555"></uni-icons>
 					<view class="text">消息</view>
 				</view>
-				<view class="btn" @click="toWhat('msg2')">
+				<view class="btn" @click="toWhat('qiandao')">
 					<uni-icons type="paperplane" size="25" color="#555"></uni-icons>
 					<view class="text">签到</view>
 				</view>
@@ -63,8 +63,8 @@
 			</swiper>
 			<view class="space"></view>
 			<uni-list>
-				<uni-list-item title="我的钱包" link></uni-list-item>
-				<uni-list-item title="签到" link></uni-list-item>
+				<uni-list-item title="我的钱包" link to="charge/charge"></uni-list-item>
+				<uni-list-item title="签到" link to="qiandao/qiandao"></uni-list-item>
 				<uni-list-item title="每日福利" link></uni-list-item>
 			</uni-list>
 			<view class="space"></view>
@@ -101,6 +101,12 @@ export default {
 			switch (add) {
 				case 'msg':
 					url = './chartMessage/chartMessage';
+					break;
+				case 'qiandao':
+					url = './qiandao/qiandao'
+					break;
+				case 'pay':
+					url = './charge/charge'
 					break;
 			}
 			uni.navigateTo({

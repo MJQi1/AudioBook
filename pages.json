@@ -151,31 +151,50 @@
 			"enablePullDownRefresh": false
 		}
 
+	}, {
+		"path": "pages/mine/settings/settings",
+		"style": {
+			"navigationBarTitleText": "设置",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/bookDatiles/allList/allList",
+		"style": {
+			"navigationBarTitleText": "全部章节",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/play/play",
+		"style": {
+			"navigationBarTitleText": "播放",
+			"enablePullDownRefresh": false,
+			"transparentTitle": "auto",
+			"app-plus":{
+				"titleNView":{
+					"backButton":{
+						"background": "rgba(0,0,0,0)"
+					}
+				}
+			}
+		}
+
 	}    ,{
-            "path" : "pages/mine/settings/settings",
+            "path" : "pages/mine/qiandao/qiandao",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "设置",
+                "navigationBarTitleText": "签到",
                 "enablePullDownRefresh": false
             }
             
         }
         ,{
-            "path" : "pages/bookDatiles/allList/allList",
+            "path" : "pages/mine/charge/charge",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "全部章节",
+                "navigationBarTitleText": "账户",
                 "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/play/play",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "播放",
-                "enablePullDownRefresh": false,
-				"transparentTitle":"always"
             }
             
         }

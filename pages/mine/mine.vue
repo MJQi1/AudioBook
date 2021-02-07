@@ -27,19 +27,23 @@
 			</view>
 			<view class="vip-card">
 				<view class="gard-title">至尊 · VIP</view>
-				<view class="grad-bach">
+				<view v-if="!isVip" class="grad-bach" @click="toWhat('chargeVip')">
 					立即开通， 畅享生活
+					<uni-icons type="forward"></uni-icons>
+				</view>
+				<view v-if="isVip" class="grad-bach" @click="toWhat('chargeVip')">
+					2020-02-20到期
 					<uni-icons type="forward"></uni-icons>
 				</view>
 			</view>
 		</view>
 		<view class="body-list">
 			<view class="ins-button">
-				<view class="btn" @click="toWhat('msg1')">
+				<view class="btn" @click="toWhat('collect')">
 					<uni-icons type="heart" size="25" color="#333"></uni-icons>
 					<view class="text">收藏</view>
 				</view>
-				<view class="btn" @click="toWhat('msg1')">
+				<view class="btn" @click="toWhat('history')">
 					<uni-icons type="info" size="25" color="#555"></uni-icons>
 					<view class="text">历史记录</view>
 				</view>
@@ -69,14 +73,18 @@
 			</uni-list>
 			<view class="space"></view>
 			<uni-list>
-				<uni-list-item title="我的收藏" link></uni-list-item>
-				<uni-list-item title="历史记录" link></uni-list-item>
-				<uni-list-item title="我的评论" link></uni-list-item>
+				<uni-list-item title="我的收藏" link to="favorite/favorite?type=collect"></uni-list-item>
+				<uni-list-item title="历史记录" link to="favorite/favorite?type=history"></uni-list-item>
+				<uni-list-item title="我的评论" link to="chartMessage/chartMessage?type=pl"></uni-list-item>
 			</uni-list>
 			<view class="space"></view>
 			<uni-list>
 				<uni-list-item title="设置" link to="settings/settings"></uni-list-item>
-				<uni-list-item title="意见反馈" link></uni-list-item>
+				<uni-list-item title=""  link>
+					<template slot="header">
+						<button class="sex" type="default" size="mini" open-type="">意见反馈</button>
+					</template>
+				</uni-list-item>
 			</uni-list>
 		</view>
 	</view>
@@ -86,7 +94,8 @@
 export default {
 	data() {
 		return {
-			isLogin: true
+			isLogin: true,
+			isVip: true
 		};
 	},
 	methods: {
@@ -103,10 +112,19 @@ export default {
 					url = './chartMessage/chartMessage';
 					break;
 				case 'qiandao':
-					url = './qiandao/qiandao'
+					url = './qiandao/qiandao';
 					break;
 				case 'pay':
-					url = './charge/charge'
+					url = './charge/charge';
+					break;
+				case 'chargeVip':
+					url = './charge/charge?type=vip';
+					break;
+				case 'collect':
+					url = './favorite/favorite?type=collect';
+					break;
+				case 'history':
+					url = './favorite/favorite?type=history';
 					break;
 			}
 			uni.navigateTo({
@@ -119,7 +137,7 @@ export default {
 		let path;
 		switch (index) {
 			case 0:
-				path = './settings/settings'
+				path = './settings/settings';
 				break;
 			case 1:
 				path = './chartMessage/chartMessage';
@@ -255,6 +273,20 @@ export default {
 	}
 	.space {
 		height: 10rpx;
+	}
+}
+.sex {
+	width: 90%;
+	margin: 0;
+	padding: 0;
+	height: 50rpx;
+	color: #3b4144;
+	background-color: rgba(255,255,255,0);
+	border: none !important;
+	text-align: left;
+	&:after{
+		border: none !important;
+		// background-color: none;
 	}
 }
 </style>

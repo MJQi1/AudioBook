@@ -13,6 +13,8 @@ const config = {
 	dialog:'center',
 	// 分享
 	share:'bottom',
+	//pay
+	pay:'bottom'
 }
 
 export default {

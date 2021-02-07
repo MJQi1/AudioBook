@@ -11,7 +11,11 @@
 			<uni-list-item title="检查更新" note=" " link="navigateTo"></uni-list-item>
 			<uni-list-item title="软件不错,赞一个" note=" " link="navigateTo"></uni-list-item>
 			<uni-list-item title="帮助中心" note=" " link="navigateTo"></uni-list-item>
-			<uni-list-item title="意见反馈" note=" " link="navigateTo"></uni-list-item>
+			<uni-list-item title=""  link>
+				<template slot="header">
+					<button class="sex" type="default" size="mini" open-type="">意见反馈</button>
+				</template>
+			</uni-list-item>
 			<uni-list-item title="帐号注销" note=" " link="navigateTo"></uni-list-item>
 			
 			<view class="border"></view>
@@ -67,5 +71,19 @@
 .err{
 	width:100%;
 	padding: 20rpx;
+}
+.sex {
+	width: 90%;
+	margin: 0;
+	padding: 0;
+	height: 50rpx;
+	color: #3b4144;
+	background-color: rgba(255,255,255,0);
+	border: none !important;
+	text-align: left;
+	&:after{
+		border: none !important;
+		// background-color: none;
+	}
 }
 </style>

@@ -35,6 +35,11 @@ export default {
 			current: 0
 		};
 	},
+	onLoad(option) {
+		if(option.type === 'pl'){
+			this.current = 1
+		}
+	},
 	methods: {
 		onClickItem(e) {
 			if (this.current !== e.currentIndex) {

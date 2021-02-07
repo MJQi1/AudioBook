@@ -3,27 +3,25 @@
 		<swiper class="swiper" 
 		:autoplay="autoplay" 
 		:duration="duration"
+		@change="getCurrent"
 		>
 			<swiper-item>
 				<view class="swiper-item">
 					<view class="swiper-item-img"><image src="../../static/guide/looks.png" mode="aspectFit"></image></view>
 					<view class="swiper-item-img"><image src="../../static/guide/text1.png" mode="aspectFit"></image></view>
 				</view>
-				<view class="jump-over" @tap="launchFlag()">{{jumpover}}</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="swiper-item">
 					<view class="swiper-item-img"><image src="../../static/guide/convent.png" mode="aspectFit"></image></view>
 					<view class="swiper-item-img"><image src="../../static/guide/text2.png" mode="aspectFit"></image></view>
 				</view>
-				<view class="jump-over" @tap="launchFlag()">{{jumpover}}</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="swiper-item">
 					<view class="swiper-item-img"><image src="../../static/guide/duo.png" mode="aspectFit"></image></view>
 					<view class="swiper-item-img"><image src="../../static/guide/text3.png" mode="aspectFit"></image></view>
 				</view>
-				<view class="jump-over" @tap="launchFlag()">{{jumpover}}</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="swiper-item">
@@ -33,6 +31,7 @@
 				<view class="experience" @tap="launchFlag()">{{experience}}</view>
 			</swiper-item>
 		</swiper>
+		<view class="jump-over" v-show="current !== 3" @tap="launchFlag()">{{jumpover}}</view>
 		<view class="uniapp-img"><image src="../../static/logo.png" mode="aspectFit"></image></view>
 	</view>
 </template>
@@ -45,7 +44,8 @@
 				autoplay: false,
 				duration: 500,
 				jumpover: '跳过',
-				experience: '立即体验'
+				experience: '立即体验',
+				current:0
 			}
 		},
 		methods: {
@@ -61,6 +61,9 @@
 					url: '/pages/home/home'
 				});
 				
+			},
+			getCurrent(e){
+				this.current = e.detail.current
 			}
 		}
 	}
@@ -86,7 +89,8 @@
 		display: flex;
 		/* justify-content: center; */
 		align-items:flex-end;
-		flex-direction:column-reverse
+		flex-direction:column-reverse;
+		margin-top: -10vh;
 	}
 	.swiper-item-img{
 		width: 100%;

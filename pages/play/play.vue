@@ -101,7 +101,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .main {
 	// background-color: #ffebfe;
 	width: 100%;

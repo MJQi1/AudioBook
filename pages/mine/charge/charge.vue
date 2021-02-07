@@ -9,9 +9,9 @@
 					<uni-icons type="forward"></uni-icons>
 				</view>
 				<view class="grad-bach" v-show="isVip">至尊会员2020-02-23到期</view>
-				<view class="grad-bach" v-show="isVip">
+				<view class="grad-bach" v-show="isVip" @click="popupVipPay">
 					续费会员
-					<uni-icons type="forward" size="16"></uni-icons>
+					<uni-icons type="forward" size="13"></uni-icons>
 				</view>
 			</view>
 		</view>
@@ -42,7 +42,13 @@
 				<view class="money">{{coninData/10}}元</view>
 			</view>
 		</view>
-		<view class="pay"><view class="message">{{pay}}元</view> <view class="btn" size="mini">立即支付</view></view>
+		<view class="pay"><view class="message">{{pay}}元</view> <view class="btn" @click="openPay">立即支付</view></view>
+		<uni-popup ref="popup" type="pay" :maskClick="false">
+			<b-pop-pay></b-pop-pay>
+		</uni-popup>
+		<uni-popup ref="vipPay" type="center"  :maskClick="false">
+			<b-pop-vip @pay="openPay"></b-pop-vip>
+		</uni-popup>
 	</view>
 </template>
 
@@ -83,10 +89,26 @@ export default {
 			]
 		};
 	},
+	onLoad(option){
+		if(option.type === 'vip'){
+			this.$nextTick(function(){
+				this.popupVipPay()
+			})
+			
+		}
+	},
 	methods:{
 		chooseCharge(index,money){
 			this.choose = index
 			this.pay = money
+		},
+		//弹出支付
+		openPay(){
+			 this.$refs.popup.open()
+		},
+		// 会员续费
+		popupVipPay(){
+			this.$refs.vipPay.open()
 		}
 	},
 	computed:{

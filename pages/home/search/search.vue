@@ -4,9 +4,9 @@
 
 		</view>
 		<!-- 导航搜索 -->
-		<uni-nav-bar left-icon="back" rightText="搜索" backgroundColor="#ffffff" @clickLeft="back" @clickRight="srarch" color="#ff7700">
+		<uni-nav-bar left-icon="back" rightText="搜索" backgroundColor="#ffffff" @clickLeft="back" @clickRight="srarch" color="#ff5500">
 			<view class="nav-input-text">
-				<uni-icons class="icon" size="16" type="search" color="#ff7700"></uni-icons>
+				<uni-icons class="icon" size="16" type="search" color="#666"></uni-icons>
 				<input class="input" v-model="keyCode" type="text" placeholder="搜索相关书籍吧" />
 			</view>
 		</uni-nav-bar>
@@ -26,18 +26,24 @@
 			<view class="history-text" v-else>
 				暂无历史记录
 			</view>
+			
 		</view>
-
+		<view class="line"></view>
+		<view class="container">
+			<book-intro :list="textList" :limit="0"></book-intro>
+		</view>
 	</view>
 </template>
 
 <script>
+	import {textList} from '../data.js'
 	export default {
 		data() {
 			return {
 				keyCode: '',
 				hasHistory: true,
-				historyArray: []
+				historyArray: [],
+				textList:[]
 			};
 		},
 		onLoad() {
@@ -52,6 +58,7 @@
 				} else {
 					this.hasHistory = true
 				}
+				// this.historyArray.reverse()
 			}
 		},
 		methods: {
@@ -64,17 +71,22 @@
 				})
 			},
 			// 搜索
-			srarch() {
+			async srarch() {
 				//搜索逻辑
-
+				this.textList = []
+				for(let i of textList){
+					if(i.bookTitle.includes(this.keyCode)){
+						this.textList.push(i)
+					}
+				}
 				//历史记录
 				if(this.keyCode === ''){
 					return
 				}
 				//去重
-				let set = new Set(this.historyArray)
+				let set = await new Set(this.loadHistory())
 				set.add(this.keyCode)
-				this.historyArray = Array.from(set)
+				this.historyArray = Array.from(set).reverse()
 				
 				uni.setStorage({
 					key: 'localHistory',
@@ -109,6 +121,7 @@
 				this.$nextTick(function() {
 					this.historyArray = arr
 				})
+				return arr
 			},
 			// 判断历史
 		}
@@ -121,9 +134,9 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		border: 1rpx solid #ff7700;
-		height: 4vh;
-		background-color: #fff3e1;
+		border: 1rpx solid #e5e5e5;
+		height: 50rpx;
+		background-color: #ffffff;
 		border-radius: 20px;
 
 		.icon {
@@ -132,9 +145,9 @@
 		}
 
 		.input {
+			font-size: 16rpx;
 			// height: 60rpx;
 			margin-left: 12px;
-			font-size: 30rpx;
 			width: 370rpx;
 			color: #333;
 		}
@@ -143,8 +156,8 @@
 	.search-history {
 		height: 15vh;
 		// background-color: #ffc6ff;
-		padding-bottom: 20rpx;
-		border-bottom: 3rpx dashed #adadad;
+		// padding-bottom: 20rpx;
+		// border-bottom: 3rpx dashed #adadad;
 		overflow: hidden;
 		
 		// display: flex;
@@ -153,12 +166,12 @@
 			display: flex;
 			justify-content: space-between;
 			color: #626262;
-			font-size: 30rpx;
-			border-bottom: 3rpx dashed #adadad;
+			font-size: 20rpx;
+			// border-bottom: 3rpx solid #adadad;
 		}
 
 		.history-tab {
-			// font-size: 16rpx;
+			font-size: 16rpx;
 			padding: 0 30rpx;
 			background-color: #ffb13c;
 			display: inline-block;
@@ -173,6 +186,9 @@
 		color: #adadad;
 		height: 15vh;
 		padding-bottom: 20rpx;
-		border-bottom: 3rpx dashed #adadad;
+	}
+	.line {
+		height: 20rpx;
+		background-color: #f8f8f8;
 	}
 </style>

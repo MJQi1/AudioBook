@@ -9,19 +9,18 @@
 	}, {
 		"path": "pages/mine/mine",
 		"style": {
-			"navigationBarTitleText": "",
+			"navigationBarTitleText": "个人中心",
 			"enablePullDownRefresh": false,
 			"transparentTitle": "auto",
 			"app-plus": {
 				"titleNView": {
-					"titleText": "",
+					"titleText": "个人中心",
 					"backgroundColor": "#fff",
 					"buttons": [{
 						"type": "none",
 						"background": "rgba(0,0,0,0.1)",
 						"fontSrc": "/static/font/iconfont.ttf",
-						"text": "\ue672",
-						"color": "#007AFF"
+						"text": "\ue672"
 					}, {
 						"type": "none",
 						"background": "rgba(0,0,0,0.1)",
@@ -194,6 +193,15 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "账户",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/favorite/favorite",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
             

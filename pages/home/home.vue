@@ -41,7 +41,7 @@
 							<!-- 首页轮播 -->
 							<swiper class="banner" v-if="index === 0" :indicator-dots="true" indicator-color="#ffe4cb" indicator-active-color="#ffaa00"
 							 :autoplay="true" :interval="3000" :duration="1000" circular="true">
-								<swiper-item v-for="(item,index) in data" :key="item.id">
+								<swiper-item v-for="(item,index1) in data" :key="item.id">
 									<view class="banner-item">
 										<image :src="item.src" mode="scaleToFill"></image>
 									</view>
@@ -64,7 +64,7 @@
 								<book-small-rank :lists="rankData"></book-small-rank>
 								<!-- 下拉加载随机推荐 -->
 								<book-block-title title="精彩推荐">
-									<view class="" v-for="(item, index) in pollDownData" :key="index">
+									<view class="" v-for="(item, index2) in pollDownData" :key="index2">
 										<book-intro :list="item.list"></book-intro>	
 									</view>
 									
@@ -171,6 +171,7 @@
 			//显示抽屉
 			showDraw() {
 				this.$refs.draw.open();
+				// uni.hideTabBar()
 			},
 			//练级swiper
 			selected(index) {
@@ -243,7 +244,7 @@
 		.search-box {
 			color: #999;
 			width: 60vw;
-			height: 3vh;
+			height: 50rpx;
 			margin-left: 20rpx;
 			border: 1px solid #e5e5e5;
 			border-radius: 50rpx;
@@ -252,7 +253,7 @@
 				font-size: 16rpx;
 				margin-left: 15vw;
 				height: 100%;
-				line-height: 160%;
+				line-height: 50rpx;
 			}
 		}
 

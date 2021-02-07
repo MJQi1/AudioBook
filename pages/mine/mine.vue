@@ -2,9 +2,9 @@
 	<view class="main-box">
 		<view class="top-message">
 			<view class="persional-msg" v-show="isLogin">
-				<image src="../../static/icons/bangbangtang.png" mode="aspectFit"></image>
-				<view class="user-name">用户名</view>
-				<uni-icons type="compose" size="16" class="edit-icon" color="#eee"></uni-icons>
+				<image src="../../static/icons/bangbangtang.png" mode="aspectFit"  @click="toWhat('persional')"></image>
+				<view class="user-name" @click="toWhat('persional')">用户名</view>
+				<uni-icons type="compose" size="16" class="edit-icon" color="#eee"  @click="toWhat('persional')"></uni-icons>
 			</view>
 			<view class="persional-msg" v-show="!isLogin">
 				<image src="../../static/icons/bangbangtang.png" mode="aspectFit" @click="toLogin"></image>
@@ -126,6 +126,8 @@ export default {
 				case 'history':
 					url = './favorite/favorite?type=history';
 					break;
+				case 'persional':
+					url = './persional/persional'
 			}
 			uni.navigateTo({
 				url: url

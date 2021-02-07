@@ -201,8 +201,35 @@
             "path" : "pages/mine/favorite/favorite",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "爱好",
                 "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/persional/persional",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "个人信息",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/persional/modify/modify",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改",
+                "enablePullDownRefresh": false,
+				"app-plus":{	
+					"titleNView":{
+						"buttons":[{
+							"type":"none",
+							"text":"完成",
+							"fontSize":"16px"
+						}]
+					}
+				}
             }
             
         }

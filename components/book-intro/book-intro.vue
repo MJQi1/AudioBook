@@ -5,8 +5,7 @@
 			<view class="datils">
 				<text class="title">{{ item.bookTitle }}</text>
 				<view class="intro">
-					详情一键三连点赞Mark关注该博主随时了解T赞Mark关注该博主随时了解T要输入用户名和密赞Mark关注该博主随时了解T要输入用户名和1231313密要输入用户名和密码的解决方法asdfas的博asdfasdfasddasfasdfas客
-					2614
+					{{item.bookIntro}}
 				</view>
 				<view class="msg">{{ item.author }} · {{ item.type }} · {{ item.state }}</view>
 			</view>
@@ -56,6 +55,7 @@ export default {
 	flex-flow: row warp;
 	// background-color: #808080;
 	padding: 20rpx 0;
+	// box-shadow: 0  2rpx 2rpx #afafaf;
 	.image {
 		height: 100%;
 		width: 23%;
@@ -63,7 +63,8 @@ export default {
 		image {
 			height: 100%;
 			width: 160rpx;
-			border-radius: 20rpx;
+			border-radius: 15rpx;
+			box-shadow: 0  5rpx 10rpx #afafaf;
 		}
 	}
 	.datils {

@@ -17,9 +17,11 @@
 		props:{
 			datils:{
 				type:Object,
-				default:{
-					src:"/static/icons/add.png",
-					bookTitle:''
+				default:function(){
+					return {
+						src:"/static/icons/add.png",
+						bookTitle:''
+					}
 				}
 			}
 		},
@@ -35,18 +37,23 @@
 
 <style lang="less" scoped>
 .book-item{
-	margin: 25rpx;
-	height: 320rpx;
-	width: 180rpx;
+	padding: 20rpx;
+	margin: 15rpx;
+	height: 300rpx;
+	width: 160rpx;
 	display: flex;
+	border-radius: 20rpx;
 	flex-flow: column nowrap;
+	background-color: #FFFFFF;
 	image {
-		height: 72%;
+		height: 80%;
 		width: 100%;
 		border-radius: 15rpx;
+		box-shadow: 0 6rpx 10rpx #a5a5a5;
 	}
 	.title{
-		padding-top: 10rpx;
+		font-size: 20rpx;
+		padding-top: 30rpx;
 		height: 28%;
 		color: #333;
 		text-overflow: ellipsis;

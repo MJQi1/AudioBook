@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-segmented-control :current="current" :values="items" styleType="text" @clickItem="onClickItem" activeColor="#ff6600"></uni-segmented-control>
+		<uni-segmented-control :current="current" :values="items" styleType="text" @clickItem="onClickItem" activeColor="#ff5500"></uni-segmented-control>
 		<view class="content">
 			<view v-show="current === index1" class="content-item" v-for="(node,index1) in items" >
 				<view class="left-tab">
@@ -55,6 +55,7 @@ export default {
 <style lang="less" scoped>
 	.content{
 		// padding-top: 20rpx;
+		background-color: #f0f0f0;
 		.content-item{
 			// border-top: 1rpx solid #666666;
 			margin-top: 10rpx;
@@ -69,9 +70,9 @@ export default {
 				.check-bth{
 					line-height: 75rpx;
 					height: 75rpx;
-					
-					margin-top: 2rpx;
+					font-size: 26rpx;
 					text-align: center;
+					margin: 20prx !important;
 				}
 				.check-active{
 					border-left: 7rpx solid #ff6600;
@@ -83,6 +84,7 @@ export default {
 				width: 560rpx;
 				padding: 20rpx;
 				overflow: hidden;
+				background-color: #FFFFFF;
 				.scroll{
 					height: 95%;
 				}

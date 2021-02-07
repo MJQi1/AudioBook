@@ -55,6 +55,7 @@ export default {
 <style lang="less" scoped>
 	.content{
 		// padding-top: 20rpx;
+		background-color: #f0f0f0;
 		.content-item{
 			// border-top: 1rpx solid #666666;
 			margin-top: 10rpx;
@@ -69,7 +70,7 @@ export default {
 				.check-bth{
 					line-height: 75rpx;
 					height: 75rpx;
-					
+					font-size: 26rpx;
 					margin-top: 2rpx;
 					text-align: center;
 				}
@@ -83,6 +84,8 @@ export default {
 				width: 560rpx;
 				padding: 20rpx;
 				overflow: hidden;
+				background-color: #FFFFFF;
+				
 				.scroll{
 					height: 95%;
 				}

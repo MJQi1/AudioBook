@@ -44,13 +44,30 @@
 				bookshelfList:textList,
 				isLogin:false
 			};
+		},
+		onNavigationBarButtonTap(e) {
+			const index = e.index;
+			let path;
+			switch (index) {
+				case 0:
+					path = './settings/settings';
+					console.log(1);
+					break;
+				case 1:
+					path = '../home/search/search';
+					console.log(2);
+					break;
+			}
+			uni.navigateTo({
+				url: path
+			});
 		}
 	}
 </script>
 
 <style lang="less" scoped>
 .main-box{
-	
+	background-color: #fafafa;
 	height: 1860rpx;
 	width: 100%;
 }

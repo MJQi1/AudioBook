@@ -142,15 +142,15 @@ const girlList = [{
 ]
 
 const rankData = [{
-		title: '热播榜',
+		title: '人气榜',
 		list: textList
 	},
 	{
-		title: '推荐',
+		title: '免费榜',
 		list: textList
 	},
 	{
-		title: '销售榜',
+		title: '新书榜',
 		list: textList
 	}
 ]

@@ -41,7 +41,9 @@
             },
             "ios" : {},
             /* ios打包配置 */
-            "sdkConfigs" : {},
+            "sdkConfigs" : {
+                "ad" : {}
+            },
             "splashscreen" : {
                 "androidStyle" : "default",
                 "android" : {
@@ -58,7 +60,7 @@
                     "xxxhdpi" : "unpackage/res/icons/192x192.png"
                 },
                 "ios" : {
-                    "appstore" : "unpackage/res/icons/96x96.png",
+                    "appstore" : "unpackage/res/icons/1024x1024.png",
                     "ipad" : {
                         "app" : "unpackage/res/icons/76x76.png",
                         "app@2x" : "unpackage/res/icons/152x152.png",
@@ -80,6 +82,22 @@
                         "spotlight@2x" : "unpackage/res/icons/80x80.png",
                         "spotlight@3x" : "unpackage/res/icons/120x120.png"
                     }
+                }
+            }
+        },
+        "nativePlugins" : {
+            "Audio-Notification" : {
+                "__plugin_info__" : {
+                    "name" : "安卓通知栏音乐控制",
+                    "description" : "安卓通知栏音乐控制",
+                    "platforms" : "Android",
+                    "url" : "https://ext.dcloud.net.cn/plugin?id=1164",
+                    "android_package_name" : "com.tongzhi.bar",
+                    "ios_bundle_id" : "",
+                    "isCloud" : true,
+                    "bought" : 1,
+                    "pid" : "1164",
+                    "parameters" : {}
                 }
             }
         }

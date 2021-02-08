@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="main">
 		<uni-segmented-control :current="current" :values="items" styleType="text" @clickItem="onClickItem" activeColor="#ff6600"></uni-segmented-control>
 		<view class="content">
 			<view v-show="current === index1" class="content-item" v-for="(node,index1) in items" >
@@ -53,19 +53,23 @@ export default {
 </script>
 
 <style lang="less" scoped>
+	.main{
+		height: 100%;
+		
+	}
 	.content{
 		// padding-top: 20rpx;
-		background-color: #f0f0f0;
+		height: 90vh;
+		// background-color: #f0f0f0;
 		.content-item{
 			// border-top: 1rpx solid #666666;
 			margin-top: 10rpx;
 			padding-top: 10rpx;
 			display: flex;
-			height: 88vh;
+			height: 100%;
 			flex-direction: row;
 			.left-tab{
 				width: 25vw;
-				height: 100%;
 				background-color: #f0f0f0;
 				.check-bth{
 					line-height: 75rpx;
@@ -73,19 +77,20 @@ export default {
 					font-size: 26rpx;
 					margin-top: 2rpx;
 					text-align: center;
+					// height: 100%;
 				}
 				.check-active{
-					border-left: 7rpx solid #ff6600;
+					border-left: 7rpx solid #ff8d0b;
 					background-color: #ffffff;
-					color: #ff6600;
+					color: #ff8d0b;
 				}
 			}
 			.right-box{
 				width: 560rpx;
-				padding: 20rpx;
-				overflow: hidden;
-				background-color: #FFFFFF;
+				// padding: 20rpx;
+				// overflow: hidden;
 				
+				background-color: #FFFFFF;
 				.scroll{
 					height: 95%;
 				}

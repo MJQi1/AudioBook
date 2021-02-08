@@ -58,17 +58,17 @@
 		white-space: nowrap;
 		
 		.book-datils {
-			width: 160rpx;
+			width: 180rpx;
 			background-color: #fff;
 			height: 300rpx;
 			margin-right: 20rpx;
 			overflow: hidden;
 			display: inline-block;
-
 			image {
 				border-radius: 20rpx;
-				width: 100%;
+				width: 90%;
 				height: 70%;
+				box-shadow: 0  5rpx 10rpx #afafaf;
 			}
 
 			.book-title {
@@ -83,10 +83,11 @@
 					display: -webkit-box;
 					-webkit-line-clamp: 1;
 					-webkit-box-orient: vertical;
+					font-size: 26rpx;
 				}
 				.author {
 					display: block;
-					font-size: 28rpx;
+					font-size: 20rpx;
 					color: #999;
 				}
 			}

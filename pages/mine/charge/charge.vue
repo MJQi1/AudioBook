@@ -38,11 +38,11 @@
 			</view>
 			
 			<view class="charge-btn" :class="{'charge-btn-active':choose == 999}" @click="chooseCharge(999,coninData)">
-				<view class="coin"><input type="text" maxlength="7" v-model.lazy="coninData" value=""placeholder="自定义" /></view>
-				<view class="money">{{coninData/10}}元</view>
+				<view class="coin"><input type="text" maxlength="7" v-model="coninData" @input="changeData" value=""placeholder="自定义" /></view>
+				<view class="money">{{coninData/100}}元</view>
 			</view>
 		</view>
-		<view class="pay"><view class="message">{{pay}}元</view> <view class="btn" @click="openPay">立即支付</view></view>
+		<view class="pay"><view class="message">{{pay}}元</view><view class="btn" @click="openPay">立即支付</view></view>
 		<uni-popup ref="popup" type="pay" :maskClick="false">
 			<b-pop-pay></b-pop-pay>
 		</uni-popup>
@@ -109,6 +109,9 @@ export default {
 		// 会员续费
 		popupVipPay(){
 			this.$refs.vipPay.open()
+		},
+		changeData(){
+			this.pay = this.coninData/100
 		}
 	},
 	computed:{
@@ -129,6 +132,7 @@ export default {
 	height: 160rpx;
 	padding: 30rpx;
 	border-radius: 20rpx;
+	box-shadow: 2rpx 8rpx 10rpx #b5b5b5;
 	margin: 30rpx auto;
 	.card-id {
 		width: 120rpx;
@@ -179,7 +183,7 @@ export default {
 		width: 28%;
 		// border: 1rpx solid #ffaa00;
 		border-radius: 15rpx;
-		box-shadow: 2rpx 3rpx 30rpx #9f9f9f;
+		box-shadow: 2rpx 3rpx 30rpx #dfdfdf;
 		.coin{
 			height: 60%;
 			padding-left: 20rpx;
@@ -219,8 +223,9 @@ export default {
 		padding-left: 30rpx;
 	}
 	.btn{
-		padding: 20rpx 30rpx 20rpx 80rpx;
-		background-color: #ff5500;
+		line-height: 80rpx;
+		padding: 0rpx 30rpx 0rpx 80rpx;
+		background-color: #ff7e0e;
 		color: #fff;
 		border-top-left-radius: 50rpx;
 		border-bottom-left-radius: 50rpx;

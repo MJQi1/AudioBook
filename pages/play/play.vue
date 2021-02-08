@@ -3,7 +3,7 @@
 		<view class="play-background"></view>
 		<!-- 播放版面 -->
 		<view class="play-content">
-			<view class="play-cover"><image id="cover" src="../../static/background/shelf.png" mode="aspectFill"></image></view>
+			<view class="play-cover"><image :animation="marquee" id="cover" src="../../static/background/shelf.png" mode="aspectFill"></image></view>
 			<view class="">
 				<view class="play-button">
 					<view class="silder"><slider /></view>
@@ -50,7 +50,6 @@
 
 <script>
 export default {
-	
 	data() {
 		return {
 			playBtnSrc: '',
@@ -69,34 +68,75 @@ export default {
 				backgroundImage: 'url("../../static/icons/Playerpause.png")',
 				backgroundSize: 'cover'
 			},
-			rate:''
+			rate: '',
+			marquee: {}, //跑马灯效果
+			animation: {},
+			deg:0,
+			timer:null
 		};
 	},
 	onReady() {
-		this.rate = this.$anime({
-			targets:'#cover',
-			rotate:'360deg',
-			easing:'linear',
-			loop:true,
-			duration:7000
-		})
+		// this.rate = this.$anime({
+		// 	targets:'#cover',
+		// 	rotate:'360deg',
+		// 	easing:'linear',
+		// 	loop:true,
+		// 	duration:7000
+		// })
+		const that = this;
+		/* 创建的动画 */
+		var animation = uni.createAnimation({
+			duration: 3000,
+			timingFunction: 'linear'
+		});
+		that.animation = animation;
+		// 模仿ajax请求
+		setTimeout(() => {
+			that.startAni();
+			that.loopAni();
+		}, 100);
 	},
 	methods: {
 		//播放
 		play(state) {
-			
 			if (state) {
-				this.rate.play()
+				// this.rate.play();
 				this.isPlay = true;
-			} else{
-				this.rate.pause()
+				this.loopAni()
+			} else {
+				// this.rate.pause();
+				clearInterval(this.timer)
+				
 				this.isPlay = false;
 			}
 		},
 		open(mode) {
 			this.show = !this.show;
 		},
-		change() {}
+		change() {},
+		startAni() {
+			const that = this;
+			//这里输入固定值的话  循环动画就没执行了  所以加上一个随机数就可以了
+			this.deg = this.deg += 180
+			that.animation.rotate(this.deg).step({
+				duration:3000
+			});
+			
+			that.marquee = that.animation.export();
+		},
+		loopAni(x) {
+			const that = this;
+			that.timer = null;
+			clearInterval(that.timer);
+			if(x){
+				console.log(123);
+				return
+			}
+			that.timer = setInterval(() => {
+				that.startAni();
+			}, 3010); //这个的时间比动画的时间多一点点  防止动画没做完又执行了
+			
+		}
 	}
 };
 </script>

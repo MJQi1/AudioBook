@@ -48,7 +48,6 @@
 		},
 		onLoad() {
 			this.loadHistory()
-
 		},
 		watch: {
 			historyArray(new1, old) {
@@ -58,7 +57,6 @@
 				} else {
 					this.hasHistory = true
 				}
-				// this.historyArray.reverse()
 			}
 		},
 		methods: {
@@ -71,7 +69,7 @@
 				})
 			},
 			// 搜索
-			async srarch() {
+			srarch() {
 				//搜索逻辑
 				this.textList = []
 				for(let i of textList){
@@ -84,14 +82,11 @@
 					return
 				}
 				//去重
-				let set = await new Set(this.loadHistory())
-				set.add(this.keyCode)
-				this.historyArray = Array.from(set).reverse()
+				this.historyArray.unshift(this.keyCode)
+				let set = new Set(this.historyArray)
+				this.historyArray = Array.from(set)
 				
-				uni.setStorage({
-					key: 'localHistory',
-					data: this.historyArray
-				})
+				uni.setStorageSync('localHistory',this.historyArray)
 			},
 			showDialog() {
 				this.$refs.popup.open()
@@ -111,19 +106,11 @@
 			},
 			//加载历史
 			loadHistory() {
-				let arr = []
-				uni.getStorage({
-					key: 'localHistory',
-					success(e) {
-						arr = e.data
-					}
-				})
+				let arr = uni.getStorageSync('localHistory')
 				this.$nextTick(function() {
 					this.historyArray = arr
 				})
-				return arr
 			},
-			// 判断历史
 		}
 
 	}
@@ -145,7 +132,7 @@
 		}
 
 		.input {
-			font-size: 16rpx;
+			font-size: 26rpx;
 			// height: 60rpx;
 			margin-left: 12px;
 			width: 370rpx;

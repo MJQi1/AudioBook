@@ -75,9 +75,9 @@ export default {
 					margin: 20prx !important;
 				}
 				.check-active{
-					border-left: 7rpx solid #ff6600;
+					border-left: 7rpx solid #ff8d0b;
 					background-color: #ffffff;
-					color: #ff6600;
+					color: #ff8d0b;
 				}
 			}
 			.right-box{

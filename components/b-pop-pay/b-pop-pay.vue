@@ -25,7 +25,7 @@
 			</radio-group>
 			
 		</uni-list>
-		<view class="pay" @click="NowPay()">立即支付</view>
+		<view class="pay" @click="NowPay()"><text>立即支付</text></view>
 	</view>
 </template>
 
@@ -68,11 +68,11 @@ export default {
 <style lang="less">
 .main {
 	width: 100%;
-	height: 460rpx;
+	height: 420rpx;
 	background-color: #fff;
 }
 .list {
-	background-color: #f8f8f8;
+	// background-color: #f8f8f8;
 }
 .payLogo1 {
 	height: 50rpx;
@@ -87,12 +87,14 @@ export default {
 .pay {
 	height: 70rpx;
 	width: 80%;
-	background-color: #ff5500;
+	background-color: #ff7e0e;
 	border-radius: 50rpx;
 	line-height: 70rpx;
 	margin: 30rpx auto;
 	text-align: center;
 	color: #ffffff;
+	display: flex;
+	justify-content: center;
 }
 .back {
 	padding: 20rpx;

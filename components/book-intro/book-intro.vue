@@ -31,8 +31,9 @@ export default {
 	methods: {
 		// 跳转详情
 		goDetails(id) {
+			console.log(11);
 			uni.navigateTo({
-				url: '../../pages/bookDatiles/bookDatiles?id=' + id
+				url: '/pages/bookDatiles/bookDatiles?id=' + id
 			});
 		}
 	},
@@ -74,14 +75,14 @@ export default {
 		overflow: hidden;
 		.title {
 			color: #333;
-			font-size: 30rpx;
+			font-size: 28rpx;
 		}
 		.intro {
 			// height: 100rpx;
 			padding-top: 20rpx;
 			color: #999;
 			line-height: 40rpx;
-			font-size: 26rpx;
+			font-size: 24rpx;
 			//文字超出隐藏
 			text-overflow: ellipsis;
 			overflow: hidden;
@@ -92,7 +93,7 @@ export default {
 		.msg {
 			color: #999;
 			font-size: 20rpx;
-			padding-top: 30rpx;
+			padding-top: 20rpx;
 		}
 	}
 }

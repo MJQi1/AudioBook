@@ -18,11 +18,15 @@
 			 :style="{ width: boxWidth, height: boxHeight, backgroundColor: styles.backgroundColor }" class="uni-fab__content"
 			 elevation="5">
 				<view v-if="flexDirectionStart || horizontalLeft" class="uni-fab__item uni-fab__item--first" />
-				<view v-for="(item, index) in content" :key="index" :class="{ 'uni-fab__item--active': isShow }" class="uni-fab__item"
-				 @click="_onItemClick(index, item)">
-					<image :src="item.active ? item.selectedIconPath : item.iconPath" class="uni-fab__item-image" mode="widthFix" />
-					<text class="uni-fab__item-text" :style="{ color: item.active ? styles.selectedColor : styles.color }">{{ item.text }}</text>
+				<view class="book-title" @click="onTitleClick">{{title}}</view>
+				<view class="book-btn">
+					<view v-for="(item, index) in content" :key="index" :class="{ 'uni-fab__item--active': isShow }" class="uni-fab__item"
+					 @click="_onItemClick(index, item)">
+						<image :src="item.active ? item.selectedIconPath : item.iconPath" class="uni-fab__item-image" mode="widthFix" />
+						<text class="uni-fab__item-text" :style="{ color: item.active ? styles.selectedColor : styles.color }">{{ item.text }}</text>
+					</view>
 				</view>
+				
 				<view v-if="flexDirectionEnd || horizontalRight" class="uni-fab__item uni-fab__item--first" />
 			</view>
 		</view>
@@ -33,9 +37,11 @@
 		  'uni-fab__circle--rightTop': rightTop,
 		  'uni-fab__content--other-platform': !isAndroidNvue
 		}"
-		 class="uni-fab__circle uni-fab__plus" :style="{ 'background-color': styles.buttonColor }" @click="_onClick">
-			<view class="fab-circle-v"  :class="{'uni-fab__plus--active': isShow && content.length > 0}"></view>
-			<view class="fab-circle-h" :class="{'uni-fab__plus--active': isShow  && content.length > 0}"></view>
+		 class="uni-fab__circle uni-fab__plus" 
+		 :style="{ 'background-color': styles.buttonColor,'background-image':styles.backgroundImage }" 
+		 @click="_onClick">
+			<view class=""  :class="{'uni-fab__plus--active': isShow && content.length > 0}"></view>
+			<view class="" :class="{'uni-fab__plus--active': isShow  && content.length > 0}"></view>
 		</view>
 	</view>
 </template>
@@ -99,6 +105,10 @@
 			popMenu: {
 				type: Boolean,
 				default: true
+			},
+			title:{
+				type:String,
+				default:'标题'
 			}
 		},
 		data() {
@@ -110,13 +120,14 @@
 					color: '#3c3e49',
 					selectedColor: '#007AFF',
 					backgroundColor: '#fff',
-					buttonColor: '#3c3e49'
+					buttonColor: '#3c3e49',
+					backgroundImage:'url(../../static/background/mine.png)'
 				}
 			}
 		},
 		computed: {
 			contentWidth(e) {
-				return (this.content.length + 1) * 55 + 10 + 'px'
+				return (this.content.length + 1) * 40 + 10 + 'px'
 			},
 			contentWidthMin() {
 				return 55 + 'px'
@@ -184,6 +195,10 @@
 			},
 			close() {
 				this.isShow = false
+			},
+			//标题点击
+			onTitleClick(){
+				this.$emit('titleClick')
 			},
 			/**
 			 * 按钮点击事件
@@ -273,6 +288,8 @@
 		width: 55px;
 		height: 55px;
 		background-color: #3c3e49;
+		// background-image: url(../../static/background/mine.png);
+		background-size: cover;
 		border-radius: 55px;
 		z-index: 11;
 	}
@@ -360,12 +377,12 @@
 		box-sizing: border-box;
 		display: flex;
 		/* #endif */
-		flex-direction: row;
+		flex-direction: column;
 		border-radius: 55px;
 		overflow: hidden;
 		transition-property: width, height;
 		transition-duration: 0.2s;
-		width: 55px;
+		width: 36px;
 		border-color: #DDDDDD;
 		border-width: 1rpx;
 		border-style: solid;
@@ -399,6 +416,19 @@
 		justify-content: flex-end;
 	}
 
+	.book-title{
+		height: 20px;
+		padding-right: 20%;
+		text-align: center;
+		font-size: 26rpx;
+		line-height: 20px;
+	}
+	.book-btn{
+		padding-left: 5%;
+		height: 35px;
+		display: flex;
+		justify-content: row;
+	}
 	.uni-fab__item {
 		/* #ifndef APP-NVUE */
 		display: flex;
@@ -406,8 +436,8 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		width: 55px;
-		height: 55px;
+		width: 36px;
+		height: 35px;
 		opacity: 0;
 		transition: opacity 0.2s;
 	}

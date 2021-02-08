@@ -6,7 +6,7 @@
 			</view>
 
 			<view class="title-are">
-				完整榜单<uni-icons type="forward" size="14" color="#999"></uni-icons>
+				完整榜单<uni-icons type="forward" size="10" color="#999"></uni-icons>
 			</view>
 		</view>
 		<swiper class="swiper" @change="change" :current="current" :duration="1000">
@@ -56,6 +56,7 @@ export default {
 	background-color: #fff;
 	border-radius: 20rpx;
 	padding: 20rpx;
+	
 }
 .title {
 	display: flex;
@@ -68,7 +69,7 @@ export default {
 		flex-direction: row;
 		view {
 			margin-right: 20rpx;
-			font-size: 20rpx;
+			font-size: 24rpx;
 		}
 		.active {
 			// line-height: 20rpx;
@@ -76,7 +77,7 @@ export default {
 		}
 	}
 	.title-are {
-		font-size: 12rpx;
+		font-size: 16rpx;
 		color: #999999;
 	}
 }
@@ -93,6 +94,7 @@ export default {
 			display: flex;
 			flex-flow: row;
 			margin: 20rpx 0;
+			border-radius: 20rpx;
 			.index {
 				width: 35rpx;
 				// line-height: 160rpx;
@@ -100,8 +102,9 @@ export default {
 			}
 			image {
 				width: 120rpx;
-				height: 100%;
+				height: 98%;
 				border-radius: 15rpx;
+				box-shadow:0rpx 0rpx 10rpx #b9b9b9;
 			}
 			.intro {
 				padding: 0 20rpx 0 5px;

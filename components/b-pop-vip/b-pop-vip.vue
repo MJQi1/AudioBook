@@ -6,14 +6,14 @@
 				
 			</view>
 			<view>
-				<uni-data-checkbox mode="tag" selectedColor="#ff5500" v-model="choose" :multiple="false" :localdata="range" />
+				<uni-data-checkbox mode="tag" selectedColor="#ff7e0e" v-model="choose" :multiple="false" :localdata="range" />
 			</view>
 			<view class="money">
 				金额：{{choose}}元
 			</view>
 		</view>
 		
-		<view class="pay" @click="NowPay()">立即支付</view>
+		<view class="pay" @click="NowPay()"><text>立即支付</text></view>
 	</view>
 </template>
 
@@ -42,7 +42,7 @@ export default {
 <style lang="less">
 .main {
 	width: 100%;
-	height: 460rpx;
+	height: 420rpx;
 	border-radius: 20rpx;
 	background-color: #fff;
 }
@@ -55,23 +55,32 @@ export default {
 	.money{
 		text-align: right;
 		padding: 20rpx 30rpx 0 0 ;
+		font-size: 28rpx;
+		color: #666;
 	}
 }
 
 .pay {
 	height: 70rpx;
 	width: 80%;
-	background-color: #ff5500;
+	background-color: #ff7e0e;
 	border-radius: 50rpx;
 	line-height: 70rpx;
 	margin: 20rpx auto;
-	text-align: center;
+	text-align: center !important;
 	color: #ffffff;
+	display: flex;
+	justify-content: center;
+	text {
+		
+	}
 }
 .back {
 	padding: 20rpx;
 	display: flex;
 	align-items: center;
+	color: #333;
+	box-shadow: 0 1rpx 1rpx #ebebeb;
 }
 </style>
 

@@ -38,22 +38,22 @@
 <style lang="less" scoped>
 .book-item{
 	padding: 20rpx;
-	margin: 15rpx;
-	height: 300rpx;
+	margin: 0 15rpx;
+	height: 280rpx;
 	width: 160rpx;
 	display: flex;
 	border-radius: 20rpx;
 	flex-flow: column nowrap;
-	background-color: #FFFFFF;
+	// background-color: #FFFFFF;
 	image {
-		height: 80%;
+		height: 90%;
 		width: 100%;
 		border-radius: 15rpx;
 		box-shadow: 0 6rpx 10rpx #a5a5a5;
 	}
 	.title{
-		font-size: 20rpx;
-		padding-top: 30rpx;
+		font-size: 25rpx;
+		padding-top: 10rpx;
 		height: 28%;
 		color: #333;
 		text-overflow: ellipsis;

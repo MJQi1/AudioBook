@@ -6,34 +6,25 @@
 				<view class="book-info">
 					<view class="book-title">shugmingxsdsa</view>
 					<view class="book-type">
+						<uni-tag class="tag" size="small" text="表示" type="primary"></uni-tag>
+						<uni-tag class="tag" size="small" text="表示" type="warning"></uni-tag>
 						<uni-tag class="tag" size="small" text="表示" type="success"></uni-tag>
-						<uni-tag class="tag" size="small" text="表示表示" type="primary"></uni-tag>
-						<uni-tag class="tag" size="small" text="表示" type="error"></uni-tag>
 					</view>
-					<view class="author">作者</view>
+					<view class="author"><view>作者</view></view>
 				</view>
+			</view>
+			<view class="fav-add">
+				<uni-fav :checked="isFavorite" circle="true" bgColor="#9999e6" fgColor="#f7f7f7" bgColorChecked="#e64340" @click="favorite()"></uni-fav>
+				<button type="primary" size="mini" @click="addBookShelf()">加入书架</button>
 			</view>
 		</view>
 
 		<uni-section title="简介" type="line"></uni-section>
-		
-			<uni-group title="作者" margin-top="" mode="card">
-				<view class="nextText">
-					内容主体，可自定义内容及样式
-				</view>
-			</uni-group>
-			<uni-group title="主播" margin-top="" mode="card" >
-				<view class="nextText">
-					内容主体，可自定义内容及样式
-				</view>
-			</uni-group>
-			<uni-group title="内容简介" margin-top="" mode="card" >
-				<view class="nextText">
-					内容主体，可自定义内容及样式
-				</view>
-			</uni-group>
-	
-			
+
+		<uni-group title="作者" margin-top="" mode="card"><view class="nextText">内容主体，可自定义内容及样式</view></uni-group>
+		<uni-group title="主播" margin-top="" mode="card"><view class="nextText">内容主体，可自定义内容及样式</view></uni-group>
+		<uni-group title="内容简介" margin-top="" mode="card"><view class="nextText">内容主体，可自定义内容及样式</view></uni-group>
+
 		<uni-section title="全部章节" sub-title="" type="line"></uni-section>
 		<uni-list>
 			<uni-list-item v-for="(item, index) in bookTemp" :key="index" :title="`第${index + 1}章  ${item.title}`" to="../play/play"></uni-list-item>
@@ -75,7 +66,11 @@
 				</uni-list>
 			</view>
 		</view>
-		<view>{{ bookId }}</view>
+		<!-- <view>{{ bookId }}</view> -->
+		<uni-popup type="share" ref="share">
+			<book-share-pop @select="shareSelect"></book-share-pop>
+			
+		</uni-popup>
 	</view>
 </template>
 
@@ -130,7 +125,8 @@ export default {
 				text: '',
 				rate: 0
 			},
-			errMsg:'',
+			isFavorite: false,
+			errMsg: '',
 			src: 'http://imagev2.xmcdn.com/group74/M08/F7/E5/wKgO3F6ZKlyTkqKqAAMEKEhOSIw777.jpg!op_type=5&upload_type=album&device_type=ios&name=mobile_large&magick=png'
 		};
 	},
@@ -146,15 +142,58 @@ export default {
 		// 评论
 		evalute() {
 			if (this.evaluteData.text == '') {
-				this.errMsg = '请填写评论'
-			} else if(this.evaluteData.rate == 0) {
-				this.errMsg = '请进行评分'
-			}else{
+				this.errMsg = '请填写评论';
+			} else if (this.evaluteData.rate == 0) {
+				this.errMsg = '请进行评分';
+			} else {
 				console.log(`submit ${this.evaluteData}`);
-				
-				this.errMsg = ''
-				this.evaluteData = {title:'',rate:0}
+
+				this.errMsg = '';
+				this.evaluteData = { title: '', rate: 0 };
 			}
+		},
+		// 收藏
+		favorite() {
+			this.isFavorite = !this.isFavorite;
+		},
+		// 分享
+		share() {
+			this.$refs.share.open()
+		},
+		// 加入书架
+		addBookShelf() {
+			
+		},
+		//分享选择
+		shareSelect(op){
+			let name = op.item.name
+			switch(name){
+				case 'wx':
+					console.log('wx');
+					break
+				case 'qq':
+					console.log('qq');
+					break
+				case 'sina':
+					console.log('wb');
+					break
+				case 'more':
+					console.log('more');
+					break
+			}
+		}
+	},
+	onNavigationBarButtonTap(op) {
+		let index = op.index;
+		switch (index) {
+			case 0:
+				console.log('分享');
+				this.share()
+				break;
+			case 1:
+				console.log('收藏');
+				this.favorite()
+				break;
 		}
 	}
 };
@@ -167,26 +206,35 @@ export default {
 }
 .book-top {
 	height: 360rpx;
-	background-image: url(../../static/background/home.jpg);
+	background-image: url(../../static/background/shelf.gif);
 	background-size: cover;
 	background-repeat: no-repeat;
 	padding: 30rpx;
+	.fav-add {
+		padding-left: 362rpx;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		button {
+			
+		}
+	}
 	.book-top-warp {
 		// filter: blur(20rpx);
 		display: flex;
 		flex-direction: row;
-		margin-top: 150rpx;
+		margin-top: 110rpx;
 		height: 170rpx;
 		image {
 			border-radius: 20%;
 			width: 170rpx;
-			height: 100%;
+			height: 150rpx;
 		}
 		.book-info {
-			width: 360rpx;
+			width: 550rpx;
 			padding-left: 30rpx;
 			.book-title {
-				color: #333;
+				color: #aa0000;
 				font-size: 38rpx;
 				line-height: 70rpx;
 			}
@@ -200,7 +248,12 @@ export default {
 				}
 			}
 			.author {
-				font-size: 20rpx;
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-size: 25rpx;
+				
 			}
 		}
 	}
@@ -249,7 +302,7 @@ export default {
 		}
 	}
 }
-.nextText{
+.nextText {
 	font-size: 20rpx;
 }
 </style>

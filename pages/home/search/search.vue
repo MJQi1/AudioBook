@@ -51,7 +51,6 @@
 		},
 		watch: {
 			historyArray(new1, old) {
-				console.log(new1.length);
 				if (new1.length === 0) {
 					this.hasHistory = false
 				} else {
@@ -83,6 +82,7 @@
 				}
 				//去重
 				this.historyArray.unshift(this.keyCode)
+				// console.log(typeof(this.historyArray));
 				let set = new Set(this.historyArray)
 				this.historyArray = Array.from(set)
 				
@@ -106,7 +106,9 @@
 			},
 			//加载历史
 			loadHistory() {
-				let arr = uni.getStorageSync('localHistory')
+				let arr = []
+				// console.log(typeof(arr));
+				arr = uni.getStorageSync('localHistory')
 				this.$nextTick(function() {
 					this.historyArray = arr
 				})

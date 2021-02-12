@@ -48,6 +48,7 @@
 					{{ item.name }}
 				</view>
 			</scroll-view>
+
 			<!-- 切换容器 -->
 			<swiper class="swipers" :indicator-dots="false" :current="tabAct" @change="swiperChange" :duration="500">
 				<swiper-item v-for="(item, index) in selectBar" v-if="item.select" :key="item.name">
@@ -136,8 +137,10 @@ export default {
 		}
 	},
 	onLoad() {
-		const settings = uni.getStorageSync('moudule-select')
-		this.selectBar = settings
+		let settings = uni.getStorageSync('moudule-select')
+		// console.log(settings);
+		// if(settings)
+		// this.selectBar = settings
 	},
 	methods: {
 		//跳转搜索页
@@ -324,8 +327,8 @@ page {
 	flex: 1;
 	flex-direction: column;
 	overflow: hidden;
-	// background-color: #ffc87b;
-	background-image: url(../../static/background/backimg.png);
+	background-color: #ffe6c7;
+	// background-image: url(/static/background/content.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 	color: #555;
@@ -335,7 +338,7 @@ page {
 		width: 100%;
 		height: 70rpx;
 		white-space: nowrap;
-		background-image: linear-gradient(to bottom, #fdf2ee, #ffffff);
+		background-image: linear-gradient(to bottom, #fdf2ee, #ffe6c7);
 
 		.page-container {
 			display: inline-block;
@@ -346,7 +349,8 @@ page {
 		}
 
 		.tab-active {
-			border-bottom: 5rpx #ffc13a solid;
+			color: #ff5500;
+			border-bottom: 5rpx #ff5500 solid;
 		}
 	}
 

@@ -47,8 +47,8 @@
             "splashscreen" : {
                 "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "static/load/load480.png",
-                    "xhdpi" : "static/load/load720.png",
+                    "hdpi" : "static/load/load1080.png",
+                    "xhdpi" : "static/load/load1080.png",
                     "xxhdpi" : "static/load/load1080.png"
                 }
             },
@@ -85,22 +85,7 @@
                 }
             }
         },
-        "nativePlugins" : {
-            "Audio-Notification" : {
-                "__plugin_info__" : {
-                    "name" : "安卓通知栏音乐控制",
-                    "description" : "安卓通知栏音乐控制",
-                    "platforms" : "Android",
-                    "url" : "https://ext.dcloud.net.cn/plugin?id=1164",
-                    "android_package_name" : "com.tongzhi.bar",
-                    "ios_bundle_id" : "",
-                    "isCloud" : true,
-                    "bought" : 1,
-                    "pid" : "1164",
-                    "parameters" : {}
-                }
-            }
-        }
+        "nativePlugins" : {}
     },
     /* SDK配置 */
     "quickapp" : {},

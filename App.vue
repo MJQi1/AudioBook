@@ -1,33 +1,19 @@
 <script>
+import {mapState,mapGetters, mapMutations , mapActions } from 'vuex'
 export default {
 	onLaunch: function() {
-		const AudioNotification = uni.requireNativePlugin("Audio-Notification"); // 显示插件,
-		showView(params,callback),
-		AudioNotification.showView({
-		title:'鸡你太美',
-		singer:'坤坤',
-		image:'https://dss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1187968865,2620848686&fm=179&app=42&f=PNG?w=56&h=56',
-		},res=>{
-			console.log(res.btn)
-			switch(res.btn){
-				case 0: // 点击了上一曲
-					this.onPrev()
-					break
-				case 1: // 点击了暂停按钮
-					this.pause()
-					break
-				case 2: // 点击了播放按钮
-					this.play()
-					break
-				case 3: // 点击了下一曲
-					this.onNext()
-					break
-				case 4: // 点击了关闭按钮
-					AudioNotification.hideView()
-					break
+		const that = this
+		// 获取系统信息
+		uni.getSystemInfo({
+			success(info) {
+				let screenHeight = info.screenHeight
+				info.screenWidth
+				console.log(screenHeight);
+				// that.getPhoneHeight(screenHeight)
+				// alert(that.phoneHeight())
 			}
 		})
-
+		//点击中间按钮跳转
 		uni.onTabBarMidButtonTap(function(){
 			uni.navigateTo({
 				url:'/pages/bookshelf/bookshelf'
@@ -42,9 +28,12 @@ export default {
 		console.log('App Hide')
 	},
 	methods:{
-		showView(params,callback){
-			
-		}
+		...mapState([
+			'phoneHeight',
+		]),
+		...mapActions([
+			'getPhoneHeight'
+		])
 	}
 }
 </script>

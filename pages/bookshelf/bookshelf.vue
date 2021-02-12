@@ -3,80 +3,105 @@
 		<view class="top">
 			<view class="top-title" v-show="isLogin">
 				<text>Hi,蒂华纳姐</text>
-				<view class="next-title">
-					欢迎来到AudioT听书
-				</view>
+				<view class="next-title">欢迎来到AudioT听书</view>
 			</view>
 			<view class="top-title" v-show="!isLogin">
-				<navigator url="../mine/login/login">你好，请 <text style="color: #d5d4aa;">登录</text></navigator>
-				<view class="next-title">
-					享受私人听书空间
-				</view>
+				<navigator url="../mine/login/login">
+					你好，请
+					<text style="color: #d5d4aa;">登录</text>
+				</navigator>
+				<view class="next-title">享受私人听书空间</view>
 			</view>
 			<view class="msg-bar">
 				<swiper class="swiper" :vertical="true" :circular="true" :autoplay="true" :interval="3000" :duration="1000">
 					<swiper-item>
 						<view class="swiper-item">
-							<image src="../../static/icons/book.png" mode="aspectFit"></image><view class="act">lsdfasd</view>
+							<image src="../../static/icons/book.png" mode="aspectFit"></image>
+							<view class="act">lsdfasd</view>
 						</view>
 					</swiper-item>
 					<swiper-item>
 						<view class="swiper-item">
-							<image src="../../static/icons/book.png" mode="aspectFit"></image><view class="act">61523</view>
+							<image src="../../static/icons/book.png" mode="aspectFit"></image>
+							<view class="act">61523</view>
 						</view>
 					</swiper-item>
 				</swiper>
 			</view>
 		</view>
 		<view class="bookshelf">
-			
-			<bookshelf-item v-for="(item,index) in bookshelfList" :key="index" :datils="item"></bookshelf-item>
+			<bookshelf-item v-for="(item, index) in bookshelfList" :key="index" :datils="item"></bookshelf-item>
 			<bookshelf-item></bookshelf-item>
 		</view>
+		<uni-popup type="share" ref="share">
+			<book-share-pop @select="shareSelect"></book-share-pop>
+		</uni-popup>
 	</view>
+	
 </template>
 
 <script>
-	import {textList} from "../home/data.js"
-	export default {
-		data() {
-			return {
-				bookshelfList:textList,
-				isLogin:false
-			};
-		},
-		onNavigationBarButtonTap(e) {
-			const index = e.index;
-			let path;
-			switch (index) {
-				case 0:
-					path = './settings/settings';
-					console.log(1);
-					break;
-				case 1:
-					path = '../home/search/search';
-					console.log(2);
-					break;
-			}
-			uni.navigateTo({
-				url: path
-			});
+import { textList } from '../home/data.js';
+export default {
+	data() {
+		return {
+			bookshelfList: textList,
+			isLogin: false
+		};
+	},
+	onNavigationBarButtonTap(e) {
+		const index = e.index;
+		let path;
+		switch (index) {
+			case 0:
+				this.$refs.share.open()
+				break;
+			case 1:
+				path = '../home/search/search';
+				console.log(2);
+				break;
 		}
+		uni.navigateTo({
+			url: path
+		});
+	},
+	methods:{
+		//分享选择
+		shareSelect(op){
+			let name = op.item.name
+			switch(name){
+				case 'wx':
+					console.log('wx');
+					break
+				case 'qq':
+					console.log('qq');
+					break
+				case 'sina':
+					console.log('wb');
+					break
+				case 'more':
+					console.log('more');
+					break
+			}
+			this.$refs.share.close()
+		}
+		
 	}
+};
 </script>
 
 <style lang="less" scoped>
-.main-box{
+.main-box {
 	background-color: #fafafa;
 	height: 1860rpx;
 	width: 100%;
 }
-.top{
+.top {
 	height: 460rpx;
 	background-image: url(../../static/background/shelf.png);
 	background-position: center;
 	background-size: cover;
-	.top-title{
+	.top-title {
 		position: absolute;
 		top: 10%;
 		right: 10%;
@@ -84,13 +109,13 @@
 		text-align: right;
 		font-weight: bold;
 		color: #eee;
-		.next-title{
+		.next-title {
 			margin-top: 20rpx;
 			font-size: 36rpx;
 			font-weight: normal;
 		}
 	}
-	.msg-bar{
+	.msg-bar {
 		position: relative;
 		top: 400rpx;
 		height: 60rpx;
@@ -99,17 +124,17 @@
 		padding: 20rpx 50rpx;
 		border-radius: 20rpx;
 		background-color: #ffffff;
-		box-shadow:0rpx 10rpx 10rpx #b9b9b9;
-		.swiper{
+		box-shadow: 0rpx 10rpx 10rpx #b9b9b9;
+		.swiper {
 			height: 60rpx;
-			.swiper-item{
+			.swiper-item {
 				display: flex;
 				flex-direction: row;
 				image {
 					width: 60rpx;
 					height: 60rpx;
 				}
-				.act{
+				.act {
 					text-indent: 30rpx;
 					line-height: 60rpx;
 				}
@@ -117,7 +142,7 @@
 		}
 	}
 }
-.bookshelf{
+.bookshelf {
 	padding: 80rpx 30rpx;
 	display: flex;
 	flex-flow: row wrap;

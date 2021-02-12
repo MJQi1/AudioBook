@@ -57,14 +57,15 @@
 				</view>
 			</view>
 			<view class="space"></view>
-			<swiper class="swiper" :autoplay="true" :interval="5000" :duration="1000" circular="true">
+			<!-- <swiper class="swiper" :autoplay="true" :interval="5000" :duration="1000" circular="true">
 				<swiper-item>
 					<view class="swiper-item"><image src="../../static/load/load480.png" mode="scaleToFill"></image></view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item"><image src="../../static/load/load480.png" mode="scaleToFill"></image></view>
 				</swiper-item>
-			</swiper>
+			</swiper> -->
+			<book-small-swiper></book-small-swiper>
 			<view class="space"></view>
 			<uni-list>
 				<uni-list-item title="我的钱包" link to="charge/charge"></uni-list-item>

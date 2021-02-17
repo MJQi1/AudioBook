@@ -73,7 +73,8 @@
 							</swiper>
 							<view class="swiper-container">
 								<!-- 图标快捷 -->
-								<book-block v-if="item.name === '推荐'"></book-block>
+								<book-block v-if="item.name === '推荐'" @chooseSwiper="handleChooseSwiper"></book-block>
+								<book-small-swiper imageList=""></book-small-swiper>
 								<book-block v-if="item.name === '男生'" :list="boyList"></book-block>
 								<book-block v-if="item.name === '女生'" :list="girlList"></book-block>
 								<!-- 展示模块 -->
@@ -138,9 +139,10 @@ export default {
 	},
 	onLoad() {
 		let settings = uni.getStorageSync('moudule-select')
-		// console.log(settings);
-		// if(settings)
-		// this.selectBar = settings
+		if(settings !== ''){
+			this.selectBar = settings
+		}
+
 	},
 	methods: {
 		//跳转搜索页
@@ -224,6 +226,16 @@ export default {
 			setTimeout(()=>{
 				this.pollDownData.push(data)
 			},1000)
+		},
+		handleChooseSwiper(item){
+			switch(item){
+				case '免费':
+					this.tabAct = 4
+					break
+				case '会员':
+					this.tabAct = 5
+					break
+			}
 		}
 	},
 	onPullDownRefresh() {

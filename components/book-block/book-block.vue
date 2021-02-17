@@ -1,6 +1,6 @@
 <template>
 	<view class="book-block" v-show="show">
-		<view class="classify" v-for="(item, index) in list" :key="index" @click="goPage(item.path)">
+		<view class="classify" v-for="(item, index) in list" :key="index" @click="goPage(item)">
 			<image :src="item.imageSrc" mode="aspectFit"></image>
 
 			<view class="title">
@@ -23,12 +23,12 @@ export default {
 				{
 					title: '分类',
 					imageSrc: '/static/icons/fenlei.png',
-					path: '/pages/index/test/test'
+					path: '/pages/classify/classify'
 				},
 				{
 					title: '排行',
 					imageSrc: '/static/icons/paihangbang.png',
-					path: '/pages/index/test/test'
+					path: '/pages/rank/rank'
 				},
 				{
 					title: '免费',
@@ -57,11 +57,12 @@ export default {
 		}
 	},
 	methods:{
-		goPage(path) {
-			console.log(22);
-			uni.navigateTo({
-				url:path
+		goPage(item) {
+			console.log(item.path);
+			uni.switchTab({
+				url:item.path
 			})
+			this.$emit('chooseSwiper',item.title)
 		}
 	}
 };

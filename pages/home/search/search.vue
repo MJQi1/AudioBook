@@ -81,8 +81,8 @@
 					return
 				}
 				//去重
+				console.log(this.historyArray);
 				this.historyArray.unshift(this.keyCode)
-				// console.log(typeof(this.historyArray));
 				let set = new Set(this.historyArray)
 				this.historyArray = Array.from(set)
 				
@@ -107,10 +107,9 @@
 			//加载历史
 			loadHistory() {
 				let arr = []
-				// console.log(typeof(arr));
-				arr = uni.getStorageSync('localHistory')
+				let his = uni.getStorageSync('localHistory')
 				this.$nextTick(function() {
-					this.historyArray = arr
+					this.historyArray = his
 				})
 			},
 		}

@@ -5,7 +5,7 @@
 			<radio-group name="" @change="radioData">
 				<uni-list-item class="list" title="" thumb="" note="">
 					<template slot="header">
-						<image class="payLogo1" src="https://gw.alipayobjects.com/mdn/member_frontWeb/afts/img/A*h7o9Q4g2KiUAAAAAAAAAAABkARQnAQ" mode="aspectFit"></image>
+						<image class="payLogo1" src="/static/icons/apply.png" mode="aspectFit"></image>
 					</template>
 					<template slot="footer">
 						

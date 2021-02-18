@@ -54,43 +54,16 @@
 				<swiper-item v-for="(item, index) in selectBar" v-if="item.select" :key="item.name">
 					<!-- 滚动效果 -->
 					<scroll-view scroll-y="true" class="swiper-sccroll" @scrolltolower="loadMore">
-						<view>
-							<!-- 首页轮播 -->
-							<swiper
-								class="banner"
-								v-if="index === 0"
-								:indicator-dots="true"
-								indicator-color="#ffe4cb"
-								indicator-active-color="#ffaa00"
-								:autoplay="true"
-								:interval="3000"
-								:duration="1000"
-								circular="true"
-							>
-								<swiper-item v-for="(item, index1) in data" :key="item.id">
-									<view class="banner-item"><image :src="item.src"></image></view>
-								</swiper-item>
-							</swiper>
-							<view class="swiper-container">
-								<!-- 图标快捷 -->
-								<book-block v-if="item.name === '推荐'" @chooseSwiper="handleChooseSwiper"></book-block>
-								<book-small-swiper imageList=""></book-small-swiper>
-								<book-block v-if="item.name === '男生'" :list="boyList"></book-block>
-								<book-block v-if="item.name === '女生'" :list="girlList"></book-block>
-								<!-- 展示模块 -->
-								<book-block-title title="猜你喜欢" :refresh="true"><a-compinents :list="textList"></a-compinents></book-block-title>
-								<!-- 展示详情 -->
-								<book-block-title title="为你推荐" :more="true"><book-intro :list="textList"></book-intro></book-block-title>
-								<!-- 小排行 -->
-								<book-small-rank :lists="rankData"></book-small-rank>
-								<!-- 下拉加载随机推荐 -->
-								<book-block-title title="精彩推荐">
-									<view class="" v-for="(item, index2) in pollDownData" :key="index2"><book-intro :list="item.list"></book-intro></view>
-								</book-block-title>
-								<uni-load-more :status="state"></uni-load-more>
-								<view class="" style="height: 30rpx;"></view>
-							</view>
-						</view>
+						<insCom v-if="item.name == '推荐'"/>
+						<boyCom v-if="item.name == '男生'"/>
+						<girlCom v-if="item.name == '女生'"/>
+						<eduCom v-if="item.name == '教育'"/>
+						<memberCom v-if="item.name == '会员'"/>
+						<freeCom v-if="item.name == '免费'"/>
+						<childCom v-if="item.name == '儿童'"/>
+						
+						<uni-load-more :status="state"></uni-load-more>
+						<view class="" style="height: 30rpx;"></view>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -100,7 +73,23 @@
 
 <script>
 import {selectBar, rankData, textList,boyList, girlList, pollDownData} from './data.js'
+import ins from './typeHome/ins.vue'
+import boy from './typeHome/boy.vue'
+import girl from './typeHome/grirl.vue'
+import edu from './typeHome/edu.vue'
+import free from './typeHome/free.vue'
+import member from './typeHome/menber.vue'
+import child from './typeHome/child.vue'
 export default {
+	components:{
+		insCom:ins,
+		boyCom:boy,
+		girlCom:girl,
+		eduCom:edu,
+		freeCom:free,
+		memberCom:member,
+		childCom:child
+	},
 	data() {
 		return {
 			data: [{
@@ -134,7 +123,16 @@ export default {
 			girlList:girlList,
 			rankData: rankData,
 			pollDownData:pollDownData,
-
+			imageList: [
+					{
+						src: '/static/load/load1080.png',
+						path: '/pages/index/index'
+					},
+					{
+						src: '/static/load/load1080.png',
+						path: ''
+					}
+				]
 		}
 	},
 	onLoad() {

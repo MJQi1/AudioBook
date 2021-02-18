@@ -19,11 +19,11 @@ export default {
 			default: () => {
 				return [
 					{
-						src: '/static/load/load480.png',
+						src: '/static/load/load1080.png',
 						path: '/pages/index/index'
 					},
 					{
-						src: '/static/load/load480.png',
+						src: '/static/load/load1080.png',
 						path: ''
 					}
 				];
@@ -45,14 +45,16 @@ export default {
 .swiper {
 	height: 220rpx;
 	// padding: 30rpx;
+	margin: 0 0 20rpx 0;
+	// border-radius: 20rpx;
 	width: 100%;
-	background-color: #fff;
+	// background-color: #fff;
 	.swiper-item {
 		image {
 			height: 180rpx;
-			width: 92%;
+			width: 98%;
 			border-radius: 20rpx;
-			margin: 20rpx 30rpx;
+			margin: 20rpx 5rpx;
 		}
 	}
 }

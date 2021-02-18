@@ -65,7 +65,9 @@
 					<view class="swiper-item"><image src="../../static/load/load480.png" mode="scaleToFill"></image></view>
 				</swiper-item>
 			</swiper> -->
-			<book-small-swiper></book-small-swiper>
+			<view class="small-swiper">
+				<book-small-swiper></book-small-swiper>
+			</view>
 			<view class="space"></view>
 			<uni-list>
 				<uni-list-item title="我的钱包" link to="charge/charge"></uni-list-item>
@@ -291,5 +293,10 @@ export default {
 		border: none !important;
 		// background-color: none;
 	}
+}
+
+.small-swiper{
+	padding: 0 20rpx;
+	background-color: #FFFFFF;
 }
 </style>

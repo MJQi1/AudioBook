@@ -237,6 +237,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/home/typeHome/ins",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

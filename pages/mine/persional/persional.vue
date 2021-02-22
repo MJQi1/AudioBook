@@ -21,6 +21,11 @@
 					男
 				</template>
 			</uni-list-item>
+			<uni-list-item title="生日" link="" to="modify/modify?type=brith" note="">
+				<template slot="footer">
+					xxxx
+				</template>
+			</uni-list-item>
 			<uni-list-item title="邮箱" link="" to="modify/modify?type=email"note="">
 				<template slot="footer">
 					xxxx

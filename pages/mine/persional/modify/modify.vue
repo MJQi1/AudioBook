@@ -29,6 +29,10 @@
 			<view>邮箱是登录账号不可修改</view>
 			<uni-easyinput  v-model="infoData.email" disabled="" placeholder="" />
 		</view>
+		<view v-if="type=='brith'">
+			<view>填写生日</view>
+			<uni-easyinput  v-model="infoData.brith" placeholder="" />
+		</view>
 		<view v-if="type=='phone'">
 			<view>填写新的手机号</view>
 			<uni-easyinput  v-model="infoData.phone" placeholder="" />
@@ -57,7 +61,8 @@
 					email:'',
 					phone:'',
 					fun:[],
-					info:''
+					info:'',
+					brith:''
 				},
 				aihao:[{"value": 0,"text": "篮球"    },{"value": 1,"text": "足球"},{"value": 2,"text": "游泳"}]
 			};

@@ -2,12 +2,12 @@
 	<view class="main-box">
 		<view class="top">
 			<view class="top-title" v-show="isLogin">
-				<text>Hi,蒂华纳姐</text>
+				<text>Hi,{{user}}</text>
 				<view class="next-title">欢迎来到AudioT听书</view>
 			</view>
 			<view class="top-title" v-show="!isLogin">
 				<navigator url="../mine/login/login">
-					你好，请
+					你好，请{{user}}
 					<text style="color: #d5d4aa;">登录</text>
 				</navigator>
 				<view class="next-title">享受私人听书空间</view>
@@ -46,8 +46,14 @@ export default {
 	data() {
 		return {
 			bookshelfList: textList,
-			isLogin: false
+			isLogin: false,
+			user: ''
 		};
+	},
+	onLoad() {
+		// 登录状态
+		this.isLogin = this.$store.state.user.hasLogin
+		this.user = this.$store.state.user.user
 	},
 	onNavigationBarButtonTap(e) {
 		const index = e.index;

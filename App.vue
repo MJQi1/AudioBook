@@ -19,10 +19,21 @@ export default {
 				url:'/pages/bookshelf/bookshelf'
 			})
 		})
+		
+		//判断用户登录
+		let user = uni.getStorageSync('user')
+		if(user == ''){
+			console.log('未登录');
+		}else {
+			this.$store.commit('USER_LOGIN',user)
+			console.log('登录用户：' + user);
+		}
+		
 		console.log('App Launch')
 	},
 	onShow: function() {
 		console.log('App Show')
+		
 	},
 	onHide: function() {
 		console.log('App Hide')

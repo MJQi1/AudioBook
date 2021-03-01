@@ -97,9 +97,12 @@
 export default {
 	data() {
 		return {
-			isLogin: true,
+			isLogin: this.$store.state.user.hasLogin,
 			isVip: true
 		};
+	},
+	onLoad() {
+		
 	},
 	methods: {
 		toLogin() {

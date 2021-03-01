@@ -31,7 +31,7 @@
 		</view>
 		<view v-if="type=='brith'">
 			<view>填写生日</view>
-			<uni-easyinput  v-model="infoData.brith" placeholder="" />
+			
 		</view>
 		<view v-if="type=='phone'">
 			<view>填写新的手机号</view>

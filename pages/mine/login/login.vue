@@ -9,7 +9,7 @@
 		<view class="input">
 			<!-- 登录 -->
 			<uni-forms class="form" ref="login" v-show="loginOr" label-width="50" :rules="rules">
-				<uni-forms-item label="帐号" name="email"><uni-easyinput v-model="loginData.email" placeholder="请输入邮箱" /></uni-forms-item>
+				<uni-forms-item label="帐号" name="username"><uni-easyinput v-model="loginData.email" placeholder="请输入用户名" /></uni-forms-item>
 				<uni-forms-item label="密码" name="passward"><uni-easyinput type="passward" v-model="loginData.passward" placeholder="请输入密码" /></uni-forms-item>
 				<uni-forms-item label=" " name="" class="login-btn">
 					<view class="sub-btn">
@@ -17,6 +17,11 @@
 						<view class="register-link" @click="changeRegister">注册账号</view>
 					</view>
 				</uni-forms-item>
+				<!-- <uni-forms-item label=" " name="" class="login-btn">
+					<view class="sub-btn">
+						<view class="register-link" @click="alterPassward">修改密码</view>
+					</view>
+				</uni-forms-item> -->
 			</uni-forms>
 			<!-- 注册 -->
 			<uni-forms class="form" ref="register" v-show="!loginOr" label-width="50" :rules="rules">
@@ -24,8 +29,8 @@
 				<uni-forms-item label="用户名" name="username"><uni-easyinput v-model="registerData.username" placeholder="请输用户名" /></uni-forms-item>
 				<uni-forms-item label="密码" name="passward"><uni-easyinput v-model="registerData.passward" placeholder="请输入密码" /></uni-forms-item>
 				<uni-forms-item label="验证码" name="code">
-					<uni-easyinput v-model="registerData.code" />
-					<button size="mini" class="get-code" @click="getCode">获取验证码</button>
+					<uni-easyinput v-model="registerData.code" maxlength="6" />
+					<button size="mini" ref="code" class="get-code" @click="getCode">获取验证码</button>
 				</uni-forms-item>
 				<uni-forms-item label=" " name="" class="login-btn">
 					<view class="sub-btn">
@@ -44,7 +49,7 @@
 			</view>
 
 			<view class="tiaokuan">
-				<checkbox-group  @change="clauseChange">
+				<checkbox-group @change="clauseChange">
 					<label>
 						<checkbox style="transform:scale(0.5)" color="#ffaa00" checked value="1" />
 						<text>
@@ -52,17 +57,16 @@
 							<text class="underline">用户协议</text>
 							和
 							<text class="underline">隐私政策</text>
-							
 						</text>
 					</label>
 				</checkbox-group>
-				
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+import { getData, postData } from '@/http/fetch.js';
 export default {
 	data() {
 		return {
@@ -100,7 +104,7 @@ export default {
 						},
 						{
 							minLength: 6,
-							maxLength: 8,
+							maxLength: 16,
 							errorMessage: '密码长度在 {minLength} 到 {maxLength} 个字符'
 						}
 					]
@@ -141,58 +145,83 @@ export default {
 		changeLogin() {
 			this.loginOr = true;
 		},
+		alterPassward() {},
 		//登录
 		Login() {
-			
-			if(this.clause !== '1'){
+			if (this.clause !== '1') {
 				uni.showToast({
-					title:'请选择条款',
-					icon:'none'
-				})
-				return
+					title: '请选择条款',
+					icon: 'none'
+				});
+				return;
 			}
 			this.$refs.login
 				.submit()
 				.then(res => {
-					console.log('表单数据信息：', res);
+					let resp;
+					postData('login/', res)
+						.catch(error => this.toast('服务器错误'))
+						.then(response => {
+							console.log(response.user);
+							this.toast(response.msg);
+							if(response['msg']== '登陆成功') {
+								//stroge中放用户信息id
+								uni.setStorageSync('user',response.user)
+								uni.navigateBack()
+							}
+						});
 				})
 				.catch(err => {
-					console.log('表单错误信息：', err);
+					console.log('表单错误信息');
 				});
+		},
+		//Toast 提示信息
+		toast(data) {
+			uni.showToast({
+				title: data,
+				icon: 'none'
+			});
 		},
 		//注册
 		Register() {
-			if(this.clause !== '1'){
+			if (this.clause !== '1') {
 				uni.showToast({
-					title:'请选择条款',
-					icon:'none'
-				})
-				return
+					title: '请选择条款',
+					icon: 'none'
+				});
+				return;
 			}
 			this.$refs.register
 				.submit()
 				.then(res => {
-					console.log('表单数据信息：', res);
+					postData('register/', res)
+						// .then(res => res.json())
+						.catch(error => this.toast('服务器错误'))
+						.then(response => {
+							this.toast(response['msg'])
+							if(response['msg'] == '注册成功')
+							this.loginOr = true;
+						});
 				})
 				.catch(err => {
 					console.log('表单错误信息：', err);
 				});
 		},
 		// 接受条款
-		clauseChange(d){
-			this.clause = d.detail.value[0]
+		clauseChange(d) {
+			this.clause = d.detail.value[0];
 		},
 		//获取验证码
-		getCode(){
-			let email = this.registerData.email
-			console.log(email);
-			let test = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)
-			console.log(test);
-			if(!test){
-				uni.showToast({
-					icon:"none",
-					title:"输入正确邮箱"
-				})
+		async getCode() {
+			let email = this.registerData.email;
+			let test = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email);
+			if (!test) {
+				this.toast('邮箱格式错误')
+			} else {
+				let resp = await getData('register/?email=' + email);
+				// resp = eval(resp);
+				this.toast(resp['msg'])
+				
 			}
 		}
 	}
@@ -251,6 +280,16 @@ export default {
 					// height: 60rpx;
 				}
 				.register-link {
+					// width: 100%;
+					position: absolute;
+					right: 0;
+					bottom: 20rpx;
+					display: inline-block;
+					font-size: 16rpx;
+					// line-height: 60rpx;
+					color: #888;
+				}
+				.passward-link {
 					// width: 100%;
 					position: absolute;
 					right: 0;

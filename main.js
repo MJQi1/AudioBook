@@ -25,7 +25,7 @@ const xmly = new XMLY()
 // 调用接口获取喜马拉雅数据
 // 获取分类列表
 xmly.get('https://api.ximalaya.com/categories/list').then(res => {
-  console.log(res)
+  // console.log(res)
 })
 const app = new Vue({
     ...App

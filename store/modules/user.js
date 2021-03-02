@@ -1,6 +1,7 @@
 const state = {
 	user: {},
-	hasLogin:false
+	hasLogin:false,
+	userInfo: {}
 }
 const getters = {
 	
@@ -12,9 +13,12 @@ const mutations = {
 		state.user = info
 	},
 	//登出
-	USER_LOGOUT(state, info) {
+	USER_LOGOUT(state) {
 		state.hasLogin = false
-		state.user = info
+		state.user = {}
+	},
+	USER_INFO(state, info) {
+		state.userInfo = info
 	}
 }
 const actions = {

@@ -1,14 +1,16 @@
 const baseUrl = 'http://127.0.0.1:8000/'
 
-	export function postData(url, data) {
-		return fetch(baseUrl + url, {
+	export async function postData(url, data) {
+		let resp = await fetch(baseUrl + url, {
 			body: JSON.stringify(data), // must match 'Content-Type' header
 			headers: {
 				'user-agent': 'Mozilla/4.0 MDN Example',
 				'content-type': 'application/json'
 			},
 			method: 'POST', // *GET, POST, PUT, DELETE, etc.
-		}).then(response => response.json())
+		})
+		let res = await resp.json()
+		return res
 	}
 	
 	export async function getData(url) {

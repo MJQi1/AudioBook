@@ -7,7 +7,7 @@
 			</view>
 			<view class="top-title" v-show="!isLogin">
 				<navigator url="../mine/login/login">
-					你好，请{{user}}
+					你好,请
 					<text style="color: #d5d4aa;">登录</text>
 				</navigator>
 				<view class="next-title">享受私人听书空间</view>

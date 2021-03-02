@@ -24,14 +24,14 @@
 			
 			<view v-if="isLogin">
 				<view class="border"></view>
-				<button type="default" class="button" size="mini">切换账号</button>
+				<button type="default" class="button" @click="changelogin" size="mini">切换账号</button>
 				<view class="border"></view>
-				<button type="default" class="button" size="mini">退出登录	</button>
+				<button type="default" class="button" @click="logout" size="mini">退出登录	</button>
 			</view>
 			
 			<view v-if="!isLogin">
 				<view class="border"></view>
-				<button type="default" class="button" size="mini">登录账号</button>
+				<button type="default" class="button" size="mini" @click="toWhat('login')">登录账号</button>
 			</view>
 			
 			<view class="border"></view>
@@ -41,11 +41,37 @@
 </template>
 
 <script>
+	import { getData, postData } from '@/http/fetch.js';
 	export default {
 		data() {
 			return {
-				isLogin:true
+				isLogin:this.$store.state.user.hasLogin
 			};
+		},
+		methods:{
+			//切换登录
+			changelogin(){
+				
+			},
+			//登出
+			async logout() {
+				let resp = await getData('logout/')
+				console.log(resp);
+				uni.setStorageSync('user','')
+				this.$store.commit('USER_LOGOUT')
+				this.isLogin = false
+			},
+			toWhat(s) {
+				let path = ''
+				switch(s) {
+					case 'login':
+						path = '../login/login'
+				}
+				uni.navigateTo({
+					url:path
+				})
+			}
+				
 		}
 	}
 </script>

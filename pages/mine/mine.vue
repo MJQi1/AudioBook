@@ -3,11 +3,11 @@
 		<view class="top-message">
 			<view class="persional-msg" v-show="isLogin">
 				<image src="../../static/icons/bangbangtang.png" mode="aspectFit"  @click="toWhat('persional')"></image>
-				<view class="user-name" @click="toWhat('persional')">用户名</view>
+				<view class="user-name" @click="toWhat('persional')">{{userinfo.username}}</view>
 				<uni-icons type="compose" size="16" class="edit-icon" color="#eee"  @click="toWhat('persional')"></uni-icons>
 			</view>
 			<view class="persional-msg" v-show="!isLogin">
-				<image src="../../static/icons/bangbangtang.png" mode="aspectFit" @click="toLogin"></image>
+				<image src="../../static/icons/bangbangtang.png" mode="aspectFit"></image>
 				<view class="user-name" @click="toLogin">登录</view>
 			</view>
 			<view class="wallet-msg">
@@ -94,17 +94,29 @@
 </template>
 
 <script>
+import { getData, postData} from '@/http/fetch.js'
 export default {
 	data() {
 		return {
-			isLogin: this.$store.state.user.hasLogin,
-			isVip: true
+			isLogin: false,
+			isVip: true,
+			userinfo:{}
 		};
 	},
 	onLoad() {
-		
+		this.getUserInfo()
 	},
 	methods: {
+		//获取用户信息
+		getUserInfo(){
+			this.isLogin = this.$store.state.user.hasLogin
+			let user = this.$store.state.user.user
+			if(this.isLogin) {
+				let info = this.$store.state.user.userInfo
+				var obj = eval(info)
+				this.userinfo = obj[0].fields
+			}
+		},
 		toLogin() {
 			uni.navigateTo({
 				url: './login/login'

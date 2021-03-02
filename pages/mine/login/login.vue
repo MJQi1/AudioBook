@@ -149,30 +149,24 @@ export default {
 		//登录
 		Login() {
 			if (this.clause !== '1') {
-				uni.showToast({
-					title: '请选择条款',
-					icon: 'none'
-				});
+				this.toast('请选择条款');
 				return;
 			}
 			this.$refs.login
 				.submit()
-				.then(res => {
+				.then(async (res) => {
 					let resp;
-					postData('login/', res)
-						.catch(error => this.toast('服务器错误'))
-						.then(response => {
-							console.log(response.user);
-							this.toast(response.msg);
-							if(response['msg']== '登陆成功') {
-								//stroge中放用户信息id
-								uni.setStorageSync('user',response.user)
-								uni.navigateBack()
-							}
-						});
+					let set = await postData('login/', res)
+						this.toast(set.msg);
+						if(set.msg== '登陆成功') {
+							//stroge中放用户信息id
+							uni.setStorageSync('user',set.user)
+							uni.navigateBack()
+						}
+						console.log(set);
 				})
 				.catch(err => {
-					console.log('表单错误信息');
+					console.log('表单错误信息',err);
 				});
 		},
 		//Toast 提示信息
@@ -193,15 +187,13 @@ export default {
 			}
 			this.$refs.register
 				.submit()
-				.then(res => {
-					postData('register/', res)
-						// .then(res => res.json())
-						.catch(error => this.toast('服务器错误'))
-						.then(response => {
-							this.toast(response['msg'])
-							if(response['msg'] == '注册成功')
-							this.loginOr = true;
-						});
+				.then(async (res)=> {
+					let set = await postData('register/', res)
+					this.toast(set.msg)
+					if(set.msg == '注册成功'){
+						this.loginOr = true;
+					}
+					console.log(set);
 				})
 				.catch(err => {
 					console.log('表单错误信息：', err);

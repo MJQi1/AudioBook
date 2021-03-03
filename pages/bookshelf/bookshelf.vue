@@ -52,8 +52,11 @@ export default {
 	},
 	onLoad() {
 		// 登录状态
-		this.isLogin = this.$store.state.user.hasLogin
-		this.user = this.$store.state.user.user
+		// this.getUser()
+	},
+	onShow() {
+		// console.log('show....................');
+		this.getUser()
 	},
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
@@ -72,6 +75,10 @@ export default {
 		});
 	},
 	methods:{
+		getUser() {
+			this.isLogin = this.$store.state.user.hasLogin
+			this.user = this.$store.state.user.user
+		},
 		//分享选择
 		shareSelect(op){
 			let name = op.item.name

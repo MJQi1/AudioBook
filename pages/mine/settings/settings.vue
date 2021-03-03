@@ -48,10 +48,17 @@
 				isLogin:this.$store.state.user.hasLogin
 			};
 		},
+		onShow() {
+			this.isLogin = this.$store.state.user.hasLogin
+		},
 		methods:{
 			//切换登录
 			changelogin(){
-				
+				this.logout().then(() => {
+					uni.navigateTo({
+						url:'../login/login'
+					})
+				})
 			},
 			//登出
 			async logout() {

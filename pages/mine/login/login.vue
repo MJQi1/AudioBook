@@ -155,12 +155,14 @@ export default {
 			this.$refs.login
 				.submit()
 				.then(async (res) => {
-					let resp;
 					let set = await postData('login/', res)
 						this.toast(set.msg);
 						if(set.msg== '登陆成功') {
 							//stroge中放用户信息id
 							uni.setStorageSync('user',set.user)
+							this.$store.commit('USER_LOGIN', set.user)
+							let userinfo = await getData('user/getUserInfo/?username=' + set.user);
+							this.$store.commit('USER_INFO', userinfo);
 							uni.navigateBack()
 						}
 						console.log(set);

@@ -2,7 +2,7 @@
 	<view class="main-box">
 		<view class="top-message">
 			<view class="persional-msg" v-show="isLogin">
-				<image src="../../static/icons/bangbangtang.png" mode="aspectFit"  @click="toWhat('persional')"></image>
+				<image :src="image" mode="aspectFit"  @click="toWhat('persional')"></image>
 				<view class="user-name" @click="toWhat('persional')">{{userinfo.username}}</view>
 				<uni-icons type="compose" size="16" class="edit-icon" color="#eee"  @click="toWhat('persional')"></uni-icons>
 			</view>
@@ -100,11 +100,16 @@ export default {
 		return {
 			isLogin: false,
 			isVip: true,
-			userinfo:{}
+			userinfo:{},
+			image:''
 		};
 	},
 	onLoad() {
 		this.getUserInfo()
+	},
+	onShow() {
+		this.getUserInfo()
+		this.getTest()
 	},
 	methods: {
 		//获取用户信息
@@ -117,10 +122,15 @@ export default {
 				this.userinfo = obj[0].fields
 			}
 		},
+		async getTest(){
+			// http://127.0.0.1:8000/static/head_image/tx.png
+			let resp =  await getData('show/')
+			this.image = 'http://127.0.0.1:8000' + resp.src
+		},
 		toLogin() {
 			uni.navigateTo({
 				url: './login/login'
-			});
+			})
 		},
 		// 跳转到哪？
 		toWhat(add) {
@@ -193,8 +203,10 @@ export default {
 		// background-color: #4CD964;
 		color: #eee;
 		image {
+			border-radius: 10rpx;
 			height: 100%;
-			width: 200rpx;
+			width: 100rpx;
+			margin: 0 50rpx;
 		}
 		.user-name {
 			height: 100%;

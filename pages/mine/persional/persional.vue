@@ -7,46 +7,46 @@
 						头像
 					</view>
 				</template>
-				<template slot="footer">
-					<image class="touxiang" src="../../../static/background/mine.png" mode="aspectFill"></image>
+				<template slot="footer" >
+					<image class="touxiang" :src="userinfo.headImage | imgSrc" mode="aspectFill"></image>
 				</template>
 			</uni-list-item>
 			<uni-list-item title="用户名" link="" to="modify/modify?type=username" note="">
-				<template slot="footer">
-					xxxx
+				<template slot="footer" >
+					<text class="info">	{{userinfo.username | formatNull}}</text>
 				</template>
 			</uni-list-item>
 			<uni-list-item title="性别" link="" to="modify/modify?type=sex" note="">
 				<template slot="footer">
-					男
+					<text class="info">	{{userinfo.sex | formatNull}}</text>
 				</template>
 			</uni-list-item>
-			<uni-list-item title="生日" link="" to="modify/modify?type=brith" note="">
+			<uni-list-item title="生日" link="" to="modify/modify?type=birthday" note="">
 				<template slot="footer">
-					xxxx
+					<text class="info">	{{userinfo.birthday | formatNull}}</text>
 				</template>
 			</uni-list-item>
 			<uni-list-item title="邮箱" link="" to="modify/modify?type=email"note="">
 				<template slot="footer">
-					xxxx
+					<text class="info">	{{userinfo.email | formatNull}}</text>
 				</template>
 			</uni-list-item>
 			<uni-list-item title="手机" link="" to="modify/modify?type=phone" note="">
 				<template slot="footer">
-					xxxx
+					<text class="info">	{{userinfo.phone | formatNull}}</text>
 				</template>
 			</uni-list-item>
 			<uni-list-item title="爱好" link="" to="modify/modify?type=fun" note="">
 				<template slot="footer">
-					xxxx
+					<text class="info">	{{userinfo.fun | formatNull}}</text>
 				</template>
 			</uni-list-item>
 			<uni-list-item title="地区" link="" to="modify/modify?type=area" note="">
 				<template slot="footer">
-					xxxx
+					<text class="info">	{{userinfo.area | formatNull}}</text>
 				</template>
 			</uni-list-item>
-			<uni-list-item title="个性签名"  note="阿桑的歌发但是公司发多少个豆腐干士大夫" link to="modify/modify?type=info">
+			<uni-list-item title="个性签名"  :note="userinfo.info | formatNull" link to="modify/modify?type=info">
 			</uni-list-item>
 		</uni-list>
 		<view class="tips">
@@ -59,8 +59,24 @@
 	export default {
 		data() {
 			return {
-				
+				userinfo:{}
 			};
+		},
+		onLoad() {
+			let info = this.$store.state.user.userInfo
+			info = eval(info)
+			this.userinfo = info[0].fields
+			console.log(info);
+			
+		},
+		filters:{
+			formatNull(ret) {
+				if(ret != null){
+					return ret
+				}else {
+					return ret = '暂未设置'
+				}
+			}
 		}
 	}
 </script>
@@ -80,5 +96,9 @@
 	color:#999;
 	margin:30rpx;
 	text-align: right;
+}
+.info{
+	font-size: 26rpx;
+	color: #666;
 }
 </style>

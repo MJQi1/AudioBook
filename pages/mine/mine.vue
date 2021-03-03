@@ -2,7 +2,7 @@
 	<view class="main-box">
 		<view class="top-message">
 			<view class="persional-msg" v-show="isLogin">
-				<image :src="image" mode="aspectFit"  @click="toWhat('persional')"></image>
+				<image :src="userinfo.headImage | imgSrc" mode="aspectFit"  @click="toWhat('persional')"></image>
 				<view class="user-name" @click="toWhat('persional')">{{userinfo.username}}</view>
 				<uni-icons type="compose" size="16" class="edit-icon" color="#eee"  @click="toWhat('persional')"></uni-icons>
 			</view>
@@ -12,11 +12,11 @@
 			</view>
 			<view class="wallet-msg">
 				<view class="book-coin" @click="toWhat('pay')">
-					<view class="coin">10</view>
+					<view class="coin">{{userinfo.coin}}</view>
 					<view class="coin-title">书币</view>
 				</view>
 				<view class="book-coin" @click="toWhat('pay')">
-					<view class="coin">0</view>
+					<view class="coin">{{userinfo.coupon}}</view>
 					<view class="coin-title">书券</view>
 				</view>
 				<view class="book-coin" @click="toWhat('pay')">
@@ -32,7 +32,7 @@
 					<uni-icons type="forward"></uni-icons>
 				</view>
 				<view v-if="isVip" class="grad-bach" @click="toWhat('chargeVip')">
-					2020-02-20到期
+					{{userinfo.vip}}
 					<uni-icons type="forward"></uni-icons>
 				</view>
 			</view>
@@ -99,7 +99,7 @@ export default {
 	data() {
 		return {
 			isLogin: false,
-			isVip: true,
+			isVip: false,
 			userinfo:{},
 			image:''
 		};
@@ -109,7 +109,7 @@ export default {
 	},
 	onShow() {
 		this.getUserInfo()
-		this.getTest()
+		// this.getTest()
 	},
 	methods: {
 		//获取用户信息
@@ -120,13 +120,17 @@ export default {
 				let info = this.$store.state.user.userInfo
 				var obj = eval(info)
 				this.userinfo = obj[0].fields
+				//判断VIP
+				if(obj[0].fields.vip != null) {
+					this.isLogin = true
+				}
 			}
 		},
-		async getTest(){
-			// http://127.0.0.1:8000/static/head_image/tx.png
-			let resp =  await getData('show/')
-			this.image = 'http://127.0.0.1:8000' + resp.src
-		},
+		// async getTest(){
+		// 	// http://127.0.0.1:8000/static/head_image/tx.png
+		// 	let resp =  await getData('show/')
+		// 	this.image = 'http://127.0.0.1:8000' + resp.src
+		// },
 		toLogin() {
 			uni.navigateTo({
 				url: './login/login'

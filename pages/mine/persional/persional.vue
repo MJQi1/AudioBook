@@ -9,7 +9,7 @@
 				</template>
 				<template slot="footer" >
 					<image class="touxiang" :src="userinfo.headImage | imgSrc" mode="aspectFill"></image>
-					{{userinfo.headImage}}
+					<!-- {{userinfo.headImage}} -->
 				</template>
 			</uni-list-item>
 			<uni-list-item title="用户名" link="" to="modify/modify?type=username" note="">

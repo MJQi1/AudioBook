@@ -1,14 +1,14 @@
 <template>
 	<view class="main">
 		<view class="vip-card">
-			<view class="card-id"><image src="/static/background/shelf.png"></image></view>
+			<view class="card-id"><image :src="userinfo.headImage|imgSrc"></image></view>
 			<view class="card-title">
 				<view class="gard-title">至尊 · VIP</view>
-				<view class="grad-bach" v-show="!isVip">
+				<view class="grad-bach" v-show="!isVip" @click="popupVipPay">
 					立即开通， 畅享生活
 					<uni-icons type="forward"></uni-icons>
 				</view>
-				<view class="grad-bach" v-show="isVip">至尊会员2020-02-23到期</view>
+				<view class="grad-bach" v-show="isVip">至尊会员{{userinfo.vip}}到期</view>
 				<view class="grad-bach" v-show="isVip" @click="popupVipPay">
 					续费会员
 					<uni-icons type="forward" size="13"></uni-icons>
@@ -18,21 +18,21 @@
 		<uni-section title="我的账户" sub-title="" type="line"></uni-section>
 		<view class="wallet-msg">
 			<view class="book-coin">
-				<view class="coin">10</view>
+				<view class="coin">{{userinfo.coin}}</view>
 				<view class="coin-title">书币</view>
 			</view>
 			<view class="book-coin">
-				<view class="coin">0</view>
+				<view class="coin">{{userinfo.coupon}}</view>
 				<view class="coin-title">书券</view>
 			</view>
 			<view class="book-coin">
 				<view class="coin">0</view>
-				<view class="coin-title">优惠券</view>
+				<view class="coin-title">优惠券 		{{pay}}</view>
 			</view>
 		</view>
 		<uni-section title="充值中心" sub-title="" type="line"></uni-section>
 		<view class="charge-view">
-			<view class="charge-btn" v-for="(item,index) in chargeMsg" :class="{'charge-btn-active':choose == index}" @click="chooseCharge(index,item.pay)">
+			<view class="charge-btn" v-for="(item,index) in chargeMsg" :class="{'charge-btn-active':choose == index}" @click="chooseCharge(index,item.pay,item.coin)">
 				<view class="coin">{{item.coin}}</view>
 				<view class="money">{{item.pay}}元</view>
 			</view>
@@ -44,7 +44,7 @@
 		</view>
 		<view class="pay"><view class="message">{{pay}}元</view><view class="btn" @click="openPay">立即支付</view></view>
 		<uni-popup ref="popup" type="pay" :maskClick="false">
-			<b-pop-pay></b-pop-pay>
+			<b-pop-pay @payChoose="charge"></b-pop-pay>
 		</uni-popup>
 		<uni-popup ref="vipPay" type="center"  :maskClick="false">
 			<b-pop-vip @pay="openPay"></b-pop-vip>
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { getData,postData } from '@/http/fetch.js'
 export default {
 	data() {
 		return {
@@ -86,7 +87,8 @@ export default {
 					pay:500,
 					coin:55888
 				}
-			]
+			],
+			userinfo:{}
 		};
 	},
 	onLoad(option){
@@ -97,10 +99,18 @@ export default {
 			
 		}
 	},
+	onShow() {
+		let info = this.$store.state.user.userInfo
+		info = eval(info)
+		this.userinfo = info[0].fields
+		this.isVip = this.userinfo.vip
+		console.log(this.userinfo);
+	},
 	methods:{
-		chooseCharge(index,money){
+		chooseCharge(index,money,coin){
 			this.choose = index
 			this.pay = money
+			this.coninData = coin
 		},
 		//弹出支付
 		openPay(){
@@ -112,6 +122,16 @@ export default {
 		},
 		changeData(){
 			this.pay = this.coninData/100
+		},
+		// 充值
+		async charge() {
+			let data = {
+				charge: this.coninData,
+				user: this.userinfo.username
+			}
+			
+			let resp = await postData('wallet/chargeCoin/', data)
+			console.log(resp);
 		}
 	},
 	computed:{

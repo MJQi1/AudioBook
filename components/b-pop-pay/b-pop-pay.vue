@@ -60,6 +60,7 @@ export default {
 					title:'微信支付成功'
 				})
 			}
+			this.$emit('payChoose')
 		}
 	}
 };

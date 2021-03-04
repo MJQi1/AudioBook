@@ -1,6 +1,8 @@
 <template>
 	<view class="container">
-		<view v-if="type == 'tx'"><zw-upload-img title="选择头像" :num="num" :dataList="dataList" @chooseImg="chooseImg" @close="close($event)"></zw-upload-img></view>
+		<view v-if="type == 'tx'">
+			<zw-upload-img title="选择头像" :num="num" :dataList="dataList" @chooseImg="chooseImg" @close="close($event)"></zw-upload-img>
+		</view>
 
 		<view v-if="type == 'username'">
 			<view>查看用户名(不可修改)</view>
@@ -38,12 +40,12 @@
 			<view>编写个性签名</view>
 			<textarea :value="infoData.info" v-model="infoData.info" style="background-color: #f4f4f4;padding: 30rpx; font-size: 26rpx;" placeholder="个性签名..." />
 		</view>
-		{{ infoData }}
+		<!-- {{ infoData }} -->
 	</view>
 </template>
 
 <script>
-import {getData, postData} from '@/http/fetch.js'
+import { getData, postData } from '@/http/fetch.js';
 export default {
 	data() {
 		return {
@@ -60,13 +62,15 @@ export default {
 				birthday: '',
 				area: ''
 			},
-			aihao: [{ value: '运动', text: '运动' }, 
-			{ value: '军事', text: '军事' }, 
-			{ value: '游戏', text: '游戏' }, 
-			{ value: '阅读', text: '阅读' },
-			{ value: '宅家', text: '宅家'}],
+			aihao: [
+				{ value: '运动', text: '运动' },
+				{ value: '军事', text: '军事' },
+				{ value: '游戏', text: '游戏' },
+				{ value: '阅读', text: '阅读' },
+				{ value: '宅家', text: '宅家' }
+			],
 			array: ['中国', '美国', '巴西', '日本'],
-			sex: [{ value: '男', text: '男' },{value:'女',text:"女"}]
+			sex: [{ value: '男', text: '男' }, { value: '女', text: '女' }]
 		};
 	},
 	computed: {
@@ -94,13 +98,21 @@ export default {
 	methods: {
 		//上传数据
 		async save() {
-			this.infoData.fun = this.infoData.fun.toString().replace(',', ' ')
-			this.infoData.type = this.type
-			console.log(this.infoData);
-			let resp = await postData('user/modifyUserInfo/', this.infoData)
-			console.log(resp);
-			console.log('保存信息');
+			this.infoData.fun = this.infoData.fun.toString();
+			this.infoData.type = this.type;
+			let resp = await postData('user/modifyUserInfo/', this.infoData);
+			console.log(resp.state);
+
+			// 更新本地数据
+			this.$store.commit('USER_INFO', resp.data);
+			this.toast(resp.state);
 			uni.navigateBack({});
+		},
+		toast(msg) {
+			uni.showToast({
+				title: msg,
+				icon: 'none'
+			});
 		},
 		getInfo() {
 			let obj = eval(this.$store.state.user.userInfo);
@@ -109,7 +121,7 @@ export default {
 			this.infoData.birthday = obj[0].fields.birthday;
 			this.infoData.email = obj[0].fields.email;
 			this.infoData.phone = obj[0].fields.phone;
-			this.infoData.fun = obj[0].fields.fun.split();
+			this.infoData.fun = obj[0].fields.fun.split(',');
 			this.infoData.area = obj[0].fields.area;
 			this.infoData.info = obj[0].fields.info;
 			// console.log(this.infoData);
@@ -157,9 +169,24 @@ export default {
 				count: this.num - this.dataList.length,
 				success: res => {
 					this.dataList = this.dataList.concat(res.tempFilePaths);
-					// #ifdef APP-PLUS
-					this.upLoadImg1(); //上传，需自行写
-					// #endif
+					this.upLoadImg(); //上传，需自行写
+				}
+			});
+		},
+		close(msg) {
+			this.dataList = msg;
+		},
+		// 上传图片
+		async upLoadImg() {
+			uni.uploadFile({
+				url: 'http://127.0.0.1:8000/user/uploadImg/', //仅为示例，非真实的接口地址
+				filePath: this.dataList[0],
+				name: 'file',
+				formData: {
+					user: this.infoData.username
+				},
+				success: uploadFileRes => {
+					console.log(uploadFileRes.data);
 				}
 			});
 		},
@@ -180,7 +207,7 @@ export default {
 		},
 		bindDateChange: function(e) {
 			console.log(e.target.value);
-			this.infoData.brithday = e.target.value;
+			this.infoData.birthday = e.target.value;
 		},
 		bindPickerChange: function(e) {
 			this.infoData.area = this.array[e.target.value];

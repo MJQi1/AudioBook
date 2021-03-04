@@ -9,6 +9,7 @@
 				</template>
 				<template slot="footer" >
 					<image class="touxiang" :src="userinfo.headImage | imgSrc" mode="aspectFill"></image>
+					{{userinfo.headImage}}
 				</template>
 			</uni-list-item>
 			<uni-list-item title="用户名" link="" to="modify/modify?type=username" note="">
@@ -62,7 +63,7 @@
 				userinfo:{}
 			};
 		},
-		onLoad() {
+		onShow() {
 			let info = this.$store.state.user.userInfo
 			info = eval(info)
 			this.userinfo = info[0].fields

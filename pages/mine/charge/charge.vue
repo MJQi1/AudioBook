@@ -27,7 +27,7 @@
 			</view>
 			<view class="book-coin">
 				<view class="coin">0</view>
-				<view class="coin-title">优惠券 		{{pay}}</view>
+				<view class="coin-title">优惠券</view>
 			</view>
 		</view>
 		<uni-section title="充值中心" sub-title="" type="line"></uni-section>
@@ -44,10 +44,10 @@
 		</view>
 		<view class="pay"><view class="message">{{pay}}元</view><view class="btn" @click="openPay">立即支付</view></view>
 		<uni-popup ref="popup" type="pay" :maskClick="false">
-			<b-pop-pay @payChoose="charge"></b-pop-pay>
+			<b-pop-pay ref="paychose" @payChoose="charge"></b-pop-pay>
 		</uni-popup>
 		<uni-popup ref="vipPay" type="center"  :maskClick="false">
-			<b-pop-vip @pay="openPay"></b-pop-vip>
+			<b-pop-vip @pay="vipOpenPay"></b-pop-vip>
 		</uni-popup>
 	</view>
 </template>
@@ -58,7 +58,7 @@ export default {
 	data() {
 		return {
 			isVip: true,
-			coninData: null,
+			coninData: 0,
 			choose: -1,
 			pay:0,
 			chargeMsg:[
@@ -88,7 +88,10 @@ export default {
 					coin:55888
 				}
 			],
-			userinfo:{}
+			userinfo:{
+				
+			},
+			vip:0
 		};
 	},
 	onLoad(option){
@@ -100,38 +103,70 @@ export default {
 		}
 	},
 	onShow() {
-		let info = this.$store.state.user.userInfo
-		info = eval(info)
-		this.userinfo = info[0].fields
-		this.isVip = this.userinfo.vip
-		console.log(this.userinfo);
+		this.loadUserInfo()
 	},
 	methods:{
+		loadUserInfo(){
+			let info = this.$store.state.user.userInfo
+			info = eval(info)
+			this.userinfo = info[0].fields
+			this.isVip = this.userinfo.vip
+			console.log(this.userinfo);
+		},
 		chooseCharge(index,money,coin){
 			this.choose = index
 			this.pay = money
 			this.coninData = coin
 		},
-		//弹出支付
+		//充值coin选择支付
 		openPay(){
-			 this.$refs.popup.open()
+			this.vip= 0
+			this.$refs.popup.open()
 		},
 		// 会员续费
 		popupVipPay(){
 			this.$refs.vipPay.open()
 		},
+		//vip 选择支付
+		vipOpenPay(money){
+			let vipDate
+			this.coninData = 0
+			switch(money){
+				case 3:
+					vipDate = 7
+				case 10:
+					vipDate = 30
+					break
+				case 29:
+					vipDate = 90
+					break
+				case 109:
+					vipDate = 360
+					break
+			}
+			
+			this.vip = vipDate
+			this.$refs.popup.open()
+		},
 		changeData(){
 			this.pay = this.coninData/100
 		},
 		// 充值
-		async charge() {
+		async charge(type) {
 			let data = {
 				charge: this.coninData,
-				user: this.userinfo.username
+				user: this.userinfo.username,
+				vip: this.vip
+			}
+			console.log(data);
+			let resp = await postData('wallet/chargeCoin/', data)
+			if(resp.state = 'success'){
+				this.$store.commit("USER_INFO", resp.data)
+				this.loadUserInfo()
+			}else{
+				console.log('error');
 			}
 			
-			let resp = await postData('wallet/chargeCoin/', data)
-			console.log(resp);
 		}
 	},
 	computed:{

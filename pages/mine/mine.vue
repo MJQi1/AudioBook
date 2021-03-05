@@ -122,7 +122,7 @@ export default {
 				this.userinfo = obj[0].fields
 				//判断VIP
 				if(obj[0].fields.vip != null) {
-					this.isLogin = true
+					this.isVip = true
 				}
 			}
 		},

@@ -33,7 +33,7 @@ export default {
 		// 立即支付
 		NowPay(){
 			this.popup.close();
-			this.$emit('pay')
+			this.$emit('pay',this.choose)
 		}
 	}
 };

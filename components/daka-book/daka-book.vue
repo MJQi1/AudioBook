@@ -15,6 +15,7 @@
 				<button class="barbtn" v-else>Next</button>
 			</view>
 		</view>
+		<!-- {{user}}{{yue}} -->
 		<!-- 显示星期 -->
 		<view class="week" v-if="langType=='ch'">
 			<view v-for="(item,index) in weeks_ch" :key="index">{{item}}</view>
@@ -54,6 +55,7 @@
 </template>
 
 <script>
+	import {getData, postData} from '@/http/fetch.js'
 	export default {
 		data() {
 			return {
@@ -66,7 +68,8 @@
 				toYear: parseInt(new Date().getFullYear()), //本年
 				weeks_ch: ['日', '一', '二', '三', '四', '五', '六'],
 				weeks_en: ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'],
-				yue:13,
+				yue:0,
+				user:''
 			};
 		},
 		props: {
@@ -97,6 +100,9 @@
 			this.calculateEmptyGrids(this.cur_year, this.cur_month);
 			this.calculateDays(this.cur_year, this.cur_month);
 			this.onJudgeSign();
+			this.yue= eval(this.$store.state.user.userInfo)[0].fields.coin
+			console.log(this.$store.state.user.userInfo.coin);
+			this.user = this.$store.state.user.user
 		},
 		watch: {
 			dataSource: 'onResChange',
@@ -197,7 +203,7 @@
 				this.$emit('dateChange', this.cur_year+"-"+this.cur_month); //传给调用模板页面去拿新数据				
 			},
 
-			clickSignUp(date, type) { //type=0补签，type=1当日签到		
+			async clickSignUp(date, type) { //type=0补签，type=1当日签到		
 			
 				var str = "签到";
 				if (type == 0) {//如果不需要补签功能直接在这阻止不执行后面的代码就行。
@@ -211,8 +217,14 @@
 						return
 					}else {
 						this.yue -= 10
+						let resp = await getData('user/signIn/?username='+this.user+'&type='+type)
+						console.log(resp);
 					}
+				}else{
+					let resp = await getData('user/signIn/?username='+this.user+'&type='+type)
+					console.log(resp);
 				}
+				
 				uni.showToast({
 					title: str + "成功" + date + "号,获得20书币",
 					icon: 'none',
@@ -224,7 +236,15 @@
 				// this.$forceUpdate();
 				
 				this.$emit('clickChange', this.cur_year + "-" + this.cur_month + "-" + date); //传给调用模板页面
-
+				let arr = uni.getStorage({
+					key:'sign'
+				})
+				console.log(arr.value);
+				// arr.split(',').push(date).toString()
+				uni.setStorage({
+					key:'sign',
+					data:arr
+				})
 				//refresh
 				this.onJudgeSign();
 

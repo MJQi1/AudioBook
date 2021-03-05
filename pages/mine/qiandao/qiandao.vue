@@ -33,6 +33,7 @@
 		created() {
 			//获取当前用户当前任务的签到状态  			
 			this.getData(this.toYear+"-"+this.toMonth);
+			
 		},
 		methods: {
 			clickSign(day) {
@@ -66,7 +67,8 @@
 				
 				if (y == this.toYear && m == this.toMonth) {
 					//这是我造的假数据！！！
-					let num=["2","3","8","12","15"],newSign=[],today=new Date().getDate();
+					let num=eval(uni.setStorageSync('sign')) ,newSign=[],today=new Date().getDate();
+					
 					for(let i=0;i<6;i++){
 						if(parseInt(num[i])>today){
 							break;

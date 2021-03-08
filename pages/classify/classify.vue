@@ -4,10 +4,10 @@
 		<view class="content">
 			<view v-show="current === index1" class="content-item" v-for="(node,index1) in items" :key="node">
 				<view class="left-tab">
-					<view v-if="index1===0" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list1 " :key="index" @click="changTab(index)">{{item}}</view>
-					<view v-if="index1===1" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list2" :key="index" @click="changTab(index)">{{item}}</view>
-					<view v-if="index1===2" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list3" :key="index" @click="changTab(index)">{{item}}</view>
-					<view v-if="index1===3" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list4" :key="index" @click="changTab(index)">{{item}}</view>
+					<view v-if="index1===0" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list1 " :key="index" @click="changTab(1,index)">{{item}}</view>
+					<view v-if="index1===1" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list2" :key="index" @click="changTab(2,index)">{{item}}</view>
+					<view v-if="index1===2" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list3" :key="index" @click="changTab(3,index)">{{item}}</view>
+					<view v-if="index1===3" class="check-bth" :class="{'check-active': index==active}" v-for="(item,index) in list4" :key="index" @click="changTab(4,index)">{{item}}</view>
 				</view>
 				
 				<view class="right-box">
@@ -24,7 +24,8 @@
 </template>
 
 <script>
-	import {textList} from '../home/data.js'
+import {textList} from '../home/data.js'
+import {getData, postData} from '@/http/fetch.js'
 export default {
 	data() {
 		return {
@@ -38,15 +39,63 @@ export default {
 			data:textList
 		};
 	},
+	created() {
+		this.getBook('都市')
+	},
 	methods: {
+		//获取书
+		async getBook(type){
+			let data  = {
+				type:type
+			}
+			let res = await postData('book/getTypeBook/', data)
+			if(res.state == 'success'){
+				let books = eval(res.data)
+				// books[0].fields
+				this.data = books
+				console.log(books);
+			}
+			
+			// console.log(res);
+		},
 		onClickItem(e) {
 			if (this.current !== e.currentIndex) {
 				this.current = e.currentIndex;
+				switch(this.current){
+					case 0:
+						this.changTab(1,0)
+						break
+					case 1:
+						this.changTab(2,0)
+						break
+					case 2:
+						this.changTab(3,0)
+						break
+					case 3:
+						this.changTab(4,0)
+						break
+						
+				}
 			}
 		},
 		//点击排行
-		changTab(index){
+		changTab(id, index){
 			this.active = index
+			switch(id){
+				case 1:
+					this.getBook(this.list1[index])
+					break
+				case 2:
+					this.getBook(this.list2[index])
+					break
+				case 3:
+					this.getBook(this.list3[index])
+					break
+				case 4:
+					this.getBook(this.list4[index])
+					break
+					
+			}
 		}
 	}
 };

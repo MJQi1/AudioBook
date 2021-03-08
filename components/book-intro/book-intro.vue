@@ -1,13 +1,13 @@
 <template>
 	<view class="">
 		<view class="main-box" v-for="(item, index) in listSub" :key="index" @click="goDetails(item.bookId)">
-			<view class="image"><image :src="item.src" mode=""></image></view>
+			<view class="image"><image :src="item.fields.img" mode=""></image></view>
 			<view class="datils">
-				<text class="title">{{ item.bookTitle }}</text>
+				<text class="title">{{ item.fields.bookName }}</text>
 				<view class="intro">
-					{{item.bookIntro}}
+					{{item.fields.bookInfo}}
 				</view>
-				<view class="msg">{{ item.author }} · {{ item.type }} · {{ item.state }}</view>
+				<view class="msg">{{ item.fields.anchor }} · {{ item.fields.type }} · {{ item.fields.pay }}</view>
 			</view>
 		</view>
 	</view>

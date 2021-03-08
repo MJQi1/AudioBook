@@ -70,15 +70,15 @@
 			</view>
 			<view class="space"></view>
 			<uni-list>
-				<uni-list-item title="我的钱包" link to="charge/charge"></uni-list-item>
-				<uni-list-item title="签到" link to="qiandao/qiandao"></uni-list-item>
+				<uni-list-item title="我的钱包" link :to="isLogin?'charge/charge':'login/login'"></uni-list-item>
+				<uni-list-item title="签到" link :to="isLogin?'qiandao/qiandao':'login/login'"></uni-list-item>
 				<uni-list-item title="每日福利" link></uni-list-item>
 			</uni-list>
 			<view class="space"></view>
 			<uni-list>
-				<uni-list-item title="我的收藏" link to="favorite/favorite?type=collect"></uni-list-item>
-				<uni-list-item title="历史记录" link to="favorite/favorite?type=history"></uni-list-item>
-				<uni-list-item title="我的评论" link to="chartMessage/chartMessage?type=pl"></uni-list-item>
+				<uni-list-item title="我的收藏" link :to="isLogin?'favorite/favorite?type=collect':'login/login'"></uni-list-item>
+				<uni-list-item title="历史记录" link :to="isLogin?'favorite/favorite?type=history':'login/login'"></uni-list-item>
+				<uni-list-item title="我的评论" link :to="isLogin?'chartMessage/chartMessage?type=pl':'login/login'"></uni-list-item>
 			</uni-list>
 			<view class="space"></view>
 			<uni-list>
@@ -101,7 +101,7 @@ export default {
 			isLogin: false,
 			isVip: false,
 			userinfo:{},
-			image:''
+			image:'',
 		};
 	},
 	onLoad() {
@@ -141,22 +141,41 @@ export default {
 			let url;
 			switch (add) {
 				case 'msg':
-					url = './chartMessage/chartMessage';
+					if(this.isLogin){
+						url = './chartMessage/chartMessage';
+					}else{
+						url = './login/login';
+					}
 					break;
 				case 'qiandao':
 					url = './qiandao/qiandao';
+					if(!this.isLogin){
+						url = './login/login';
+					}
 					break;
 				case 'pay':
 					url = './charge/charge';
+					if(!this.isLogin){
+						url = './login/login';
+					}
 					break;
 				case 'chargeVip':
 					url = './charge/charge?type=vip';
+					if(!this.isLogin){
+						url = './login/login';
+					}
 					break;
 				case 'collect':
 					url = './favorite/favorite?type=collect';
+					if(!this.isLogin){
+						url = './login/login';
+					}
 					break;
 				case 'history':
 					url = './favorite/favorite?type=history';
+					if(!this.isLogin){
+						url = './login/login';
+					}
 					break;
 				case 'persional':
 					url = './persional/persional'

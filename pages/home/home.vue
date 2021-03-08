@@ -62,7 +62,7 @@
 						<freeCom v-if="item.name == '免费'"/>
 						<childCom v-if="item.name == '儿童'"/>
 						
-						<uni-load-more :status="state"></uni-load-more>
+						<!-- <uni-load-more :status="state"></uni-load-more> -->
 						<view class="" style="height: 30rpx;"></view>
 					</scroll-view>
 				</swiper-item>

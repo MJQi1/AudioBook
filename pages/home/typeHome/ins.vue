@@ -31,6 +31,7 @@
 				<book-block-title title="精彩推荐">
 					<view class="" v-for="(item, index2) in pollDownData" :key="index2"><book-intro :list="item.list"></book-intro></view>
 				</book-block-title>
+				<uni-load-more :status="state"></uni-load-more>
 				<view class="" style="height: 30rpx;"></view>
 			</view>
 		</view>
@@ -40,6 +41,7 @@
 
 <script>
 	import {selectBar, rankData, textList,boyList, girlList, pollDownData} from '../data.js'
+	import { getData, postData} from '@/http/fetch.js'
 	export default {
 		data() {
 			return {
@@ -86,7 +88,24 @@
 					]
 			}
 		},
+		created() {
+			// this.getData()
+		},
 		methods: {
+			//获取数据
+			async getData(){
+				let data = {
+					type: 'all',
+					state:0	
+				}
+				let res = await postData('book/getRank/',data)
+				let books = eval(res.data)
+				// books[0].fields
+				this.rankData[0].list = eval(res.data)
+				this.rankData[1].list = eval(res.data)
+				this.rankData[2].list = eval(res.data)
+				console.log(books);
+			},
 			//加载更多
 			loadMore(){
 				if(this.pollDownData.length> 6){
@@ -125,7 +144,7 @@
 <style lang="less" scoped>
 .swiper-sccroll {
 	width: 100%;
-	height: 100%;
+	height: 85vh;
 	//轮播
 	.banner {
 		height: 20vh;

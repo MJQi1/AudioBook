@@ -236,11 +236,12 @@
 				// this.$forceUpdate();
 				
 				this.$emit('clickChange', this.cur_year + "-" + this.cur_month + "-" + date); //传给调用模板页面
-				let arr = uni.getStorage({
-					key:'sign'
-				})
-				console.log(arr.value);
-				// arr.split(',').push(date).toString()
+				let arr = uni.getStorageSync('sign')
+				console.log(eval(arr));
+				arr.date.push(date)
+				
+				
+				
 				uni.setStorage({
 					key:'sign',
 					data:arr

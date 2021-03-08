@@ -63,12 +63,12 @@
 				// 	Month: m,
 				// }, (res) => {
 				//console.log(res);
-				this.sumCount = 80; //res.SumCount
 				
 				if (y == this.toYear && m == this.toMonth) {
 					//这是我造的假数据！！！
-					let num=eval(uni.setStorageSync('sign')) ,newSign=[],today=new Date().getDate();
-					
+					let num=eval(uni.getStorageSync('sign')).date ,newSign=[],today=new Date().getDate();
+					console.log(num);
+					this.sumCount = num.length; //res.SumCount
 					for(let i=0;i<6;i++){
 						if(parseInt(num[i])>today){
 							break;

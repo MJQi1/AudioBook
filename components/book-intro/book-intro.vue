@@ -1,7 +1,7 @@
 <template>
 	<view class="">
-		<view class="main-box" v-for="(item, index) in listSub" :key="index" @click="goDetails(item.bookId)">
-			<view class="image"><image :src="item.fields.img" mode=""></image></view>
+		<view v-if="listSub.length!=0" class="main-box" v-for="(item, index) in listSub" :key="index" @click="goDetails(item.fields.bookId)">
+			<view class="image"><image :src="item&&item.fields.img" mode=""></image></view>
 			<view class="datils">
 				<text class="title">{{ item.fields.bookName }}</text>
 				<view class="intro">
@@ -20,8 +20,7 @@ export default {
 	},
 	props: {
 		list: {
-			type: Array,
-			default: []
+			type: Array
 		},
 		limit: {
 			type: Number,
@@ -31,7 +30,6 @@ export default {
 	methods: {
 		// 跳转详情
 		goDetails(id) {
-			console.log(11);
 			uni.navigateTo({
 				url: '/pages/bookDatiles/bookDatiles?id=' + id
 			});

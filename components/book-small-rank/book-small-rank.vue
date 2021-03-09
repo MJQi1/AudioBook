@@ -1,23 +1,23 @@
 <template>
 	<view class="main-block">
-		<view class="title">
+		<view class="title" >
 			<view class="title-act">
 				<view @click="pointBar(index)" :class="{ active: index === current }" v-for="(item, index) in lists" :key="item.title">{{ item.title }}</view>
 			</view>
 
-			<view class="title-are">
+			<view class="title-are" @click="goRank">
 				完整榜单<uni-icons type="forward" size="10" color="#999"></uni-icons>
 			</view>
 		</view>
 		<swiper class="swiper" @change="change" :current="current" :duration="1000">
-			<swiper-item v-for="(item, index) in lists" :key="index">
+			<swiper-item  v-for="(item, index) in lists" :key="index">
 				<view class="swiper-item">
-					<view class="rank-item" v-for="(node, index) in item.list" :key="index">
-						<image :src="node.src" mode=""></image>
+					<view class="rank-item" v-for="(node, index) in item.list" :key="index" @click="goBook(node.fields.bookId)">
+						<image :src="node.fields.img" mode=""></image>
 						<text class="index">{{ index + 1 }}</text>
 						<view class="intro">
-							<text class="name">{{ node.bookTitle }}</text>
-							<text class="author">{{ node.author }}</text>
+							<text class="name">{{ node.fields.bookName }}</text>
+							<text class="author">{{ node.fields.anchor }}</text>
 						</view>
 					</view>
 				</view>
@@ -46,6 +46,16 @@ export default {
 		change(e){
 			// console.log(e);
 			this.current = e.detail.current
+		},
+		goRank(){
+			uni.switchTab({
+				url:'/pages/rank/rank'
+			})
+		},
+		goBook(id){
+			uni.navigateTo({
+				url:'/pages/bookDatiles/bookDatiles?id='+id
+			})
 		}
 	}
 };

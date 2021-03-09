@@ -54,7 +54,7 @@
 				<swiper-item v-for="(item, index) in selectBar" v-if="item.select" :key="item.name">
 					<!-- 滚动效果 -->
 					<scroll-view scroll-y="true" class="swiper-sccroll" @scrolltolower="loadMore">
-						<insCom v-if="item.name == '推荐'"/>
+						<insCom v-if="item.name == '推荐'" @switchTag="switchTag"/>
 						<boyCom v-if="item.name == '男生'"/>
 						<girlCom v-if="item.name == '女生'"/>
 						<eduCom v-if="item.name == '教育'"/>
@@ -225,15 +225,9 @@ export default {
 				this.pollDownData.push(data)
 			},1000)
 		},
-		handleChooseSwiper(item){
-			switch(item){
-				case '免费':
-					this.tabAct = 4
-					break
-				case '会员':
-					this.tabAct = 5
-					break
-			}
+		//切换主题
+		switchTag(item){
+			this.tabAct = item
 		}
 	},
 	onPullDownRefresh() {

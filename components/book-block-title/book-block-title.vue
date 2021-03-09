@@ -30,7 +30,7 @@
 		},
 		methods:{
 			refreshThis(){
-				
+				this.$emit('refreshThis')
 			},
 			moresThis(){
 				

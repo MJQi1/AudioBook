@@ -2,11 +2,11 @@
 	<view class="main-block">
 		<scroll-view scroll-x="true" class="scroll-x">
 			<view>
-				<view class="book-datils" v-for="(item,index) in list" :key="index" @click="goDetails(item.bookId)">
-					<image :src="item.src" mode=""></image>
+				<view class="book-datils" v-for="(item,index) in list" :key="index" @click="goDetails(item.fields.bookId)">
+					<image :src="item.fields.img" mode=""></image>
 					<view class="book-title">
-						<text class="title">{{item.bookTitle}}</text>
-						<text class="author">{{item.author}}</text>
+						<text class="title">{{item.fields.bookName}}</text>
+						<text class="author">{{item.fields.anchor}}</text>
 					</view>
 				</view>
 			</view> 
@@ -42,7 +42,7 @@
 			// 跳转
 			goDetails(id){
 				uni.navigateTo({
-					url:'../../pages/bookDatiles/bookDatiles?id='+id
+					url:'/pages/bookDatiles/bookDatiles?id='+id
 				})
 			}
 		}

@@ -22,14 +22,16 @@
 				<!-- 图标快捷 -->
 				<book-block  @chooseSwiper="handleChooseSwiper"></book-block>
 				<!-- 展示模块 -->
-				<book-block-title title="猜你喜欢" :refresh="true"><a-compinents :list="textList"></a-compinents></book-block-title>
+				<book-block-title title="猜你喜欢" :refresh="true" @refreshThis="getLike"><a-compinents :list="guessLike"></a-compinents></book-block-title>
 				<!-- 展示详情 -->
-				<book-block-title title="为你推荐" :more="true"><book-intro :list="textList"></book-intro></book-block-title>
+				<book-block-title title="为你推荐" :more="true"><book-intro :list="recommend"></book-intro></book-block-title>
 				<!-- 小排行 -->
 				<book-small-rank :lists="rankData"></book-small-rank>
 				<!-- 下拉加载随机推荐 -->
 				<book-block-title title="精彩推荐">
-					<view class="" v-for="(item, index2) in pollDownData" :key="index2"><book-intro :list="item.list"></book-intro></view>
+					<!-- <view class="" v-for="(item, index2) in pollDownData" :key="index2"> -->
+						<book-intro :list="pollDownData" :limit="0"></book-intro>
+					<!-- </view> -->
 				</book-block-title>
 				<uni-load-more :status="state"></uni-load-more>
 				<view class="" style="height: 30rpx;"></view>
@@ -70,12 +72,14 @@
 				old: {
 					scrollTop: 0
 				},
+				guessLike:[],//猜你喜欢
+				recommend:[],//推荐
 				//测试数据
 				textList: textList,
 				boyList:boyList,
 				girlList:girlList,
-				rankData: rankData,
-				pollDownData:pollDownData,
+				rankData: rankData,//小排行
+				pollDownData:[],
 				imageList: [
 						{
 							src: '/static/load/load1080.png',
@@ -89,7 +93,9 @@
 			}
 		},
 		created() {
-			// this.getData()
+			this.getData()//获取推荐 轮播 小排行
+			this.getLike()//获取猜你喜欢
+			this.getRecommend()
 		},
 		methods: {
 			//获取数据
@@ -98,36 +104,60 @@
 					type: 'all',
 					state:0	
 				}
+				//排行获取
 				let res = await postData('book/getRank/',data)
 				let books = eval(res.data)
 				// books[0].fields
-				this.rankData[0].list = eval(res.data)
-				this.rankData[1].list = eval(res.data)
-				this.rankData[2].list = eval(res.data)
-				console.log(books);
+				this.rankData[0].list = eval(res.data.all)
+				this.rankData[1].list = eval(res.data.free)
+				this.rankData[2].list = eval(res.data.vip)
+				
+				//推荐获取
+				let recommend = await postData('book/getRecommend/', {
+					type: 'all',
+					state: 1 })
+				this.recommend = eval(recommend.data)
+				// this.pollDownData= eval(recommend.data)
+				
+			},
+			//加载获取更多推荐
+			async getRecommend(){
+				let recommend = await postData('book/getRecommend/', {
+					type: 'all',
+					state: 1 })
+				for(let i of eval(recommend.data)){
+					this.pollDownData.push(i)
+				}
+				
+			},
+			async getLike(){
+				// 猜你喜欢推荐获取
+				let like = await postData('book/getRecommend/', {
+					type: 'all',
+					state: 0 })
+				this.guessLike = eval(like.data)
 			},
 			//加载更多
 			loadMore(){
-				if(this.pollDownData.length> 6){
+				if(this.pollDownData.length> 30){
 					this.state = 'noMore'
 					return
 				}
-			
-				let data = {
-					list: this.textList
-				}
 				this.state = 'loading'
 				setTimeout(()=>{
-					this.pollDownData.push(data)
+					this.getRecommend()
 				},1000)
 			},
 			handleChooseSwiper(item){
 				switch(item){
 					case '免费':
-						this.tabAct = 4
+						this.$emit('switchTag', 4)
 						break
 					case '会员':
-						this.tabAct = 5
+						this.$emit('switchTag', 5)
+						break
+					case '精选':
+						this.$emit('switchTag', 6)
 						break
 				}
 			}

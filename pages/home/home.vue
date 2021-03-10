@@ -60,7 +60,7 @@
 						<eduCom v-if="item.name == '教育'"/>
 						<memberCom v-if="item.name == '会员'"/>
 						<freeCom v-if="item.name == '免费'"/>
-						<childCom v-if="item.name == '儿童'"/>
+						<childCom v-if="item.name == '娱乐'"/>
 						
 						<!-- <uni-load-more :status="state"></uni-load-more> -->
 						<view class="" style="height: 30rpx;"></view>

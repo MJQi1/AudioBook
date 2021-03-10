@@ -246,6 +246,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/home/classCheck/classCheck",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -20,7 +20,7 @@
 					<view class="coin-title">书券</view>
 				</view>
 				<view class="book-coin" @click="toWhat('pay')">
-					<view class="coin">0</view>
+					<view class="coin" v-show="isLogin">0</view>
 					<view class="coin-title">优惠券</view>
 				</view>
 				<view class="charge" @click="toWhat('pay')">充值</view>
@@ -66,7 +66,7 @@
 				</swiper-item>
 			</swiper> -->
 			<view class="small-swiper">
-				<book-small-swiper></book-small-swiper>
+				<book-small-swiper :imageList="swiperArr"></book-small-swiper>
 			</view>
 			<view class="space"></view>
 			<uni-list>
@@ -102,6 +102,7 @@ export default {
 			isVip: false,
 			userinfo:{},
 			image:'',
+			swiperArr:[]
 		};
 	},
 	onLoad() {
@@ -109,7 +110,7 @@ export default {
 	},
 	onShow() {
 		this.getUserInfo()
-		// this.getTest()
+		this.getSwiper()
 	},
 	methods: {
 		//获取用户信息
@@ -126,11 +127,14 @@ export default {
 				}
 			}
 		},
-		// async getTest(){
-		// 	// http://127.0.0.1:8000/static/head_image/tx.png
-		// 	let resp =  await getData('show/')
-		// 	this.image = 'http://127.0.0.1:8000' + resp.src
-		// },
+		async getSwiper(){
+			//轮播图获取
+			let lbt = await postData('book/getRecommend/', {
+				type: 'mine',
+				state: 2
+			});
+			this.swiperArr = eval(lbt.data)
+		},
 		toLogin() {
 			uni.navigateTo({
 				url: './login/login'

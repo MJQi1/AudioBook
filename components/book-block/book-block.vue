@@ -63,6 +63,7 @@ export default {
 				url:item.path
 			})
 			this.$emit('chooseSwiper',item.title)
+			this.$emit('classBook',item.type)
 		}
 	}
 };

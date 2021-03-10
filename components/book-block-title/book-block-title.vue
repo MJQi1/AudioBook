@@ -2,8 +2,8 @@
 	<view class="main-block">
 		<view class="plate-title">
 			<view class="title">{{title}}</view>
-			<view class="left-op" v-show="refresh">换一换<uni-icons type="loop" size="10" color="#999" @click="refreshThis"></uni-icons></view>
-			<view class="left-op" v-show="more"> 加载更多<uni-icons type="forward" size="10" color="#999" @click="moresThis"></uni-icons></view>
+			<view class="left-op" v-show="refresh" @click="refreshThis">换一换<uni-icons type="loop" size="10" color="#999" ></uni-icons></view>
+			<view class="left-op" v-show="more" @click="moresThis"> 加载更多<uni-icons type="forward" size="10" color="#999" ></uni-icons></view>
 		</view>
 		<slot></slot>
 	</view>
@@ -33,7 +33,7 @@
 				this.$emit('refreshThis')
 			},
 			moresThis(){
-				
+				this.$emit('moresThis')
 			}
 		}
 	}

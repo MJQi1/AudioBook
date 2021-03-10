@@ -23,7 +23,7 @@ const selectBar = [{
 		select: true
 	},
 	{
-		name: '儿童',
+		name: '娱乐',
 		select: true
 	},
 ]
@@ -91,10 +91,10 @@ const textList = [{
 const boyList = [{
 		title: '玄幻',
 		imageSrc: '/static/icons/xuanhuan.png',
-		path: '/pages/index/test/test'
+		path: '/pages/home/classCheck/classCheck'
 	},
 	{
-		title: '武侠',
+		title: '仙侠武侠',
 		imageSrc: '/static/icons/xianxia.png',
 		path: '/pages/index/test/test'
 	},
@@ -104,43 +104,96 @@ const boyList = [{
 		path: '/pages/index/test/test'
 	},
 	{
-		title: '悬疑',
+		title: '悬疑灵异',
 		imageSrc: '/static/icons/xuanyi.png',
 		path: '/pages/index/test/test'
 	},
 	{
-		title: '游戏',
+		title: '游戏动漫',
 		imageSrc: '/static/icons/youxi.png',
 		path: '/pages/index/test/test'
 	}
 ]
 const girlList = [{
-		title: '言情',
+		title: '都市言情',
 		imageSrc: '/static/icons/yanqing.png',
 		path: '/pages/index/test/test'
 	},
 	{
-		title: '悬疑',
+		title: '悬疑灵异',
 		imageSrc: '/static/icons/xuanyi.png',
 		path: '/pages/index/test/test'
 	},
 	{
-		title: '仙侠',
+		title: '仙侠武侠',
 		imageSrc: '/static/icons/xianxia.png',
 		path: '/pages/index/test/test'
 	},
 	{
-		title: '青春',
+		title: '青春校园',
 		imageSrc: '/static/icons/shuidi.png',
 		path: '/pages/index/test/test'
 	},
 	{
-		title: '游戏',
+		title: '游戏动漫',
 		imageSrc: '/static/icons/youxi.png',
 		path: '/pages/index/test/test'
 	}
 ]
 
+const eduList = [{
+		title: '外语',
+		imageSrc: '/static/icons/yanqing.png',
+		path: '/pages/index/test/test'
+	},
+	{
+		title: '考研',
+		imageSrc: '/static/icons/xuanyi.png',
+		path: '/pages/index/test/test'
+	},
+	{
+		title: '高考',
+		imageSrc: '/static/icons/xianxia.png',
+		path: '/pages/index/test/test'
+	},
+	{
+		title: '初中',
+		imageSrc: '/static/icons/shuidi.png',
+		path: '/pages/index/test/test'
+	},
+	{
+		title: '小学',
+		imageSrc: '/static/icons/youxi.png',
+		path: '/pages/index/test/test'
+	}
+]
+
+const funList = [{
+		title: '相声评书',
+		imageSrc: '/static/icons/yanqing.png',
+		path: '/pages/index/test/test'
+	},
+	{
+		title: '娱乐',
+		imageSrc: '/static/icons/xuanyi.png',
+		path: '/pages/index/test/test'
+	},
+	{
+		title: '戏曲',
+		imageSrc: '/static/icons/xianxia.png',
+		path: '/pages/index/test/test'
+	},
+	{
+		title: '广播剧',
+		imageSrc: '/static/icons/shuidi.png',
+		path: '/pages/index/test/test'
+	},
+	{
+		title: '商业财经',
+		imageSrc: '/static/icons/youxi.png',
+		path: '/pages/index/test/test'
+	}
+]
 const rankData = [{
 		title: '人气榜',
 		list: textList
@@ -170,5 +223,7 @@ export {
 	rankData,
 	boyList,
 	girlList,
+	funList,
+	eduList,
 	pollDownData
 }

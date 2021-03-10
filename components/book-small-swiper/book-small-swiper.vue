@@ -2,7 +2,7 @@
 	<view>
 		<swiper class="swiper" :autoplay="true" :interval="5000" :duration="1000" circular="true">
 			<swiper-item v-for="(item, index) in imageList" :key="index">
-				<view class="swiper-item"><image :src="item.src" mode="scaleToFill" @click="toSwiper(item.path)"></image></view>
+				<view class="swiper-item"><image :src="item.fields.image" mode="scaleToFill" @click="toSwiper(item.fields.bookId)"></image></view>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -32,9 +32,9 @@ export default {
 	},
 	methods:{
 		//挑转
-		toSwiper(url){
+		toSwiper(id){
 			uni.navigateTo({
-				url:url
+				url:'../../pages/bookDatiles/bookDatiles?id='+ id
 			})
 		}
 	}

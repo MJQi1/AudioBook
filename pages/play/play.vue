@@ -96,6 +96,9 @@ export default {
 			that.loopAni();
 		}, 100);
 	},
+	onLoad(op) {
+		console.log(op.id);
+	},
 	methods: {
 		//播放
 		play(state) {

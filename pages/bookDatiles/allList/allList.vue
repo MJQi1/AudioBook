@@ -1,11 +1,11 @@
 <template>
 	<view>
 		<view class="book-top-warp">
-			<image src="../../../static/background/home.jpg" mode="aspectFit"></image>
+			<image :src="info.img" mode="aspectFit"></image>
 			<view class="book-info">
-				<view class="book-title">shugmingxsdsa</view>
-				<view class="author">作者：</view>
-				<view class="author">主播：</view>
+				<view class="book-title">{{info.book}}</view>
+				<view class="author">分类：{{info.type}}</view>
+				<view class="author">主播：{{info.anchor}}</view>
 			</view>
 			<view class="sort" @click="sort">
 				<view v-show="sorts">
@@ -21,7 +21,7 @@
 		<scroll-view class="scroll" scroll-y="true" >
 			<view>
 				<uni-list>
-					<uni-list-item v-for="(item, index) in bookTemp" :key="index" :title="`第${item.index}章  ${item.title}`" to="../home/search/search"></uni-list-item>
+					<uni-list-item v-for="(item, index) in bookTemp" :key="index" :title="item.fields.chapterName" :to="'/pages/play/play?id='+item.fields.chapterId"></uni-list-item>
 				</uni-list>
 			</view>
 		</scroll-view>
@@ -30,59 +30,27 @@
 </template>
 
 <script>
+	import {getData, postData} from '@/http/fetch.js'
 	export default {
 		data() {
 			return {
 				//顺序
 				sorts:true,
-				bookTemp: [
-					{
-						title: '阿里的父1',
-						link: 'src',
-						index:1
-					},
-					{
-						title: '阿父母公开2',
-						link: 'src',
-						index:2
-					},
-					{
-						title: '阿里的父母3',
-						link: 'src',
-						index:3
-					},
-					{
-						title: '阿里4',
-						link: 'src'
-					},
-					{
-						title: '阿5',
-						link: 'src'
-					},
-					{
-						title: '阿里的父母6',
-						link: 'src'
-					},
-					{
-						title: '阿里的父7',
-						link: 'src'
-					},
-					{
-						title: '阿里的8',
-						link: 'src'
-					},
-					{
-						title: '阿里的9',
-						link: 'src'
-					},
-					{
-						title: '阿里10',
-						link: 'src'
-					},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{index:29}
-				]
+				bookTemp: [],
+				info:''
 			};
 		},
+		onLoad(op) {
+			this.getChapter(op.bookId)
+			// console.log(op);
+			this.info = op
+		},
 		methods:{
+			async getChapter(id){
+				let res = await getData('book/getBookDetiles/?id=' + id)
+				// console.log(res);
+				this.bookTemp = eval(res.data)
+			},
 			sort(){
 				this.bookTemp.reverse()
 				this.sorts = !this.sorts
@@ -110,6 +78,7 @@
 				color: #333;
 				font-size: 38rpx;
 				line-height: 70rpx;
+				overflow: hidden;
 			}
 			.author {
 				font-size: 26rpx;

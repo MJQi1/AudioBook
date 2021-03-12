@@ -2,15 +2,15 @@
 	<view class="main">
 		<view class="book-top">
 			<view class="book-top-warp">
-				<image :src="src" mode="aspectFit"></image>
+				<image :src="bookInfo.img" mode="aspectFit"></image>
 				<view class="book-info">
-					<view class="book-title">shugmingxsdsa</view>
+					<view class="book-title">{{bookInfo.bookName}}</view>
 					<view class="book-type">
-						<uni-tag class="tag" size="small" text="表示" type="primary"></uni-tag>
-						<uni-tag class="tag" size="small" text="表示" type="warning"></uni-tag>
-						<uni-tag class="tag" size="small" text="表示" type="success"></uni-tag>
+						<uni-tag class="tag" size="small" :text="bookInfo.type" type="error"></uni-tag>
+						<!-- <uni-tag class="tag" size="small" text="表示" type="warning"></uni-tag>
+						<uni-tag class="tag" size="small" text="表示" type="success"></uni-tag> -->
 					</view>
-					<view class="author"><view>作者</view></view>
+					<view class="author"><view>{{bookInfo.anchor}}</view></view>
 				</view>
 			</view>
 			<view class="fav-add">
@@ -21,14 +21,14 @@
 
 		<uni-section title="简介" type="line"></uni-section>
 
-		<uni-group title="作者" margin-top="" mode="card"><view class="nextText">内容主体，可自定义内容及样式</view></uni-group>
-		<uni-group title="主播" margin-top="" mode="card"><view class="nextText">内容主体，可自定义内容及样式</view></uni-group>
-		<uni-group title="内容简介" margin-top="" mode="card"><view class="nextText">内容主体，可自定义内容及样式</view></uni-group>
+		<!-- <uni-group title="作者" margin-top="" mode="card"><view class="nextText">内容主体，可自定义内容及样式</view></uni-group> -->
+		<uni-group title="主播" margin-top="" mode="card"><view class="nextText">{{bookInfo.anchor}}</view></uni-group>
+		<uni-group title="内容简介" margin-top="" mode="card"><view class="nextText">{{bookInfo.bookInfo}}</view></uni-group>
 
 		<uni-section title="全部章节" sub-title="" type="line"></uni-section>
 		<uni-list>
-			<uni-list-item v-for="(item, index) in bookTemp" :key="index" :title="`第${index + 1}章  ${item.title}`" to="../play/play"></uni-list-item>
-			<uni-list-item title="剩余全部章节" link to="./allList/allList"></uni-list-item>
+			<uni-list-item v-for="(item, index) in bookTemp" :key="index" :title="item.fields.chapterName" :to="'../play/play?id='+item.fields.chapterId"></uni-list-item>
+			<uni-list-item title="剩余全部章节" link :to="`./allList/allList?bookId=${bookId}&book=${bookInfo.bookName}&img=${bookInfo.img}&anchor=${bookInfo.anchor}&type=${bookInfo.type}`"></uni-list-item>
 		</uni-list>
 		<uni-section title="评价" sub-title="" type="line"></uni-section>
 		<view class="evalute">
@@ -75,10 +75,13 @@
 </template>
 
 <script>
+	import {getData,postData} from '@/http/fetch.js'
 export default {
 	data() {
 		return {
+			user:'',
 			bookId: '',
+			bookInfo:[{fields:{chapterName:''}}],
 			bookTemp: [
 				{
 					title: '阿里的父1',
@@ -134,8 +137,20 @@ export default {
 		//option为object类型，会序列化上个页面传递的参数
 		this.bookId = option.id; //打印出上个页面传递的参数。
 		console.log(this.bookId);
+		this.user = this.$store.state.user.user
+		this.getBook()
 	},
 	methods: {
+		//获取数据
+		async getBook(){
+			let result = await postData('book/getBookDetiles/',{
+				user:this.user,
+				bookId:this.bookId
+			})
+			this.bookInfo = eval(result.book)[0].fields
+			this.bookTemp = eval(result.chapter)
+			// console.log(this.bookTemp);
+		},
 		//获取评分
 		getRate(e) {
 			this.evaluteData.rate = e.value;
@@ -236,14 +251,14 @@ export default {
 			padding-left: 30rpx;
 			.book-title {
 				color: #aa0000;
-				font-size: 38rpx;
+				font-size: 35rpx;
 				line-height: 70rpx;
 			}
 			.book-type {
-				hegiht: 50rpx;
+				hegiht: 45rpx;
 				display: flex;
 				flex-direction: row;
-				padding: 10rpx 0;
+				padding: 5rpx 0;
 				.tag {
 					margin-right: 20rpx;
 				}

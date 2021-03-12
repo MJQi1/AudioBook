@@ -21,7 +21,7 @@
 				<view class="history-title"><text>历史记录</text>
 					<uni-icons @click="showDialog" type="trash"></uni-icons>
 				</view>
-				<view class="history-tab" v-for="(item,index) in historyArray" :key="index">{{item}}</view>
+				<view class="history-tab" v-for="(item,index) in historyArray" :key="index" @click="historyClick(item)">{{item}}</view>
 			</view>
 			<view class="history-text" v-else>
 				暂无历史记录
@@ -30,13 +30,17 @@
 		</view>
 		<view class="line"></view>
 		<view class="container">
-			<book-intro :list="textList" :limit="0"></book-intro>
+			<book-intro v-show="textList.length != 0" :list="textList" :limit="0"></book-intro>
+			<view v-show="textList.length == 0" style="color: #999;text-align: center;">
+				没有结果
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
 	import {textList} from '../data.js'
+	import {postData} from '@/http/fetch.js'
 	export default {
 		data() {
 			return {
@@ -68,12 +72,21 @@
 				})
 			},
 			// 搜索
-			srarch() {
+			async srarch() {
 				//搜索逻辑
 				this.textList = []
-				for(let i of textList){
-					if(i.bookTitle.includes(this.keyCode)){
-						this.textList.push(i)
+				let result = await postData('book/search/',{
+					keyCode: this.keyCode
+				})
+				console.log(result)
+				let rel = []
+				for(let item in result.data){
+					let data = eval(result.data[item])
+					for(let i in data){
+						if(rel.indexOf(data[i].fields.bookName) == -1){
+							rel.push(data[i].fields.bookName)
+							this.textList.push(data[i])
+						}
 					}
 				}
 				//历史记录
@@ -81,6 +94,9 @@
 					return
 				}
 				//去重
+				if(this.historyArray == '' | this.historyArray == null){
+					this.historyArray = []
+				}
 				console.log(this.historyArray);
 				this.historyArray.unshift(this.keyCode)
 				let set = new Set(this.historyArray)
@@ -112,6 +128,10 @@
 					this.historyArray = his
 				})
 			},
+			historyClick(key){
+				this.keyCode = key
+				this.srarch()
+			}
 		}
 
 	}

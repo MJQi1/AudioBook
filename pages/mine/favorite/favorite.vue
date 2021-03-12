@@ -7,11 +7,13 @@
 
 <script>
 	import {textList} from '../../home/data.js'
+	import {postData} from '@/http/fetch.js'
 	export default {
 		data() {
 			return {
 				textList:textList,
-				isHistory:false
+				isHistory:false,
+				user:this.$store.state.user.user
 			};
 		},
 		onLoad(option) {
@@ -19,12 +21,23 @@
 				uni.setNavigationBarTitle({
 					title:'我的收藏'
 				})
+				this.getCollect()
 			}
 			if(option.type === 'history'){
 				uni.setNavigationBarTitle({
 					title:'历史记录'
 				})
 				this.isHistory = true
+			}
+		},
+		methods:{
+			async getCollect(){
+				let res = await postData('user/collect/',{
+					user: this.user,
+					bookId:'0',
+					state: 3//获取收藏列表
+				}) 
+				this.textList = eval(res.state)
 			}
 		}
 	}

@@ -14,18 +14,19 @@
 			</view>
 			<view class="msg-bar">
 				<swiper class="swiper" :vertical="true" :circular="true" :autoplay="true" :interval="3000" :duration="1000">
-					<swiper-item>
+					<swiper-item v-if="isLogin" v-for="(item, index) in bookshelfList">
 						<view class="swiper-item">
 							<image src="../../static/icons/book.png" mode="aspectFit"></image>
-							<view class="act">lsdfasd</view>
+							<view class="act">{{item.fields.bookName}} : {{item.fields.bookInfo}}</view>
 						</view>
 					</swiper-item>
-					<swiper-item>
+					<swiper-item v-if="!isLogin" v-for="(item, index) in ins">
 						<view class="swiper-item">
 							<image src="../../static/icons/book.png" mode="aspectFit"></image>
-							<view class="act">61523</view>
+							<view class="act">{{item}}</view>
 						</view>
 					</swiper-item>
+					
 				</swiper>
 			</view>
 		</view>
@@ -41,13 +42,14 @@
 </template>
 
 <script>
-import { textList } from '../home/data.js';
+import {postData} from '@/http/fetch.js'
 export default {
 	data() {
 		return {
-			bookshelfList: textList,
+			bookshelfList: [],
 			isLogin: false,
-			user: ''
+			user: '',
+			ins:['登录享受美好生活','登录享受私人听书空间']
 		};
 	},
 	onLoad() {
@@ -57,6 +59,7 @@ export default {
 	onShow() {
 		// console.log('show....................');
 		this.getUser()
+		this.getShelf()
 	},
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
@@ -74,10 +77,29 @@ export default {
 			url: path
 		});
 	},
+	watch:{
+		isLogin(newdata, old){
+			if(newdata == false) {
+				this.bookshelfList = []
+			}
+		}
+	},
 	methods:{
 		getUser() {
 			this.isLogin = this.$store.state.user.hasLogin
 			this.user = this.$store.state.user.user
+		},
+		async getShelf() {
+			if(!this.isLogin){
+				return
+			}
+			
+			let res = await postData('user/shelf/',{
+				user: this.user,
+				bookId:'',
+				state: 3//get list
+			})
+			this.bookshelfList = eval(res.state)
 		},
 		//分享选择
 		shareSelect(op){
@@ -148,6 +170,7 @@ export default {
 					height: 60rpx;
 				}
 				.act {
+					font-size: 25rpx;
 					text-indent: 30rpx;
 					line-height: 60rpx;
 				}

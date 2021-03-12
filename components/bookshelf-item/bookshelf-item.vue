@@ -1,8 +1,8 @@
 <template>
-	<view class="book-item" @click="goBookDatiles(datils.bookId)">
-		<image :src="datils.src" mode="scaleToFill"></image>
+	<view class="book-item" @click="goBookDatiles(datils.fields.bookId)">
+		<image :src="datils.fields.img" mode="scaleToFill"></image>
 		<view class="title" >
-			{{datils.bookTitle}}
+			{{datils.fields.bookName}}
 		</view>
 	</view>
 </template>
@@ -19,14 +19,23 @@
 				type:Object,
 				default:function(){
 					return {
-						src:"/static/icons/add.png",
-						bookTitle:''
+						fields:{
+							img:"/static/icons/add.png",
+							bookId:'home'
+						}
+						
 					}
 				}
 			}
 		},
 		methods:{
 			goBookDatiles(id){
+				if(id == 'home'){
+					uni.switchTab({
+						url:'/pages/home/home'
+					})
+					return
+				}
 				uni.navigateTo({
 					url:'/pages/bookDatiles/bookDatiles?id='+id
 				})

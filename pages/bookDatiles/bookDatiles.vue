@@ -6,7 +6,7 @@
 				<view class="book-info">
 					<view class="book-title">{{bookInfo.bookName}}</view>
 					<view class="book-type">
-						<uni-tag class="tag" size="small" :text="bookInfo.type" type="error"></uni-tag>
+						<uni-tag class="tag" size="small" :text="bookInfo.type" type="primary"></uni-tag>
 						<!-- <uni-tag class="tag" size="small" text="表示" type="warning"></uni-tag>
 						<uni-tag class="tag" size="small" text="表示" type="success"></uni-tag> -->
 					</view>
@@ -14,8 +14,9 @@
 				</view>
 			</view>
 			<view class="fav-add">
-				<uni-fav :checked="isFavorite" circle="true" bgColor="#9999e6" fgColor="#f7f7f7" bgColorChecked="#e64340" @click="favorite()"></uni-fav>
-				<button type="primary" size="mini" @click="addBookShelf()">加入书架</button>
+				<uni-fav :checked="isFavorite" circle="true" bgColor="#9999e6" fgColor="#f7f7f7" bgColorChecked="#00aa00" @click="favorite()"></uni-fav>
+				<button v-show="!isShelf" type="primary" size="mini" @click="addBookShelf()">加入书架</button>
+				<button v-show="isShelf" type="warn" size="mini" @click="addBookShelf()">放出书架</button>
 			</view>
 		</view>
 
@@ -80,57 +81,17 @@ export default {
 	data() {
 		return {
 			user:'',
+			isLogin:'',
 			bookId: '',
 			bookInfo:[{fields:{chapterName:''}}],
-			bookTemp: [
-				{
-					title: '阿里的父1',
-					link: 'src'
-				},
-				{
-					title: '阿父母公开2',
-					link: 'src'
-				},
-				{
-					title: '阿里的父母3',
-					link: 'src'
-				},
-				{
-					title: '阿里4',
-					link: 'src'
-				},
-				{
-					title: '阿5',
-					link: 'src'
-				},
-				{
-					title: '阿里的父母6',
-					link: 'src'
-				},
-				{
-					title: '阿里的父7',
-					link: 'src'
-				},
-				{
-					title: '阿里的8',
-					link: 'src'
-				},
-				{
-					title: '阿里的9',
-					link: 'src'
-				},
-				{
-					title: '阿里10',
-					link: 'src'
-				}
-			],
+			bookTemp: [],
 			evaluteData: {
 				text: '',
 				rate: 0
 			},
 			isFavorite: false,
 			errMsg: '',
-			src: 'http://imagev2.xmcdn.com/group74/M08/F7/E5/wKgO3F6ZKlyTkqKqAAMEKEhOSIw777.jpg!op_type=5&upload_type=album&device_type=ios&name=mobile_large&magick=png'
+			isShelf:false
 		};
 	},
 	onLoad: function(option) {
@@ -138,6 +99,7 @@ export default {
 		this.bookId = option.id; //打印出上个页面传递的参数。
 		console.log(this.bookId);
 		this.user = this.$store.state.user.user
+		this.isLogin = this.$store.state.user.hasLogin
 		this.getBook()
 	},
 	methods: {
@@ -150,6 +112,23 @@ export default {
 			this.bookInfo = eval(result.book)[0].fields
 			this.bookTemp = eval(result.chapter)
 			// console.log(this.bookTemp);
+			
+			//获取是否收藏 书架
+			if(this.isLogin){
+				let res = await postData('user/collect/',{
+					user: this.user,
+					bookId:this.bookId,
+					state: 2//判断收藏
+				}) 
+				this.isFavorite = res.state
+				
+				let res2 = await postData('user/shelf/',{
+					user: this.user,
+					bookId:this.bookId,
+					state: 2//判断
+				}) 
+				this.isShelf = res2.state
+			}
 		},
 		//获取评分
 		getRate(e) {
@@ -169,7 +148,29 @@ export default {
 			}
 		},
 		// 收藏
-		favorite() {
+		async favorite() {
+			if(!this.isLogin){
+				uni.navigateTo({
+					url:'/pages/mine/login/login'
+				})
+			}
+			
+			if(this.isFavorite){
+				let res = await postData('user/collect/',{
+					user: this.user,
+					bookId:this.bookId,
+					state: 1//取消收藏
+				}) 
+				console.log(res);
+				
+			}else{
+				let res = await postData('user/collect/',{
+					user: this.user,
+					bookId:this.bookId,
+					state: 0//收藏
+				}) 
+				console.log(res);
+			}
 			this.isFavorite = !this.isFavorite;
 		},
 		// 分享
@@ -177,8 +178,23 @@ export default {
 			this.$refs.share.open()
 		},
 		// 加入书架
-		addBookShelf() {
-			
+		async addBookShelf() {
+			if(this.isShelf){
+				let res2 = await postData('user/shelf/',{
+					user: this.user,
+					bookId:this.bookId,
+					state: 1//删除
+				}) 
+				console.log(res2);
+			}else{
+				let res2 = await postData('user/shelf/',{
+					user: this.user,
+					bookId:this.bookId,
+					state: 0//加入
+				}) 
+				console.log(res2);
+			}
+			this.isShelf = !this.isShelf
 		},
 		//分享选择
 		shareSelect(op){

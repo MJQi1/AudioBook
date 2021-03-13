@@ -143,54 +143,54 @@ const girlList = [{
 
 const eduList = [{
 		title: '外语',
-		imageSrc: '/static/icons/yanqing.png',
+		imageSrc: '/static/icons/btn/weizhi.png',
 		path: '/pages/index/test/test'
 	},
 	{
 		title: '考研',
-		imageSrc: '/static/icons/xuanyi.png',
+		imageSrc: '/static/icons/btn/zhinanzhen.png',
 		path: '/pages/index/test/test'
 	},
 	{
 		title: '高考',
-		imageSrc: '/static/icons/xianxia.png',
+		imageSrc: '/static/icons/btn/zhangpeng.png',
 		path: '/pages/index/test/test'
 	},
 	{
 		title: '初中',
-		imageSrc: '/static/icons/shuidi.png',
+		imageSrc: '/static/icons/btn/xiangji.png',
 		path: '/pages/index/test/test'
 	},
 	{
 		title: '小学',
-		imageSrc: '/static/icons/youxi.png',
+		imageSrc: '/static/icons/btn/yinliao.png',
 		path: '/pages/index/test/test'
 	}
 ]
 
 const funList = [{
 		title: '相声评书',
-		imageSrc: '/static/icons/yanqing.png',
+		imageSrc: '/static/icons/btn/hangli.png',
 		path: '/pages/index/test/test'
 	},
 	{
 		title: '娱乐',
-		imageSrc: '/static/icons/xuanyi.png',
+		imageSrc: '/static/icons/btn/reqiqiu.png',
 		path: '/pages/index/test/test'
 	},
 	{
 		title: '戏曲',
-		imageSrc: '/static/icons/xianxia.png',
+		imageSrc: '/static/icons/btn/jianzhu.png',
 		path: '/pages/index/test/test'
 	},
 	{
 		title: '广播剧',
-		imageSrc: '/static/icons/shuidi.png',
+		imageSrc: '/static/icons/btn/jingdian.png',
 		path: '/pages/index/test/test'
 	},
 	{
 		title: '商业财经',
-		imageSrc: '/static/icons/youxi.png',
+		imageSrc: '/static/icons/btn/yinhangka.png',
 		path: '/pages/index/test/test'
 	}
 ]

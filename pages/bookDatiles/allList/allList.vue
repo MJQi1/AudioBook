@@ -21,7 +21,7 @@
 		<scroll-view class="scroll" scroll-y="true" >
 			<view>
 				<uni-list>
-					<uni-list-item v-for="(item, index) in bookTemp" :key="index" :title="item.fields.chapterName" :to="'/pages/play/play?id='+item.fields.chapterId"></uni-list-item>
+					<uni-list-item v-for="(item, index) in bookTemp" :key="index" :title="item.fields.chapterName" :to="'/pages/play/play?id='+item.fields.chapterId+'&name='+item.fields.chapterName+'&index='+index"></uni-list-item>
 				</uni-list>
 			</view>
 		</scroll-view>
@@ -40,14 +40,14 @@
 				info:''
 			};
 		},
-		onLoad(op) {
-			this.getChapter(op.bookId)
-			// console.log(op);
-			this.info = op
+		onLoad() {
+			this.info = this.$store.state.book.bookInfo
+			this.getChapter()
+			console.log(this.info);
 		},
 		methods:{
-			async getChapter(id){
-				let res = await getData('book/getBookDetiles/?id=' + id)
+			async getChapter(){
+				let res = await getData('book/getBookDetiles/?id=' + this.info.bookId)
 				// console.log(res);
 				this.bookTemp = eval(res.data)
 			},

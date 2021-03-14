@@ -28,7 +28,7 @@
 					if (value) {
 						// launchFlag=true直接跳转到首页
 						uni.switchTab({
-							url: '/pages/tabBar/component/component'
+							url: '/pages/home/home'
 						});
 					} else {
 						// launchFlag!=true显示引导页

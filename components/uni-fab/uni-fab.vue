@@ -417,11 +417,13 @@
 	}
 
 	.book-title{
-		height: 20px;
+		height: 80rpx;
 		padding-right: 20%;
 		text-align: center;
 		font-size: 26rpx;
-		line-height: 20px;
+		line-height: 40rpx;
+		white-space:nowrap; 
+		text-overflow:ellipsis;
 	}
 	.book-btn{
 		padding-left: 5%;

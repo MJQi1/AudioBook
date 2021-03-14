@@ -28,8 +28,8 @@
 
 		<uni-section title="全部章节" sub-title="" type="line"></uni-section>
 		<uni-list>
-			<uni-list-item v-for="(item, index) in bookTemp" :key="index" :title="item.fields.chapterName" :to="'../play/play?id='+item.fields.chapterId"></uni-list-item>
-			<uni-list-item title="剩余全部章节" link :to="`./allList/allList?bookId=${bookId}&book=${bookInfo.bookName}&img=${bookInfo.img}&anchor=${bookInfo.anchor}&type=${bookInfo.type}`"></uni-list-item>
+			<uni-list-item v-for="(item, index) in bookTemp" :key="index" :title="item.fields.chapterName" :to="'../play/play?id='+item.fields.chapterId+'&name='+item.fields.chapterName+'&index='+index"></uni-list-item>
+			<uni-list-item title="剩余全部章节" link :to="`./allList/allList`"></uni-list-item>
 		</uni-list>
 		<uni-section title="评价" sub-title="" type="line"></uni-section>
 		<view class="evalute">
@@ -113,6 +113,7 @@ export default {
 				bookId:this.bookId
 			})
 			this.bookInfo = eval(result.book)[0].fields
+			this.$store.commit('BOOKINFO',this.bookInfo)
 			this.bookTemp = eval(result.chapter)
 			// console.log(this.bookTemp);
 			

@@ -9,7 +9,7 @@
 		<view class="input">
 			<!-- 登录 -->
 			<uni-forms class="form" ref="login" v-show="loginOr" label-width="50" :rules="rules">
-				<uni-forms-item label="帐号" name="username"><uni-easyinput v-model="loginData.email" placeholder="请输入用户名" /></uni-forms-item>
+				<uni-forms-item label="用户名" name="username"><uni-easyinput v-model="loginData.email" placeholder="请输入用户名" /></uni-forms-item>
 				<uni-forms-item label="密码" name="passward"><uni-easyinput type="passward" v-model="loginData.passward" placeholder="请输入密码" /></uni-forms-item>
 				<uni-forms-item label=" " name="" class="login-btn">
 					<view class="sub-btn">
@@ -25,8 +25,8 @@
 			</uni-forms>
 			<!-- 注册 -->
 			<uni-forms class="form" ref="register" v-show="!loginOr" label-width="50" :rules="rules">
-				<uni-forms-item label="帐号" name="email"><uni-easyinput v-model="registerData.email" placeholder="请输入邮箱" /></uni-forms-item>
-				<uni-forms-item label="用户名" name="username"><uni-easyinput v-model="registerData.username" placeholder="请输用户名" /></uni-forms-item>
+				<uni-forms-item label="邮箱" name="email"><uni-easyinput v-model="registerData.email" placeholder="请输入邮箱" /></uni-forms-item>
+				<uni-forms-item label="用户名" name="username"><uni-easyinput v-model="registerData.username" placeholder="作为登录帐号" /></uni-forms-item>
 				<uni-forms-item label="密码" name="passward"><uni-easyinput v-model="registerData.passward" placeholder="请输入密码" /></uni-forms-item>
 				<uni-forms-item label="验证码" name="code">
 					<uni-easyinput v-model="registerData.code" maxlength="6" />

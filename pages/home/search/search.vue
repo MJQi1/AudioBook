@@ -40,7 +40,7 @@
 
 <script>
 	import {textList} from '../data.js'
-	import {postData} from '@/http/fetch.js'
+	import {postData, getData} from '@/http/fetch.js'
 	export default {
 		data() {
 			return {
@@ -97,7 +97,7 @@
 				if(this.historyArray == '' | this.historyArray == null){
 					this.historyArray = []
 				}
-				console.log(this.historyArray);
+				// console.log(this.historyArray);
 				this.historyArray.unshift(this.keyCode)
 				let set = new Set(this.historyArray)
 				this.historyArray = Array.from(set)

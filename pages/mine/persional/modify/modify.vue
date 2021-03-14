@@ -38,14 +38,15 @@
 		</view>
 		<view v-if="type == 'info'">
 			<view>编写个性签名</view>
-			<textarea :value="infoData.info" v-model="infoData.info" style="background-color: #f4f4f4;padding: 30rpx; font-size: 26rpx;" placeholder="个性签名..." />
+			<uni-easyinput v-model="infoData.info" placeholder="个性签名" />
+			
 		</view>
-		<!-- {{ infoData }} -->
 	</view>
 </template>
 
 <script>
 import { getData, postData } from '@/http/fetch.js';
+import common from '@/common.js'
 export default {
 	data() {
 		return {
@@ -179,7 +180,7 @@ export default {
 		// 上传图片
 		async upLoadImg() {
 			uni.uploadFile({
-				url: 'http://127.0.0.1:8000/user/uploadImg/', //仅为示例，非真实的接口地址
+				url: this.$common.baseUrl + 'user/uploadImg/', //仅为示例，非真实的接口地址
 				filePath: this.dataList[0],
 				name: 'file',
 				formData: {

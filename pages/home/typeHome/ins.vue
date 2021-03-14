@@ -101,6 +101,13 @@ export default {
 	methods: {
 		//获取数据
 		async getData() {
+			//轮播图获取
+			let lbt = await postData('book/getRecommend/', {
+				type: 'all',
+				state: 2
+			});
+			this.swiperArr = eval(lbt.data)
+			
 			let data = {
 				type: 'all',
 				state: 0
@@ -121,12 +128,7 @@ export default {
 			this.recommend = eval(recommend.data);
 			// this.pollDownData= eval(recommend.data)
 			
-			//轮播图获取
-			let lbt = await postData('book/getRecommend/', {
-				type: 'all',
-				state: 2
-			});
-			this.swiperArr = eval(lbt.data)
+			
 		},
 		//加载获取更多推荐
 		async getRecommend() {

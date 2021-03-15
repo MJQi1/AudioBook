@@ -70,12 +70,11 @@ export default {
 			};
 		},
 		paused() {
-			console.log(this.paused);
 			if (this.paused) {
-				this.content[2].iconPath = '/static/icons/Playerpause.png';
+				this.content[2].iconPath = '/static/icons/Playerplay.png';
 			} else {
 				console.log('play');
-				this.content[2].iconPath = '/static/icons/Playerplay.png';
+				this.content[2].iconPath = '/static/icons/Playerpause.png';
 			}
 		}
 	},

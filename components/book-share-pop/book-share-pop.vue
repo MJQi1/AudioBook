@@ -31,7 +31,7 @@
 				bottomData: [{
 						text: '微信',
 						icon: 'weixin',
-						name: 'wx'
+						name: 'weixin'
 					},
 					{
 						text: 'QQ',
@@ -41,22 +41,25 @@
 					{
 						text: '新浪',
 						icon: 'weibo',
-						name: 'sina'
+						name: 'sinaweibo'
 					},
 					{
-						text: '其他',
-						icon: 'more-filled',
-						name: 'more'
+						text: '朋友圈',
+						icon: 'pengyouquan',
+						name: 'pengyouquan'
 					}
 				]
 			}
 		},
-		created() {},
+		created() {
+			
+		},
 		methods: {
 			/**
 			 * 选择内容
 			 */
 			select(item, index) {
+				
 				this.$emit('select', {
 					item,
 					index

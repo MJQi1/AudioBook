@@ -104,20 +104,39 @@ export default {
 		//分享选择
 		shareSelect(op){
 			let name = op.item.name
-			switch(name){
-				case 'wx':
-					console.log('wx');
-					break
-				case 'qq':
-					console.log('qq');
-					break
-				case 'sina':
-					console.log('wb');
-					break
-				case 'more':
-					console.log('more');
-					break
+			if (name=='pengyouquan'){
+				uni.share({
+				    provider: 'weixin',
+				    scene: "WXSenceTimeline",
+				    type: 1,
+					title:'来自AudioBook分享',
+					href:'https://uniapp.dcloud.io/api/plugins/share',
+				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+				    success: function (res) {
+				        console.log("shanre:");
+				    },
+				    fail: function (err) {
+				        console.log("fail shanre");
+				    }
+				})
+			}else{
+				uni.share({
+				    provider: name,
+				    scene: "WXSceneSession",
+				    type: 1,
+					title:'来自AudioBook分享',
+					href:'https://uniapp.dcloud.io/api/plugins/share',
+				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+				    success: function (res) {
+				        console.log("shanre:");
+				    },
+				    fail: function (err) {
+				        console.log("fail shanre");
+				    }
+				})
 			}
+			
+			
 			this.$refs.share.close()
 		}
 		

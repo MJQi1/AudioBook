@@ -34,8 +34,8 @@
 		<uni-section title="评价" sub-title="" type="line"></uni-section>
 		<view class="evalute">
 			<view class="evalute-grade">
-				<view class="grade">分数：2.5</view>
-				<uni-rate value="2.5" size="20" readonly></uni-rate>
+				<view class="grade">分数：{{score}}</view>
+				<uni-rate :value="score" size="20" readonly></uni-rate>
 			</view>
 			<view class="evalute-input">
 				<uni-forms ref="form">
@@ -49,19 +49,28 @@
 				</uni-forms>
 			</view>
 			<view class="evalute-list">
-				<uni-list>
-					<uni-list-item
-						title="名字"
-						note="列表描述信息列表描述信息列表描述信息列表描述信息列表列表描述信息列表描述信息列表描述信列表描述信息列表描述信息列表描述信列表描述信息列表描述信息列表描述信描述信息列表描述信息列表描述信息"
-						thumb="https://tse3-mm.cn.bing.net/th/id/OIP.1NiQaNCRWX0sioJGRwKuAwHaIS?w=187&h=209&c=7&o=5&dpr=1.06&pid=1.7"
+				<view v-if="!hasComm" style="font-size:30rpx;text-align: center;border-top: solid 1px #999;line-height: 100rpx;">
+					暂无评论
+				</view>
+				<uni-list v-if="hasComm">
+					<uni-list-item 
+						v-for="(item, index) in commentList"
+						:key="index"
+						:title="item[2]"
+						:note="item[1]"
+						:thumb="item[3]"
 						thumb-size="lg"
 						rightText="右侧文字"
 					>
 						<template slot="header">
-							<image style="width: 100rpx;height:100rpx" src="../../static/icons/xianxia.png" mode=""></image>
+							<image style="width: 80rpx;height:80rpx;border-radius: 50%;margin-right: 20rpx;" :src="item[3]|imgSrc" mode=""></image>
 						</template>
 						<template slot="footer">
-							<text style="font-size: 16rpx; color: #999;">2020-1-2</text>
+							<view class="" style="display: flex;flex-direction: column;align-items: flex-end; justify-content: space-between;">
+								<text style="font-size: 16rpx; color: #999;">{{item[0]}}</text>
+								<uni-icons v-if="user == item[2]" type="trash" size="12" @click="delComment(item[4])"></uni-icons>
+							</view>
+							
 						</template>
 					</uni-list-item>
 				</uni-list>
@@ -91,19 +100,31 @@ export default {
 			},
 			isFavorite: false,
 			errMsg: '',
-			isShelf:false
+			isShelf:false,
+			score:0,
+			commentList:[],
+			hasComm: false
 		};
 	},
 	onLoad: function(option) {
 		//option为object类型，会序列化上个页面传递的参数
 		this.bookId = option.id; //打印出上个页面传递的参数。
 		console.log(this.bookId);
-		
+		this.getComment()
 		this.getBook()
 	},
 	onShow() {
 		this.user = this.$store.state.user.user
 		this.isLogin = this.$store.state.user.hasLogin
+	},
+	watch:{
+		commentList(newdata,old){
+			if(newdata.length == 0){
+				this.hasComm = false
+			}else{
+				this.hasComm = true
+			}
+		}
 	},
 	methods: {
 		//获取数据
@@ -133,23 +154,72 @@ export default {
 				}) 
 				this.isShelf = res2.state
 			}
+			
+			
+		},
+		//获取评论列表
+		async getComment(){
+			let comment = await postData('user/Comment/',{
+				user: this.user,
+				bookId:this.bookId,
+				state: 0//get comment list
+			}) 
+			console.log(comment);
+			if(comment.comment.length==0){
+				this.score = '暂未评分'
+				this.hasComm = false
+			}else{
+				//评分
+				let sc = comment.score.c
+				this.score = parseFloat(sc).toFixed(1)
+				//评论
+				this.commentList = comment.comment.reverse()
+				this.hasComm = false
+				
+			}
 		},
 		//获取评分
 		getRate(e) {
 			this.evaluteData.rate = e.value;
 		},
 		// 评论
-		evalute() {
+		async evalute() {
+			if(!this.isLogin){
+				uni.navigateTo({
+					url:'/pages/mine/login/login'
+				})
+			}
+			
 			if (this.evaluteData.text == '') {
 				this.errMsg = '请填写评论';
 			} else if (this.evaluteData.rate == 0) {
 				this.errMsg = '请进行评分';
 			} else {
-				console.log(`submit ${this.evaluteData}`);
-
+				console.log(this.evaluteData);
+				let res = await postData('user/Comment/',{
+					user: this.user,
+					bookId:this.bookId,
+					rate: this.evaluteData.rate,
+					comment:this.evaluteData.text,
+					state: 1//添加
+				}) 
+				console.log(res);
 				this.errMsg = '';
 				this.evaluteData = { title: '', rate: 0 };
+				this.getComment()
 			}
+			
+		},
+		// 删除评论
+		async delComment(id){
+			let res = await postData('user/Comment/',{
+				user: this.user,
+				bookId:this.bookId,
+				id: id,
+				state: 2//删除
+			}) 
+			console.log(res);
+			this.getComment()
 		},
 		// 收藏
 		async favorite() {
@@ -203,21 +273,39 @@ export default {
 		//分享选择
 		shareSelect(op){
 			let name = op.item.name
-			switch(name){
-				case 'wx':
-					console.log('wx');
-					break
-				case 'qq':
-					console.log('qq');
-					break
-				case 'sina':
-					console.log('wb');
-					break
-				case 'more':
-					console.log('more');
-					break
+			if (name=='pengyouquan'){
+				uni.share({
+				    provider: 'weixin',
+				    scene: "WXSenceTimeline",
+				    type: 1,
+					title:'来自AudioBook分享',
+					href:'https://uniapp.dcloud.io/api/plugins/share',
+				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+				    success: function (res) {
+				        console.log("shanre:");
+				    },
+				    fail: function (err) {
+				        console.log("fail shanre");
+				    }
+				})
+			}else{
+				uni.share({
+				    provider: name,
+				    scene: "WXSceneSession",
+				    type: 1,
+					title:'来自AudioBook分享',
+					href:'https://uniapp.dcloud.io/api/plugins/share',
+				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+				    success: function (res) {
+				        console.log("shanre:");
+				    },
+				    fail: function (err) {
+				        console.log("fail shanre");
+				    }
+				})
 			}
 		}
+		
 	},
 	onNavigationBarButtonTap(op) {
 		let index = op.index;

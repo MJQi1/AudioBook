@@ -176,6 +176,10 @@
 			"transparentTitle": "auto",
 			"app-plus":{
 				"titleNView":{
+					"buttons":[{
+						"type": "share",
+						"background": "rgba(0,0,0,0)"
+					}],
 					"backButton":{
 						"background": "rgba(0,0,0,0)"
 					}

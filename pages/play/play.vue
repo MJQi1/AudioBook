@@ -28,22 +28,31 @@
 				</view>
 				<!-- 评论 -->
 				<view class="pinlun">
-					<view class="pinglun-title">精彩评论(999+)</view>
+					<view class="pinglun-title">精彩评论({{commentList.length}})</view>
 					<scroll-view scroll-y="true" class="evalute-list">
 						<view>
-							<uni-list>
-								<uni-list-item
-									title="名字"
-									note="列表描述信息列表描述信息列表描述信息列表描述信息列表列表描述信息列表描述信息列表描述信列表描述信息列表描述信息列表描述信列表描述信息列表描述信息列表描述信描述信息列表描述信息列表描述信息"
-									thumb="https://tse3-mm.cn.bing.net/th/id/OIP.1NiQaNCRWX0sioJGRwKuAwHaIS?w=187&h=209&c=7&o=5&dpr=1.06&pid=1.7"
+							<view v-if="!hasComm" style="font-size:30rpx;text-align: center;border-top: solid 1px #999;line-height: 100rpx;">
+								暂无评论
+							</view>
+							<uni-list v-if="hasComm">
+								<uni-list-item 
+									v-for="(item, index) in commentList"
+									:key="index"
+									:title="item[2]"
+									:note="item[1]"
+									:thumb="item[3]"
 									thumb-size="lg"
 									rightText="右侧文字"
 								>
 									<template slot="header">
-										<image style="width: 100rpx;height:100rpx" src="../../static/icons/xianxia.png" mode=""></image>
+										<image style="width: 80rpx;height:80rpx;border-radius: 50%;margin-right: 20rpx;" :src="item[3]|imgSrc" mode=""></image>
 									</template>
 									<template slot="footer">
-										<text style="font-size: 16rpx; color: #999;">2020-1-2</text>
+										<view class="" style="display: flex;flex-direction: column;align-items: flex-end; justify-content: space-between;">
+											<text style="font-size: 16rpx; color: #999;">{{item[0]}}</text>
+											<uni-icons v-if="user == item[2]" type="trash" size="12" @click="delComment(item[4])"></uni-icons>
+										</view>
+										
 									</template>
 								</uni-list-item>
 							</uni-list>
@@ -51,6 +60,7 @@
 					</scroll-view>
 				</view>
 			</view>
+			<uni-popup type="share" ref="share"><book-share-pop @select="shareSelect"></book-share-pop></uni-popup>
 		</view>
 	</view>
 </template>
@@ -89,7 +99,18 @@ export default {
 			chapterName:'',
 			chapterIndex:'',
 			info:'',
+			commentList:[],
+			hasComm:'',
 		};
+	},
+	onNavigationBarButtonTap(e) {
+		const index = e.index;
+		let path;
+		switch (index) {
+			case 0:
+				this.$refs.share.open();
+				break;
+		}
 	},
 	onReady() {
 		const that = this;
@@ -123,11 +144,13 @@ export default {
 		if(this.chapterName != undefined){
 			this.$store.commit('INFO',{
 				title:this.bookinfo.bookName+ ' ' + this.chapterName,
-				img:this.bookinfo.img
+				img:this.bookinfo.img,
+				bookId:this.bookinfo.bookId
 			})
 		}
 		
 		this.info = this.$store.state.player.info
+		this.getComment()
 	},
 	filters: {
 		format(endTime) {
@@ -144,6 +167,19 @@ export default {
 		}
 	},
 	methods: {
+		async getComment() {
+			let comment = await postData('user/Comment/',{
+				user: this.user,
+				bookId:this.info.bookId,
+				state: 0//get comment list
+			}) 
+			this.commentList = comment.comment
+			if(comment.comment.length==0){
+				this.hasComm = false
+			}else{
+				this.hasComm = true
+			}
+		},
 		async getChapter(){
 			let res = await getData('book/getBookDetiles/?id=' + this.bookinfo.bookId)
 			this.$store.commit('PLAYLIST',eval(res.data))
@@ -170,6 +206,7 @@ export default {
 				url: 'https://www.ximalaya.com/revision/play/v1/audio?id=' + id + '&ptype=1',
 				success(res) {
 					that.$player.autoplay = true;
+					this.audioSrc = res.data.data.src;
 					that.$player.src = res.data.data.src;
 					that.currentTime = that.$player.currentTime;
 					that.$player.onCanplay(() => {
@@ -178,7 +215,9 @@ export default {
 					that.$player.play();
 					that.$store.commit('INFO',{
 						title:that.bookinfo.bookName+ ' ' + that.chapterName,
-						img:that.bookinfo.img
+						img:that.bookinfo.img,
+						bookId:that.bookinfo.bookId,
+						audioSrc: res.data.data.src
 					})
 					setInterval(()=>{
 						that.currentTime = that.$player.currentTime;
@@ -247,9 +286,47 @@ export default {
 					title:'没有更多章节',
 					icon:'none'
 				})
+			}		
+		},
+		//分享选择
+		shareSelect(op) {
+			let name = op.item.name;
+			
+			if (name == 'pengyouquan') {
+				uni.share({
+					provider: 'weixin',
+					scene: 'WXSenceTimeline',
+					type: 3,
+					title: '来自AudioBook分享',
+					href: this.$common.url,
+					imageUrl:this.info.img,
+					mediaUrl:this.info.audioSrc,
+					summary: '我正在使用AudioBook听书，赶紧跟我一起来体验！'+this.$common.url,
+				});
+			}else if(name == 'more'){
+				uni.shareWithSystem({
+				  summary: '我正在使用AudioBook听书，赶紧跟我一起来体验！'+this.$common.url,
+				  href: this.$common.url,
+				})
+			}else {
+				uni.share({
+					provider: name,
+					scene: 'WXSceneSession',
+					type: 3,
+					title: '来自AudioBook分享',
+					href: this.$common.url,
+					imageUrl:this.info.img,
+					mediaUrl:this.info.audioSrc,
+					summary: '我正在使用AudioBook听书，赶紧跟我一起来体验！'+this.$common.url,
+					success: function(res) {
+						console.log('shanre:');
+					},
+					fail: function(err) {
+						console.log('fail shanre');
+					}
+				});
 			}
-			
-			
+			this.$refs.share.close();
 		}
 	}
 };

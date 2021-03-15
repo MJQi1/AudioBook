@@ -2,7 +2,7 @@
 	<view class="main-box">
 		<view class="top">
 			<view class="top-title" v-show="isLogin">
-				<text>Hi,{{user}}</text>
+				<text>Hi,{{ user }}</text>
 				<view class="next-title">欢迎来到AudioT听书</view>
 			</view>
 			<view class="top-title" v-show="!isLogin">
@@ -17,16 +17,15 @@
 					<swiper-item v-if="isLogin" v-for="(item, index) in bookshelfList">
 						<view class="swiper-item">
 							<image src="../../static/icons/book.png" mode="aspectFit"></image>
-							<view class="act">{{item.fields.bookName}} : {{item.fields.bookInfo}}</view>
+							<view class="act">{{ item.fields.bookName }} : {{ item.fields.bookInfo }}</view>
 						</view>
 					</swiper-item>
 					<swiper-item v-if="!isLogin" v-for="(item, index) in ins">
 						<view class="swiper-item">
 							<image src="../../static/icons/book.png" mode="aspectFit"></image>
-							<view class="act">{{item}}</view>
+							<view class="act">{{ item }}</view>
 						</view>
 					</swiper-item>
-					
 				</swiper>
 			</view>
 		</view>
@@ -34,22 +33,19 @@
 			<bookshelf-item v-for="(item, index) in bookshelfList" :key="index" :datils="item"></bookshelf-item>
 			<bookshelf-item></bookshelf-item>
 		</view>
-		<uni-popup type="share" ref="share">
-			<book-share-pop @select="shareSelect"></book-share-pop>
-		</uni-popup>
+		<uni-popup type="share" ref="share"><book-share-pop @select="shareSelect"></book-share-pop></uni-popup>
 	</view>
-	
 </template>
 
 <script>
-import {postData} from '@/http/fetch.js'
+import { postData } from '@/http/fetch.js';
 export default {
 	data() {
 		return {
 			bookshelfList: [],
 			isLogin: false,
 			user: '',
-			ins:['登录享受美好生活','登录享受私人听书空间']
+			ins: ['登录享受美好生活', '登录享受私人听书空间']
 		};
 	},
 	onLoad() {
@@ -58,15 +54,15 @@ export default {
 	},
 	onShow() {
 		// console.log('show....................');
-		this.getUser()
-		this.getShelf()
+		this.getUser();
+		this.getShelf();
 	},
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
 		let path;
 		switch (index) {
 			case 0:
-				this.$refs.share.open()
+				this.$refs.share.open();
 				break;
 			case 1:
 				path = '../home/search/search';
@@ -77,69 +73,72 @@ export default {
 			url: path
 		});
 	},
-	watch:{
-		isLogin(newdata, old){
-			if(newdata == false) {
-				this.bookshelfList = []
+	watch: {
+		isLogin(newdata, old) {
+			if (newdata == false) {
+				this.bookshelfList = [];
 			}
 		}
 	},
-	methods:{
+	methods: {
 		getUser() {
-			this.isLogin = this.$store.state.user.hasLogin
-			this.user = this.$store.state.user.user
+			this.isLogin = this.$store.state.user.hasLogin;
+			this.user = this.$store.state.user.user;
 		},
 		async getShelf() {
-			if(!this.isLogin){
-				return
+			if (!this.isLogin) {
+				return;
 			}
-			
-			let res = await postData('user/shelf/',{
+
+			let res = await postData('user/shelf/', {
 				user: this.user,
-				bookId:'',
-				state: 3//get list
-			})
-			this.bookshelfList = eval(res.state)
+				bookId: '',
+				state: 3 //get list
+			});
+			this.bookshelfList = eval(res.state);
 		},
 		//分享选择
-		shareSelect(op){
-			let name = op.item.name
-			if (name=='pengyouquan'){
+		shareSelect(op) {
+			let name = op.item.name;
+			if (name == 'pengyouquan') {
 				uni.share({
-				    provider: 'weixin',
-				    scene: "WXSenceTimeline",
-				    type: 1,
-					title:'来自AudioBook分享',
-					href:'https://uniapp.dcloud.io/api/plugins/share',
-				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
-				    success: function (res) {
-				        console.log("shanre:");
-				    },
-				    fail: function (err) {
-				        console.log("fail shanre");
-				    }
+					provider: 'weixin',
+					scene: 'WXSenceTimeline',
+					type: 1,
+					title: '来自AudioBook分享',
+					href: this.$common.url,
+					summary: '我正在使用AudioBook听书，赶紧跟我一起来体验！'+this.$common.url,
+					success: function(res) {
+						console.log('shanre:');
+					},
+					fail: function(err) {
+						console.log('fail shanre');
+					}
+				});
+			} else if(name == 'more'){
+				uni.shareWithSystem({
+				  summary: '我正在使用AudioBook听书，赶紧跟我一起来体验！'+this.$common.url,
+				  href: this.$common.url,
 				})
-			}else{
+			}else {
 				uni.share({
-				    provider: name,
-				    scene: "WXSceneSession",
-				    type: 1,
-					title:'来自AudioBook分享',
-					href:'https://uniapp.dcloud.io/api/plugins/share',
-				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
-				    success: function (res) {
-				        console.log("shanre:");
-				    },
-				    fail: function (err) {
-				        console.log("fail shanre");
-				    }
-				})
+					provider: name,
+					scene: 'WXSceneSession',
+					type: 1,
+					title: '来自AudioBook分享',
+					href: this.$common.url,
+					summary: '我正在使用AudioBook听书，赶紧跟我一起来体验！'+this.$common.url,
+					success: function(res) {
+						console.log('shanre:');
+					},
+					fail: function(err) {
+						console.log('fail shanre');
+					}
+				});
 			}
-			
-			
-			this.$refs.share.close()
+
+			this.$refs.share.close();
 		}
-		
 	}
 };
 </script>

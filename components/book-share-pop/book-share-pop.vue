@@ -47,6 +47,11 @@
 						text: '朋友圈',
 						icon: 'pengyouquan',
 						name: 'pengyouquan'
+					},
+					{
+						text: '更多',
+						icon: 'more-filled',
+						name: 'more'
 					}
 				]
 			}

@@ -28,8 +28,35 @@ export default {
 		} else {
 			this.$store.commit('USER_LOGIN', user);
 			this.getUserInfo(user);
-
+			let socket = new WebSocket("ws:" + "127.0.0.1:8000/websocketLink/?username"+ user);
+			this.$store.commit('SOCKET', socket)
 			console.log('登录用户：' + user);
+			
+			
+			
+			
+			socket.onopen = function() {
+				console.log('WebSocket open'); //成功连接上Websocket
+			};
+			socket.onmessage = function(e) {
+				console.log('message: ' + e.data); //打印服务端返回的数据
+				console.log(JSON.parse(e.data));
+				let officalMessage = that.$store.state.user.socketMessage
+				officalMessage.unshift(JSON.parse(e.data))
+				that.$store.commit('SOCKET_MSG',officalMessage)
+				uni.showTabBarRedDot({
+					index:4
+				})
+				
+			};
+			socket.onclose = function(e) {
+				console.log(e);
+				socket.close(); //关闭TCP连接
+			};
+			if (socket.readyState == WebSocket.OPEN) {
+				socket.onopen();
+			}
+			
 		}
 
 		console.log('App Launch');

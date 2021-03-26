@@ -102,11 +102,13 @@ export default {
 			isVip: false,
 			userinfo:{},
 			image:'',
-			swiperArr:[]
+			swiperArr:[],
+			webView: '',
 		};
 	},
 	onLoad() {
 		this.getUserInfo()
+		this.webView= this.$mp.page.$getAppWebview()
 	},
 	onShow() {
 		this.getUserInfo()
@@ -147,6 +149,15 @@ export default {
 				case 'msg':
 					if(this.isLogin){
 						url = './chartMessage/chartMessage';
+						uni.hideTabBarRedDot({
+							index:4
+						})
+						// #ifdef APP-PLUS
+						// 修改buttons 
+						this.webView.setTitleNViewButtonStyle({  
+						    redDot:true
+						});
+						// #endif
 					}else{
 						url = './login/login';
 					}
@@ -198,6 +209,15 @@ export default {
 				break;
 			case 1:
 				path = './chartMessage/chartMessage';
+				uni.hideTabBarRedDot({
+					index:4
+				})
+				// #ifdef APP-PLUS
+				// 修改buttons 
+				this.webView.setTitleNViewButtonStyle({  
+				    redDot:true
+				});
+				// #endif
 				break;
 			case 2:
 				console.log('saomiao');

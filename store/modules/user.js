@@ -1,7 +1,9 @@
 const state = {
 	user: {},
 	hasLogin:false,
-	userInfo: {}
+	userInfo: {},
+	socket: null,
+	socketMessage:[]
 }
 const getters = {
 	
@@ -19,6 +21,12 @@ const mutations = {
 	},
 	USER_INFO(state, info) {
 		state.userInfo = info
+	},
+	SOCKET(state, info) {
+		state.socket = info
+	},
+	SOCKET_MSG(state, info) {
+		state.socketMessage = info
 	}
 }
 const actions = {

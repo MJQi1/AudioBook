@@ -4,9 +4,9 @@
 		<view class="content">
 			<view v-show="current === 0">
 				<uni-list>
-					<uni-list-item title="官方信息" note="活动点赞了你,活动点赞了你活动点赞了你,活动点赞了你,活动点赞了你,活动点赞了你" thumb="/static/uni.png" thumb-size="lg">
+					<uni-list-item v-for="(v, k) in officalMessage" :key="k" title="官方信息" :note="v.msg" thumb="/static/uni.png" thumb-size="lg">
 						<template slot="footer">
-							<text style="font-size: 20rpx;color: #999;">2020-10-20</text>
+							<text style="font-size: 20rpx;color: #999;">{{v.time}}</text>
 						</template>
 					</uni-list-item>
 				</uni-list>
@@ -58,7 +58,8 @@ export default {
 			items: ['系统消息', '评论', '点赞'],
 			current: 0,
 			commentList:[],
-			showCommentList:''
+			showCommentList:'',
+			// officalMessage:[{msg:'23231',time:'2132-2-3'}]
 		};
 	},
 	onLoad(option) {
@@ -66,11 +67,21 @@ export default {
 			this.current = 1
 		}
 		this.getComment()
+		
 	},
 	computed:{
 		user(){
 			return this.$store.state.user.user
+		},
+		socket(){
+			return this.$store.state.user.socket
+		},
+		officalMessage(){
+			return this.$store.state.user.socketMessage
 		}
+	},
+	mounted() {
+		
 	},
 	methods: {
 		// 获取pinglun

@@ -264,6 +264,13 @@ export default {
 		},
 		//分享选择
 		shareSelect(op) {
+			// #ifdef H5
+			uni.showToast({
+				icon:'none',
+				title:'请使用浏览器自带分享'
+			})
+			// #endif
+			// #ifdef APP-PLUS
 			let name = op.item.name;
 			if (name == 'pengyouquan') {
 				uni.share({
@@ -303,6 +310,9 @@ export default {
 					}
 				});
 			}
+			// #endif
+			
+			
 		}
 	},
 	onNavigationBarButtonTap(op) {

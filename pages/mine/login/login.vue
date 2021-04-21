@@ -164,6 +164,7 @@ export default {
 							let userinfo = await getData('user/getUserInfo/?username=' + set.user);
 							this.$store.commit('USER_INFO', userinfo);
 							uni.navigateBack()
+							
 						}
 						console.log(set);
 				})

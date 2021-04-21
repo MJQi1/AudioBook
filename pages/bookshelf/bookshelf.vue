@@ -99,6 +99,13 @@ export default {
 		},
 		//分享选择
 		shareSelect(op) {
+			// #ifdef H5
+			uni.showToast({
+				icon:'none',
+				title:'请使用浏览器自带分享'
+			})
+			// #endif
+			// #ifdef APP-NVUE
 			let name = op.item.name;
 			if (name == 'pengyouquan') {
 				uni.share({
@@ -136,7 +143,7 @@ export default {
 					}
 				});
 			}
-
+			// #endif
 			this.$refs.share.close();
 		}
 	}

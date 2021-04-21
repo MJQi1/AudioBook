@@ -28,13 +28,39 @@ export default {
 		} else {
 			this.$store.commit('USER_LOGIN', user);
 			this.getUserInfo(user);
-			let socket = new WebSocket("ws:" + "127.0.0.1:8000/websocketLink/?username"+ user);
+			this.socket(user)
+		}
+
+		console.log('App Launch');
+	},
+	onShow: function() {
+		console.log('App Show');
+	},
+	onHide: function() {
+		console.log('App Hide');
+	},
+	computed:{
+		loginUser() {
+			return this.$store.state.user.user
+		}
+	},
+	watch:{
+		loginUser(newVal) {
+			this.socket(newVal)
+		}
+	},
+	methods: {
+		...mapState(['phoneHeight']),
+		...mapActions(['getPhoneHeight']),
+		async getUserInfo(user) {
+			let resp = await getData('user/getUserInfo/?username=' + user);
+			this.$store.commit('USER_INFO', resp);
+		},
+		socket(user){
+			let that = this
+			let socket = new WebSocket("ws:" + this.$common.ws +"/websocketLink/?username"+ user);
 			this.$store.commit('SOCKET', socket)
-			console.log('登录用户：' + user);
-			
-			
-			
-			
+			console.log('ws用户：' + user);
 			socket.onopen = function() {
 				console.log('WebSocket open'); //成功连接上Websocket
 			};
@@ -56,23 +82,6 @@ export default {
 			if (socket.readyState == WebSocket.OPEN) {
 				socket.onopen();
 			}
-			
-		}
-
-		console.log('App Launch');
-	},
-	onShow: function() {
-		console.log('App Show');
-	},
-	onHide: function() {
-		console.log('App Hide');
-	},
-	methods: {
-		...mapState(['phoneHeight']),
-		...mapActions(['getPhoneHeight']),
-		async getUserInfo(user) {
-			let resp = await getData('user/getUserInfo/?username=' + user);
-			this.$store.commit('USER_INFO', resp);
 		}
 	}
 };

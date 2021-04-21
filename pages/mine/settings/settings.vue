@@ -35,7 +35,7 @@
 			</view>
 			
 			<view class="border"></view>
-			<button type="warn" class="err" size="mini">退出程序</button>
+			<button type="warn" class="err" size="mini" @click="exit">退出程序</button>
 		</uni-list>
 	</view>
 </template>
@@ -77,8 +77,19 @@
 				uni.navigateTo({
 					url:path
 				})
-			}
+			},
+			// 退出
+			exit(){
+				// console.log(111111111);
+				// #ifdef APP-PLUS  
+				plus.runtime.quit();  
+				// #endif
 				
+				// #ifdef H5
+				window.opener = null;
+				window.open("about:blank", "_top").close();
+				// #endif
+			}
 		}
 	}
 </script>

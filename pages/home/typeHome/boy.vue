@@ -80,6 +80,9 @@ export default {
 		this.getLike();
 		this.getRecommend();
 	},
+	onShow() {
+		console.log(111111111111111111111111);
+	},
 	methods: {
 		//获取数据
 		async getData() {

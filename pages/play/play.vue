@@ -291,7 +291,14 @@ export default {
 		//分享选择
 		shareSelect(op) {
 			let name = op.item.name;
-			
+					
+			// #ifdef H5
+			uni.showToast({
+				icon:'none',
+				title:'请使用浏览器自带分享'
+			})
+			// #endif
+			// #ifdef APP-PLUS
 			if (name == 'pengyouquan') {
 				uni.share({
 					provider: 'weixin',
@@ -326,6 +333,7 @@ export default {
 					}
 				});
 			}
+			// #endif
 			this.$refs.share.close();
 		}
 	}

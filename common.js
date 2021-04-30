@@ -8,7 +8,7 @@ globalObj.baseUrl = 'http://118.195.162.198:8000/'
 // 192.168.43.234
 // globalObj.url = 'http://192.168.43.234:8080/';
 // globalObj.url = 'http://127.0.0.1:8080/';
-globalObj.url = 'http://118.195.162.198:8000/'
+globalObj.url = 'http://118.195.162.198:8000/client'
 // 定义公共方法
 globalObj.ws = '118.195.162.198:8000'
 

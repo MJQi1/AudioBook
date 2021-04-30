@@ -105,7 +105,7 @@ export default {
 				title:'请使用浏览器自带分享'
 			})
 			// #endif
-			// #ifdef APP-NVUE
+			// #ifdef APP-PLUS
 			let name = op.item.name;
 			if (name == 'pengyouquan') {
 				uni.share({
